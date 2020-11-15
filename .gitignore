@@ -10,6 +10,18 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
+# Ignore Oculus Package
+/[Aa]ssets/[Oo]culus/*
+/[Aa]ssets/Oculus/*.meta
+/[Aa]ssets/[Oo]culus/**/*.meta
+/Assets/Oculus/*
+
+# Ignore School assets Package
+/[Aa]ssets/[Ss]chool/*
+
+# Ignore XR
+/[Aa]ssets/[Xx]r/*
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
