@@ -1,0 +1,12 @@
+disambig_tid.int
+final.mdl
+Gr.fst
+HCLr.fst
+mfcc.conf
+word_boundary.int
+ivector/final.dubm
+ivector/final.ie
+ivector/final.mat
+ivector/global_cmvn.stats
+ivector/online_cmvn.conf
+ivector/splice.conf
