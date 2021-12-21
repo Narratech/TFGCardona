@@ -1,8 +1,14 @@
 # Introduction
+
 Accessibility Hand Gesture package for Social Virtual Reality Games.
+
 Developed by Antonio Cardona Costa. Student at Universidad Complutense de Madrid.
 
+Developed using Unity 2020.3.19f1 and the following packages:
+
+
 # Packages
+
 · Oculus Integration: https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022
 
 · Speech2Text: https://assetstore.unity.com/packages/tools/audio/speech-recognition-system-187171
@@ -10,6 +16,7 @@ Developed by Antonio Cardona Costa. Student at Universidad Complutense de Madrid
 · Multiplayer backend: https://www.photonengine.com/ / https://assetstore.unity.com/packages/tools/network/pun-2-free-119922
 
 · Mirror: https://assetstore.unity.com/packages/tools/particles-effects/magic-mirror-lite-reflection-for-unity-34824
+
 
 # Project Set Up
 
