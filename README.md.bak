@@ -4,35 +4,20 @@ Developed by Antonio Cardona Costa. Student at Universidad Complutense de Madrid
 
 # Packages
 · Oculus Integration: https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022
-
 · Speech2Text: https://assetstore.unity.com/packages/tools/audio/speech-recognition-system-187171
-
 · Multiplayer backend: https://www.photonengine.com/ / https://assetstore.unity.com/packages/tools/network/pun-2-free-119922
-
 · Mirror: https://assetstore.unity.com/packages/tools/particles-effects/magic-mirror-lite-reflection-for-unity-34824
 
 # Project Set Up
-
 · Download Project: git clone ...
-
 · Setup Unity 2020.3.19f1
-
 · Open Project
-
 · Go to TFGAssets/Scenes and load SampleScene
-
 · If prefabs are missing, go to Package Manager
-	
 	· Download and import Oculus Integration (v35 or higher)
-		
 		· On promp, DO NOT use new XR features, select cancel to proced with legacy Hand Tracking.
-	
 	· Download and import PUN2 - FREE Package
-	
 	· Download and import Speech Recognition System (1.0.4 or higher)
-	
 	· Download and import Magic Mirror Lite (1.2.0 or higher)
-
 · You must have installed Oculus Desktop App. SideQuest is greatly recommended.
-
 · Go to Unity-> Build Settings -> Switch platform to Android.
