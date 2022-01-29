@@ -1,20 +1,33 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+
+using SpeechRecognitionSystem;
+
+using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Events;
-using SpeechRecognitionSystem;
-using System.Threading;
 
 internal class SpeechRecognizer : MonoBehaviour {
     public string LanguageModelDirPath = "SpeechRecognitionSystem/model/english_small";
 
-    public void OnMicrophoneReady( IMicrophone microphone ) {
+    public void OnDataProviderReady( IAudioProvider audioProvider ) {
         if ( Application.platform == RuntimePlatform.Android ) {
             if ( !Permission.HasUserAuthorizedPermission( Permission.ExternalStorageWrite ) ) {
                 Permission.RequestUserPermission( Permission.ExternalStorageWrite );
             }
         }
-        _microphone = microphone;
+        _audioProvider = audioProvider;
+        _running = true;
+        Task.Run( processing ).ConfigureAwait( false );
     }
+
+    private readonly ConcurrentQueue<float[ ]> _threadedBufferQueue = new ConcurrentQueue<float[ ]>( );
+    private readonly ConcurrentQueue<string> _recognitionPartialResultsQueue = new ConcurrentQueue<string>( );
+    private readonly ConcurrentQueue<string> _recognitionFinalResultsQueue = new ConcurrentQueue<string>( );
 
     [System.Serializable]
     public class MessageEvent : UnityEvent<string> { }
@@ -25,8 +38,18 @@ internal class SpeechRecognizer : MonoBehaviour {
 
     private void onInitResult( string modelDirPath ) {
         if ( modelDirPath != string.Empty ) {
-             _init = _sr.Init( modelDirPath );
-            LogMessageReceived?.Invoke( "Say something..." );
+            if ( Directory.Exists( modelDirPath ) ) {
+                _init = _sr.Init( modelDirPath );
+            }
+            else {
+                _init = false;
+            }
+            if ( _init ) {
+                LogMessageReceived?.Invoke( "Say something..." );
+            }
+            else {
+                LogMessageReceived?.Invoke( "Error on init SRS plugin. Check 'Language model dir path'\n" + modelDirPath );
+            }
         }
         else {
             LogMessageReceived?.Invoke( "Error on copying streaming assets" );
@@ -54,49 +77,51 @@ internal class SpeechRecognizer : MonoBehaviour {
                 _copyRequested = true;
             }
         }
-        if ( _init && ( _microphone != null ) && _microphone.IsRecording( ) ) {
-            recognize( );
-            if ( _resultReady == 0 ) {
-                _result = string.Empty;
-                if ( _partialResult != string.Empty )
-                    PartialResultReceived?.Invoke( _partialResult );
-            } else {
-                if ( _result != string.Empty ) {
-                    ResultReceived?.Invoke( _result );
-                }
+        if ( _init && ( _audioProvider != null ) ) {
+            var audioData = _audioProvider.GetData( );
+            if ( audioData != null )
+                _threadedBufferQueue.Enqueue( audioData );
+
+            if ( _recognitionPartialResultsQueue.TryDequeue( out string part ) ) {
+                if ( part != string.Empty )
+                    PartialResultReceived?.Invoke( part );
             }
-        }
-    }
-    private object _locker = new object( );
-    private void proccess( float[] data ) {
-        if ( data != null ) {
-            lock ( _locker ) {
-                _resultReady = _sr.AppendAudioData( data );
-                if ( _resultReady == 0 ) {
-                    var result = _sr.GetPartialResult( );
-                    if ( result.partial != string.Empty ) {
-                        _partialResult = result.partial;
-                    }
-                } else {
-                    var result = _sr.GetResult( );
-                    if ( result.text != string.Empty ) {
-                        _result = result.text;
-                    }
-                }
+            if ( _recognitionFinalResultsQueue.TryDequeue( out string result ) ) {
+                if ( result != string.Empty )
+                    ResultReceived?.Invoke( result );
             }
         }
     }
 
-    private string _result = string.Empty;
-    private int _resultReady;
-    private string _partialResult = string.Empty;
+    private async Task processing( ) {
+        while ( _running ) {
+            float[ ] audioData;
+            var isOk = _threadedBufferQueue.TryDequeue( out audioData );
+            if ( isOk ) {
+                int resultReady = _sr.AppendAudioData( audioData );
+                if ( resultReady == 0 ) {
+                    _recognitionPartialResultsQueue.Enqueue( _sr.GetPartialResult( )?.partial );
+                }
+                else {
+                    _recognitionFinalResultsQueue.Enqueue( _sr.GetResult( )?.text );
+                }
+            }
+            else {
+                await Task.Delay( 100 );
+            }
+        }
+    }
+
+    private bool _running = false;
 
     private void OnDestroy( ) {
         _init = false;
         _copyRequested = false;
+        _running = false;
         _sr.Dispose( );
         _sr = null;
     }
+
     private void copyAssets2ExternalStorage( string modelDirPath ) {
         if ( Application.platform == RuntimePlatform.Android ) {
             var javaUnityPlayer = new AndroidJavaClass( "com.unity3d.player.UnityPlayer" );
@@ -111,28 +136,9 @@ internal class SpeechRecognizer : MonoBehaviour {
             }
         }
     }
-    private void recognize( ) {
-        int pos = _microphone.GetRecordPosition( );
-        int diff = pos - _lastSample;
-        if ( diff > 0 ) {
-            var samples = new float[ diff * _microphone.GetAudioClip( ).channels ];
-            var ac = _microphone.GetAudioClip( );
-            if ( ac != null ) {
-                _microphone.GetAudioClip( ).GetData( samples, _lastSample );
-                if ( Application.platform != RuntimePlatform.Android ) {
-                    var t = new Thread( () => proccess( samples ) );
-                    t.Start( );
-                } else {
-                    proccess( samples );
-                }
-            }
-        }
-        _lastSample = pos;
-    }
 
     private SpeechRecognitionSystem.SpeechRecognizer _sr = null;
-    private IMicrophone _microphone = null;
+    private IAudioProvider _audioProvider = null;
     private bool _init = false;
-    private int _lastSample = 0;
     private bool _copyRequested = false;
 }

@@ -3,7 +3,7 @@ using UnityEngine.Android;
 using UnityEngine.Events;
 using SpeechRecognitionSystem;
 
-public class AudioRecorder : MonoBehaviour, IMicrophone {
+public class AudioRecorder : MonoBehaviour, IAudioProvider {
     public int MicrophoneIndex = 0;
     public int GetRecordPosition( ) {
         return Microphone.GetPosition( _deviceName );
@@ -15,10 +15,20 @@ public class AudioRecorder : MonoBehaviour, IMicrophone {
         return Microphone.IsRecording( _deviceName );
     }
 
-    [System.Serializable]
-    public class MicReadyEvent : UnityEvent<IMicrophone> { }
+    public float[ ] GetData( ) {
+        int pos = Microphone.GetPosition( _deviceName );
+        int diff = pos - _lastSample;
+        if ( diff > 0 ) {
+            var samples = new float[ diff ];
+            _audioClip.GetData( samples, _lastSample );
+            _lastSample = pos;
+            return samples;
+        }
+        _lastSample = pos;
+        return null;
+    }
 
-    public MicReadyEvent MicReady = new MicReadyEvent( );
+    public AudioReadyEvent MicReady = new AudioReadyEvent( );
 
     private void Awake( ) {
         if ( Application.platform == RuntimePlatform.Android ) {
@@ -28,7 +38,7 @@ public class AudioRecorder : MonoBehaviour, IMicrophone {
         }
     }
 
-    private void FixedUpdate( ) {
+    private void Update( ) {
         bool micAutorized = true;
         if ( Application.platform == RuntimePlatform.Android ) {
             micAutorized = Permission.HasUserAuthorizedPermission( Permission.Microphone );
@@ -52,4 +62,12 @@ public class AudioRecorder : MonoBehaviour, IMicrophone {
     private const int LENGTH_SEC = 2;
     private const int FREQ = 16000;
     private string _deviceName;
+
+    private int _currentPosition = 0;
+
+    private bool _init = false;
+
+    private const int FRAME_LENGTH = 512;
+
+    private int _lastSample = 0;
 }

@@ -9,5 +9,5 @@ EditorBuildSettings:
     path: Assets/TFGAssets/Scenes/Main_Scene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 620cf02c2c9f58f40a51dd9768a20e7b, type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9c1185788c6644e4d82cac5c29e3fe68, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 116d543c21e684843a2050d9a79b4f76, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3441d30b929f1764a9d7b2d7d1a348a4, type: 2}
