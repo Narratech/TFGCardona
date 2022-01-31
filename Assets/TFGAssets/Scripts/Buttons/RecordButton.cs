@@ -34,7 +34,7 @@ public class RecordButton : MonoBehaviour
     public Material redMat;
 
     // Movimiento Recuperacion boton
-    public float smooth = 0.1f;
+    public float smooth = 0.3f;
 
     // Timers
     public float timeAcu = 0.0f;

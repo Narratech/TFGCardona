@@ -37,6 +37,9 @@ public class GestureRecognizer : MonoBehaviour
     private List<OVRBone> LHfingerBones;
     private Gesture previousGesture;
 
+    // Gestores
+    public Persistence _persistence;
+
     // Bools
     public bool debugMode = true;
     public bool gestureCaptured = false;
@@ -53,6 +56,19 @@ public class GestureRecognizer : MonoBehaviour
         debugMode = true;
         threshold = 0.05f;   // TEST DIFFERENT THRESHOLD VALUES
         previousGesture = new Gesture();
+        _persistence = new Persistence();
+        _persistence.Init(this, Application.persistentDataPath + "/datos.xml");
+    }
+
+    public List<Gesture> getGestureList()
+    {
+        return gestures;
+    }
+
+    public void setGestureList(List<Gesture> newList)
+    {
+        gestures.Clear();
+        gestures.AddRange(newList);
     }
 
     // Update is called once per frame
@@ -118,6 +134,9 @@ public class GestureRecognizer : MonoBehaviour
             LHdata.Add(LHskeleton.transform.InverseTransformPoint(bone.Transform.position));
         }
 
+        // Le damos nombre
+        g.name = "FullGesture-" + Time.time;
+
         // Give data to the gesture structure
         g.RHfingerData = RHdata;
         g.LHfingerData = LHdata;
@@ -127,6 +146,9 @@ public class GestureRecognizer : MonoBehaviour
         g.usedHand = handUsage.BOTH_HANDS;
 
         gestures.Add(g);
+
+        // Guardamos en el archivo de persistencia el gesto capturado.
+        _persistence.SaveGestureList(gestures);
     }
 
     /// <summary>
@@ -153,6 +175,9 @@ public class GestureRecognizer : MonoBehaviour
             RHdata.Add(RHskeleton.transform.InverseTransformPoint(bone.Transform.position));
         }
 
+        // Le damos nombre
+        g.name = "RightGesture-" + Time.time;
+
         // Give data to the gesture structure
         g.RHfingerData = RHdata;
 
@@ -160,6 +185,9 @@ public class GestureRecognizer : MonoBehaviour
         g.usedHand = handUsage.RIGHT_HAND_ONLY;
 
         gestures.Add(g);
+
+        // Guardamos en el archivo de persistencia el gesto capturado.
+        _persistence.SaveGestureList(gestures);
     }
 
     /// <summary>
@@ -186,6 +214,9 @@ public class GestureRecognizer : MonoBehaviour
             LHdata.Add(LHskeleton.transform.InverseTransformPoint(bone.Transform.position));
         }
 
+        // Le damos nombre
+        g.name = "LeftGesture-" + Time.time;
+
         // Give data to the gesture structure
         g.LHfingerData = LHdata;
 
@@ -193,6 +224,9 @@ public class GestureRecognizer : MonoBehaviour
         g.usedHand = handUsage.LEFT_HAND_ONLY;
 
         gestures.Add(g);
+
+        // Guardamos en el archivo de persistencia el gesto capturado.
+        _persistence.SaveGestureList(gestures);
     }
 
     Gesture Recognize()
