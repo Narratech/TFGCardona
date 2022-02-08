@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Events;
 
 /// <summary>
 /// Esta clase se dedica a debugear por pantalla el estado de los huesos de las manos para Unity.
@@ -40,32 +38,26 @@ public class SkeletonDebug : MonoBehaviour
     {
         string RHtext = "Bone Debugger\n------------------------\nRIGHT HAND\n";
         string LHtext = "Bone Debugger\n------------------------\nLEFT HAND\n";
-        //string rhheader = "rh";
-        //int index = 0;
-        //string boneHeader = "";
-        
+
         //RH Information
-        foreach (OVRBone rhbone in RHfingerBones)
-        {
-            //boneHeader = rhheader + index.ToString();
-            RHtext = RHtext + rhbone.Id + " P: ";
-            RHtext = RHtext + RHskeleton.transform.InverseTransformPoint(rhbone.Transform.position) + " - R: " + rhbone.Transform.rotation;
-            RHtext = RHtext + "\n";
-            //index++;
+        if (RHfingerBones != null)
+        { 
+            foreach (OVRBone rhbone in RHfingerBones)
+            {
+                RHtext = RHtext + rhbone.Id + " P: ";
+                RHtext = RHtext + RHskeleton.transform.InverseTransformPoint(rhbone.Transform.position) + " - R: " + rhbone.Transform.rotation;
+                RHtext = RHtext + "\n";
+            }
         }
-
-
         //LH Information
-        //string lhheader = "lh";
-        //index = 0;
-        //boneHeader = "";
-        foreach (OVRBone lhbone in LHfingerBones)
-        {
-            //boneHeader = lhheader + index.ToString();
-            LHtext = LHtext + lhbone.Id + " P: ";
-            LHtext = LHtext + LHskeleton.transform.InverseTransformPoint(lhbone.Transform.position) + " - R: " + lhbone.Transform.rotation;
-            LHtext = LHtext + "\n";
-            //index++;
+        if (LHfingerBones != null)
+        { 
+            foreach (OVRBone lhbone in LHfingerBones)
+            {
+                LHtext = LHtext + lhbone.Id + " P: ";
+                LHtext = LHtext + LHskeleton.transform.InverseTransformPoint(lhbone.Transform.position) + " - R: " + lhbone.Transform.rotation;
+                LHtext = LHtext + "\n";
+            }
         }
 
         RHDebugText.text = RHtext;

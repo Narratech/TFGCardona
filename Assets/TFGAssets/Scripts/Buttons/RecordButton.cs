@@ -14,7 +14,7 @@ public class RecordButton : MonoBehaviour
 {
     // Posiciones mínimas y máximas del boton
     public float MinLocalY = 0.38f;
-    public float MaxLocalY = 0.55f;
+    public float MaxLocalY = 0.40f;
 
     // Gesture Recognizer GO
     [SerializeField]
@@ -34,7 +34,7 @@ public class RecordButton : MonoBehaviour
     public Material redMat;
 
     // Movimiento Recuperacion boton
-    public float smooth = 0.3f;
+    public float smooth = 0f;
 
     // Timers
     public float timeAcu = 0.0f;
@@ -55,7 +55,7 @@ public class RecordButton : MonoBehaviour
         // Getting it back into normal position
         if (!isBeingTouched && (transform.localPosition.y > MaxLocalY || transform.localPosition.y < MaxLocalY))
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUpPosition, Time.deltaTime * smooth);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUpPosition, Time.deltaTime); // * Smooth)
         }
 
         if (!isClicked)
