@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
-
+using System;
 
 // ENUMS
 public enum handUsage
@@ -73,7 +73,7 @@ public struct Gesture
 
 public class GestureRecognizer : MonoBehaviour
 {
-    public float threshold = 0.1f; // Rango de error de reconocimiento
+    
     public OVRSkeleton RHskeleton; // Esqueleto de la mano OVRRightHand
     public OVRSkeleton LHskeleton; // Esqueleto de la mano OVRLeftHand
     public List<Gesture> gestures; // Lista de 
@@ -90,6 +90,21 @@ public class GestureRecognizer : MonoBehaviour
     private TextMeshPro textoEstadoRecog;
     [SerializeField]
     private TextMeshPro textoTimer;
+    [SerializeField]
+    private TextMeshPro textoDebug;
+    [SerializeField]
+    private TextMeshPro textoChat;
+    private string sessionStart;
+
+    // Colas de texto
+    private Queue<string> debugTextQueue;
+    private List<string> debugLog;
+    private Queue<string> chatTextQueue;
+    private List<string> chatLog;
+    private int debugTextMaxLines = 45;
+    private int chatTextMaxLines = 5;
+    private int debugTextIndex = 0;
+    private int chatTextIndex = 0;
 
     // Gestores
     public Persistence _persistence;
@@ -104,15 +119,29 @@ public class GestureRecognizer : MonoBehaviour
     private float timeAcu = 0.0f;
     private float timeBetweenRecognition = 5.0f; // 5 seconds
 
+    // Reconocimiento de mano
+    private float threshold = 0.08f; // Umbral de reconocimiento
+
     // Start is called before the first frame update
     void Start()
     {
         debugMode = true;
-        threshold = 0.05f;   // TEST DIFFERENT THRESHOLD VALUES
         previousGesture = new Gesture();
         _persistence = new Persistence();
-        _persistence.Init(this, Application.persistentDataPath + "/datos.xml");
+        _persistence.Init(this, Application.persistentDataPath + "/gestos.xml");
+        
+        // Chat And Debug
+        debugTextQueue = new Queue<string>();
+        chatTextQueue = new Queue<string>();
+        debugLog = new List<string>();
+        chatLog = new List<string>();
+        // First message.
+        string nowTime = DateTime.Now.ToString();
+        sessionStart = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+        enqueueDebugText("Session: " + nowTime);
+        enqueueChatText("Session: " + nowTime);
     }
+
 
     public List<Gesture> getGestureList()
     {
@@ -153,6 +182,114 @@ public class GestureRecognizer : MonoBehaviour
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////  METODOS DE GESTION DE TEXTO //////////////////////
+    ////////////////////////////////////////////////////////////////////
+
+
+    /// <summary>
+    /// Metodo que llama a la persistencia para guardar los archivos de log con los datos almacenados en el debug y chat.
+    /// </summary>
+    private void saveLogs()
+    {
+        _persistence.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-debugLog.xml", debugLog);
+        _persistence.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-chatLog.xml", chatLog);
+    }
+
+    /// <summary>
+    /// Encola un nuevo mensaje en la cola manteniendo un limite de líneas y manda imprimir
+    /// el texto en el panel correspondiente de la escena.
+    /// </summary>
+    /// <param name="line"></param>
+    public void enqueueDebugText(string line)
+    {
+        debugTextIndex++;
+
+        // Add line
+        debugTextQueue.Enqueue(debugTextIndex + ": " + line);
+        debugLog.Add(debugTextIndex + ": " + line);
+     
+        // Si tenemos el máximo de lineas, borramos la última.
+        if (debugTextQueue.Count > debugTextMaxLines)
+        {
+            debugTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
+        }
+
+        // Mandamos imprimir
+        updateDebugPanel();
+    }
+
+    /// <summary>
+    /// Encola un nuevo mensaje en la cola manteniendo un limite de líneas y manda imprimir
+    /// el texto en el panel correspondiente de la escena.
+    /// </summary>
+    /// <param name="line"></param>
+    /// <param name="queue"></param>
+    public void enqueueChatText(string line)
+    {
+        chatTextIndex++;
+        
+        // Add line
+        chatTextQueue.Enqueue(line);
+        chatLog.Add(chatTextIndex + ": " + line);
+
+        if (chatTextQueue.Count > chatTextMaxLines)
+        {
+            chatTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
+        }
+
+        updateChatPanel();
+    }
+
+    /// <summary>
+    /// Actualiza el texto del panel de debug en la escena.
+    /// </summary>
+    public void updateDebugPanel()
+    {
+        int index = 0;
+        string newText = "";
+        textoDebug.text = "";
+
+        
+        foreach (string line in debugTextQueue)
+        {
+            if (index < debugTextQueue.Count - 1)
+                newText += line + "\n";
+            else
+                newText += line;
+            index++;
+        }
+
+        textoDebug.text = newText;
+        saveLogs();
+    }
+
+    /// <summary>
+    /// Actualiza el texto del panel de chat en la escena.
+    /// </summary>
+    public void updateChatPanel()
+    {
+        int index = 0;
+        textoChat.text = "";
+
+        foreach (string line in chatTextQueue)
+        {
+            if (index < chatTextQueue.Count - 1)
+                textoChat.text += line + "\n";
+            else
+                textoChat.text += line;
+            index++;
+        }
+        saveLogs();
+    }
+
+
+    ////////////////////////////////////////////////////////////////////
+    ///////////////////////  LOGICA INTERNA ////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+
+
     // Update is called once per frame
     void Update()
     {
@@ -170,13 +307,22 @@ public class GestureRecognizer : MonoBehaviour
         if (timeBetweenRecognition < timeAcu) //!gestureCaptured
         {
             isRecognizing = true;
-            Debug.Log("GestureRecognizer::Update() - Intentando reconocer gesto.");
+
+            // Textos debug
+            Debug.Log("Update() - Intentando reconocer gesto.");
+            enqueueDebugText("-------------------------------------------");
+            enqueueDebugText("Update() Intentando reconocer gesto actual.");
             textoEstadoRecog.text = "Intentando reconocer\n gesto.";
+            
             // Obtenemos el gesto Actual.
             Gesture currentGesture = Recognize();
-            // Vemos si ha ocurrido una coincidencia
+            
+            // Debug
             Debug.Log("Resultado de reconocimiento: " + currentGesture.gestureName);
+            enqueueDebugText("Update() Resultado: " + currentGesture.gestureName);
             textoEstadoRecog.text = textoEstadoRecog.text + "\nResultado reconocimiento:\n " + currentGesture.gestureName;
+            
+            // Vemos si se ha encontrado alguno
             bool hasRecognized = currentGesture.gestureName != "notFound";
 
             // Check if new gesture
@@ -184,9 +330,10 @@ public class GestureRecognizer : MonoBehaviour
             {
                 // New Gesture
                 Debug.Log("New Gesture Found: " + currentGesture.gestureName);
-                previousGesture = currentGesture;
+                enqueueDebugText("Update() New Gesture Found: " + currentGesture.gestureName);
                 CuboReconocimiento.GetComponent<Renderer>().material = colorVerde;
                 textoCuboRecog.text = "GESTO RECONOCIDO! (" + currentGesture.gestureName + ")";
+                previousGesture = currentGesture;
                 //currentGesture.onRecognized.Invoke(); // Callback of that gesture
                 isRecognizing = false;
             }
@@ -195,12 +342,14 @@ public class GestureRecognizer : MonoBehaviour
                 if (!hasRecognized)
                 { 
                     Debug.Log("Gesto no reconocido.");
+                    enqueueDebugText("Update() Gesto no reconocido.");
                     textoCuboRecog.text = "GESTO NO RECONOCIDO.";
                     CuboReconocimiento.GetComponent<Renderer>().material = colorRojo;
                 }
                 if (currentGesture.Equals(previousGesture))
                 { 
                     Debug.Log("Mismo gesto que el anterior reconocido.");
+                    enqueueDebugText("Update() Mismo gesto que el anterior.");
                     textoCuboRecog.text = "MISMO GESTO QUE EL ANTERIOR RECONOCIDO.";
                     CuboReconocimiento.GetComponent<Renderer>().material = colorAmarillo;
                 }
@@ -209,6 +358,12 @@ public class GestureRecognizer : MonoBehaviour
             timeAcu = 0.0f;
         }
     }
+
+
+    ////////////////////////////////////////////////////////////////////
+    ///////////////  METODOS DE GESTION DE GESTOS //////////////////////
+    ////////////////////////////////////////////////////////////////////
+
 
     /// <summary>
     /// Permite almacenar un nuevo gesto dentro del sistema de Gestos.
@@ -300,7 +455,6 @@ public class GestureRecognizer : MonoBehaviour
         // Guardamos en el archivo de persistencia el gesto capturado.
         _persistence.saveGesture(g);
     }
-
   
     /// <summary>
     /// Permite almacenar un nuevo gesto de la mano derecha en el sistema de gestos.
@@ -337,7 +491,6 @@ public class GestureRecognizer : MonoBehaviour
         _persistence.saveGesture(g);
     }
 
-
     /// <summary>
     /// Calculates the absolute distance between all quaternion components
     /// of two given quaternions
@@ -356,6 +509,7 @@ public class GestureRecognizer : MonoBehaviour
 
         // Sum of quaternion distances
         quatDist = wCompo + xCompo + yCompo + zCompo;
+        //enqueueDebugText("GestureRecog::quaternionDistance() dist: " + quatDist);
 
         return quatDist;
     }
@@ -381,9 +535,15 @@ public class GestureRecognizer : MonoBehaviour
         float RHcurrentMin = Mathf.Infinity;
         float LHcurrentMin = Mathf.Infinity;
 
+        // Debug del metodo
+        bool showDebug = false;
+
         // Por cada gesto en la lista de gestos
         foreach (var gesture in gestures)
         {
+            enqueueDebugText("Recognize() Comparando con Gesto: " + gesture.gestureName);
+            Debug.Log("Recognize() Comparando con Gesto: " + gesture.gestureName);
+
             // Variables de suma de distancias y bools de descarte si la distancia supera el umbral máximo de reconocimiento.
             // POSICION
             float sumDistanceRH = 0.0f;
@@ -400,39 +560,62 @@ public class GestureRecognizer : MonoBehaviour
             // Almacenamos suma distancias de la mano derecha
             if ((gesture.usedHand == handUsage.RIGHT_HAND_ONLY || gesture.usedHand == handUsage.BOTH_HANDS) && RHskeleton.Bones.Count > 0)
             {
-                Debug.Log("Comparando mano derecha. RHskeleton.Bones.Count = " + RHskeleton.Bones.Count);
+                if (showDebug) Debug.Log("Comparando RH. RHskeleton.Bones.Count = " + RHskeleton.Bones.Count);
+
                 for (int i = 0; i < RHskeleton.Bones.Count; i++)
                 {
                     // POSICION
                     Vector3 currentRHData = RHskeleton.transform.InverseTransformPoint(RHskeleton.Bones[i].Transform.position);
-                    float RHdistance = Vector3.Distance(currentRHData, gesture.RHBoneInfo[i].position);
-                    Debug.Log("Captured RH Pos: " + currentRHData);
-                    Debug.Log("Stored RH Pos: " + gesture.LHBoneInfo[i].position);
+                    float RHPosDistance = Vector3.Distance(currentRHData, gesture.RHBoneInfo[i].position);
+
+                    if (showDebug)
+                    { 
+                        enqueueDebugText("Distancia Pos hueso RH " + gesture.RHBoneInfo[i].id + " : " + RHPosDistance);
+                        Debug.Log("Captured RH Pos: " + currentRHData);
+                        Debug.Log("Stored RH Pos: " + gesture.LHBoneInfo[i].position);
+                    }
 
                     // ROTACION
                     Quaternion currentRHRotData = RHskeleton.Bones[i].Transform.rotation;
                     float RHRotDistance = quaternionDistance(currentRHRotData, gesture.RHBoneInfo[i].rotation);
-                    Debug.Log("Captured RH Rot: " + currentRHRotData);
-                    Debug.Log("Stored RH Rot: " + gesture.LHBoneInfo[i].rotation);
+
+                    if (showDebug)
+                    {
+                        enqueueDebugText("Distancia Rot hueso RH " + gesture.RHBoneInfo[i].id + " : " + RHRotDistance);
+                        Debug.Log("Captured RH Rot: " + currentRHRotData);
+                        Debug.Log("Stored RH Rot: " + gesture.LHBoneInfo[i].rotation);
+                    }
 
                     // Si la suma de la distancia supera el umbral máximo de reconocimiento, descartamos la mano.
                     if (sumDistanceRH > threshold)
                     {
-                        Debug.Log("Distance too great, discarding hand.");
                         isDiscardedRH = true;
+
+                        Debug.Log("Distance too great, discarding hand.");
+                        enqueueDebugText("Distancia demasiado grande (" + sumDistanceRH + "/" + threshold + "), descartando mano.");
+
                         break;
                     }
 
-                    sumDistanceRH += RHdistance + RHRotDistance;
+                    // Añadimos la distancia de este hueso a la suma total
+                    sumDistanceRH += RHPosDistance; //+RHRotDistance);
                 }
             }
             else
             {
                 bool handNotUsed = !(gesture.usedHand == handUsage.RIGHT_HAND_ONLY || gesture.usedHand == handUsage.BOTH_HANDS);
                 if (RHskeleton.Bones.Count == 0)
+                {
                     Debug.Log("No Skeleton Found.");
+                    enqueueDebugText("Esqueleto de RH no encontrado. RH Descartada");
+                }
+
                 if (handNotUsed)
+                { 
                     Debug.Log("hand not used in this gesture.");
+                    enqueueDebugText("Mano RH no usada en este gesto. RH Descartada");
+                }
+
                 Debug.Log("RIGHT Hand Discarded.");
                 isDiscardedRH = true;
             }
@@ -441,18 +624,30 @@ public class GestureRecognizer : MonoBehaviour
             // Almacenamos suma distancias de la mano izquierda
             if ((gesture.usedHand == handUsage.LEFT_HAND_ONLY || gesture.usedHand == handUsage.BOTH_HANDS) && LHskeleton.Bones.Count > 0)
             {
-                Debug.Log("Comparando mano izquierda. LHfingerBones.Count = " + LHskeleton.Bones.Count);
+                if (showDebug) Debug.Log("Comparando LH. LHfingerBones.Count = " + LHskeleton.Bones.Count);
                 for (int i = 0; i < LHskeleton.Bones.Count; i++)
                 {
                     // POSICION
                     Vector3 currentLHData = LHskeleton.transform.InverseTransformPoint(LHskeleton.Bones[i].Transform.position);
-                    Debug.Log("Captured LH Pos: " + currentLHData);
-                    Debug.Log("Stored LH Pos: " + gesture.LHBoneInfo[i].position);
-                    float LHdistance = Vector3.Distance(currentLHData, gesture.LHBoneInfo[i].position);
+                    float LHPosDistance = Vector3.Distance(currentLHData, gesture.LHBoneInfo[i].position);
+
+                    if (showDebug)
+                    {
+                        enqueueDebugText("Distancia Pos hueso LH " + gesture.LHBoneInfo[i].id + " : " + LHPosDistance);
+                        Debug.Log("Captured LH Pos: " + currentLHData);
+                        Debug.Log("Stored LH Pos: " + gesture.LHBoneInfo[i].position);
+                    }
 
                     // ROTACION
-                    Quaternion currentRHRotData = LHskeleton.Bones[i].Transform.rotation;
-                    float RHRotDistance = quaternionDistance(currentRHRotData, gesture.LHBoneInfo[i].rotation);
+                    Quaternion currentLHRotData = LHskeleton.Bones[i].Transform.rotation;
+                    float LHRotDistance = quaternionDistance(currentLHRotData, gesture.LHBoneInfo[i].rotation);
+
+                    if (showDebug)
+                    {
+                        enqueueDebugText("Distancia Rot hueso LH " + gesture.LHBoneInfo[i].id + " : " + LHRotDistance);
+                        Debug.Log("Captured LH Rot: " + currentLHRotData);
+                        Debug.Log("Stored LH Rot: " + gesture.LHBoneInfo[i].rotation);
+                    }
 
                     // Si la suma de la distancia supera el umbral máximo de reconocimiento, descartamos la mano.
                     if (sumDistanceLH > threshold)
@@ -460,7 +655,7 @@ public class GestureRecognizer : MonoBehaviour
                         isDiscardedLH = true;
                         break;
                     }
-                    sumDistanceLH += LHdistance;
+                    sumDistanceLH += LHPosDistance; // +LHRotDistance);
                 }
             }
             else
@@ -471,12 +666,15 @@ public class GestureRecognizer : MonoBehaviour
                 if (handNotUsed)
                     Debug.Log("hand not used in this gesture.");
                 Debug.Log("LEFT Hand Discarded.");
-                isDiscardedRH = true;
+                isDiscardedLH = true;
             }
+
 
             //----------------PROCESADO DE DISTANCIAS-------------------
             Debug.Log("Distancia RH: " + sumDistanceRH);
-            Debug.Log("Distancia LH: " + sumDistanceLH);
+            enqueueDebugText("Recognize() Distancia RH: " + sumDistanceRH);
+            enqueueDebugText("Recognize() Distancia LH: " + sumDistanceLH);
+
             if (gesture.usedHand == handUsage.BOTH_HANDS)
             {
                 if (!isDiscardedRH && !isDiscardedLH && sumDistanceRH < RHcurrentMin && sumDistanceLH < LHcurrentMin)
@@ -494,8 +692,20 @@ public class GestureRecognizer : MonoBehaviour
                 // establecemos este gesto almacenado como el gesto actual reconocido más cercano
                 if (!isDiscardedRH && sumDistanceRH < RHcurrentMin)
                 {
+                    enqueueDebugText("Recognize() Nuevo minimo encontrado con gesto: " + gesture.gestureName);
                     RHcurrentMin = sumDistanceRH;
                     currentGesture = gesture;
+                }
+                else 
+                {
+                    if (isDiscardedRH)
+                    { 
+                        enqueueDebugText("Recognize() RH Descartada para gesto: " + gesture.gestureName);
+                    }
+                    else if (sumDistanceRH >= RHcurrentMin)
+                    {
+                        enqueueDebugText("Recognize() Suma distancias RH (" + sumDistanceRH + ") > minimo actual : " + RHcurrentMin);
+                    }
                 }
             }
             else if (gesture.usedHand == handUsage.LEFT_HAND_ONLY)
@@ -504,6 +714,17 @@ public class GestureRecognizer : MonoBehaviour
                 {
                     LHcurrentMin = sumDistanceLH;
                     currentGesture = gesture;
+                }
+                else
+                {
+                    if (isDiscardedRH)
+                    {
+                        enqueueDebugText("Recognize() LH Descartada para gesto : " + gesture.gestureName);
+                    }
+                    else if (sumDistanceRH >= RHcurrentMin)
+                    {
+                        enqueueDebugText("Recognize() Suma distancias LH (" + sumDistanceLH + ") >= minimo actual : " + RHcurrentMin);
+                    }
                 }
             }
             else 

@@ -17,9 +17,10 @@ public class Persistence : MonoBehaviour
 
     // nombre del fichero a guardar
     private string _file;
+    private string _logFile;
 
     // Datos del gesto
-    private Gesture persistenceGesture;
+    private List<string> persistenceDebugText;
 
     // Bools
     public bool debugMode = true;
@@ -126,6 +127,23 @@ public class Persistence : MonoBehaviour
         Serialize();
     }
 
+    public void saveTextLog(string filename, List<string> text)
+    {
+        _logFile = filename;
+
+        if (persistenceDebugText == null)
+        {
+            persistenceDebugText = new List<string>(text);
+        }
+        else
+        {
+            persistenceDebugText.Clear();
+            persistenceDebugText.AddRange(text);
+        }
+
+        SerializeDebugText();        
+    }
+
     /// <summary>
     /// Método encargado de serializar los datos de la lista de gestos.
     /// </summary>
@@ -146,6 +164,26 @@ public class Persistence : MonoBehaviour
         }
 
         if (success) Debug.Log("Persistence::Serialize() - Exito al guardar el archivo de persistencia");
+        writer.Close();
+    }
+
+    private void SerializeDebugText()
+    {
+        XmlSerializer xmlSer = new XmlSerializer(typeof(List<string>));
+        TextWriter writer = new StreamWriter(_logFile);
+
+        bool success = true;
+        try
+        {
+            xmlSer.Serialize(writer, persistenceDebugText);
+        }
+        catch (Exception e)
+        {
+            success = false;
+            Debug.Log("Persistence::Serialize() - Error al serializar log texto: " + e.ToString());
+        }
+
+        if (success) Debug.Log("Persistence::Serialize() - Exito al guardar el log texto.");
         writer.Close();
     }
 
