@@ -1,25 +1,23 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System.Text;
 using System.Xml.Serialization;
-using System.Text.RegularExpressions;
 
 public class Persistence : MonoBehaviour
 {
-    // Gestor de gestos con la lista de gestos a reconocer
+    // Managers
+    [SerializeField]
     private GestureRecognizer GR;
 
     // Lista interna de gestos? Usar la del manager
     private List<Gesture> gestos;
 
     // nombre del fichero a guardar
-    private string _file;
+    private string _gestureFile;
     private string _logFile;
 
-    // Datos del gesto
+    // Lista auxiliar de strings para guardar logs de texto.
     private List<string> persistenceDebugText;
 
     // Bools
@@ -31,7 +29,10 @@ public class Persistence : MonoBehaviour
         GR = gr;
 
         // Nombre del archivo
-        _file = fileName;
+        _gestureFile = fileName;
+
+        // Debug text
+        persistenceDebugText = new List<string>();
 
         // Inicializamos lista interna usando los elementos ya almacenados en el GestureList
         gestos = new List<Gesture>();
@@ -39,17 +40,30 @@ public class Persistence : MonoBehaviour
         // Leer el fichero y cargar los gestos nada más se inicie la aplicación
         // Si falla la carga entramos en el if
         Debug.Log("Persistence::Init() - Intentando leer archivo de gestos.");
+        
         if (!Deserialize())
         {
             Debug.Log("Persistence::Init() - No se han podido cargar gestos.");
+            //debugMan.enqueuePersistenceText("No se han podido cargar gestos.");
         }
     }
 
+    ////////////////////////////////////////////////
+    ///   SERIALIZADO DE GESTOS
+    ////////////////////////////////////////////////
+
     public void SaveGestureList(List<Gesture> GL)
     {
+        // Debug y trazas
         Debug.Log("Guardando lista de gestos con tamaño (" + GL.Count + ")");
+        //debugMan.enqueuePersistenceText("Guardando lista de gestos con tamaño (" + GL.Count + ")");
         Debug.Log("Lista de gestos almacenada en Persistence de tamaño (" + gestos.Count + ")");
+        //debugMan.enqueuePersistenceText("Lista de gestos almacenada en Persistence de tamaño (" + gestos.Count + ")");
+        
+        // Limpiamos la lista auxiliar interna
         gestos.Clear();
+        
+        // Por cada gesto recibido, lo añadimos a la lista interna.
         foreach (Gesture gesto in GL)
         {
             Gesture toAddGesture = new Gesture();
@@ -77,13 +91,15 @@ public class Persistence : MonoBehaviour
             // Añadir gesto a lista interna del persistance
             gestos.Add(toAddGesture);
         }
+
+        // Serializamos los gestos almacenados en persistencia.
         Serialize();
     }
 
     public void saveGesture(Gesture g)
     {
         Debug.Log("Persistence::saveGesture()");
-        
+
         Gesture toAddGesture = new Gesture();
 
         // Nombre
@@ -127,32 +143,18 @@ public class Persistence : MonoBehaviour
         Serialize();
     }
 
-    public void saveTextLog(string filename, List<string> text)
-    {
-        _logFile = filename;
-
-        if (persistenceDebugText == null)
-        {
-            persistenceDebugText = new List<string>(text);
-        }
-        else
-        {
-            persistenceDebugText.Clear();
-            persistenceDebugText.AddRange(text);
-        }
-
-        SerializeDebugText();        
-    }
-
     /// <summary>
     /// Método encargado de serializar los datos de la lista de gestos.
     /// </summary>
     private void Serialize()
     {
+        // Preparamos el serializador a XML
         XmlSerializer xmlSer = new XmlSerializer(typeof(List<Gesture>));
-        TextWriter writer = new StreamWriter(_file);
+        TextWriter writer = new StreamWriter(_gestureFile);
 
         bool success = true;
+
+        // Intentamos guardar los datos
         try
         {
             xmlSer.Serialize(writer, gestos);
@@ -160,15 +162,52 @@ public class Persistence : MonoBehaviour
         catch (Exception e)
         {
             success = false;
-            Debug.Log("Persistence::Serialize() - Error al serializar el archivo: " + e.ToString());
+            Debug.Log("Persistence::Serialize() - Error al serializar los gestos: " + e.ToString());
         }
 
-        if (success) Debug.Log("Persistence::Serialize() - Exito al guardar el archivo de persistencia");
+        if (success)
+        { 
+            Debug.Log("Persistence::Serialize() - Exito al guardar el archivo de gestos");
+        }
+
+        // Cerramos el writer.
         writer.Close();
     }
 
+    ////////////////////////////////////////////////
+    ///   SERIALIZADO DE LOGS
+    ////////////////////////////////////////////////
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="text"></param>
+
+    public void saveTextLog(string filename, List<string> textList)
+    {
+        Debug.Log("saveTextLog() Archivo: " + filename + " - Tamaño textList: " + textList.Count);
+        _logFile = filename;
+
+        if (persistenceDebugText == null)
+        {
+            Debug.Log("saveTextLog() PersistenceDebugText es Null, generando nuevo.");
+            persistenceDebugText = new List<string>(textList);
+        }
+        else
+        {
+            persistenceDebugText.Clear();
+            persistenceDebugText.AddRange(textList);
+            Debug.Log("saveTextLog() PersistenceDebugText existe. Limpiando y rellenando, ahora tiene tamaño: " + persistenceDebugText.Count);
+        }
+
+        SerializeDebugText();        
+    }
+
+
     private void SerializeDebugText()
     {
+        Debug.Log("serializeDebugText() Preparando serializador XML");
         XmlSerializer xmlSer = new XmlSerializer(typeof(List<string>));
         TextWriter writer = new StreamWriter(_logFile);
 
@@ -183,7 +222,10 @@ public class Persistence : MonoBehaviour
             Debug.Log("Persistence::Serialize() - Error al serializar log texto: " + e.ToString());
         }
 
-        if (success) Debug.Log("Persistence::Serialize() - Exito al guardar el log texto.");
+        if (success)
+        { 
+            Debug.Log("Persistence::Serialize() - Exito al guardar el log texto.");
+        }
         writer.Close();
     }
 
@@ -194,17 +236,18 @@ public class Persistence : MonoBehaviour
     public bool Deserialize()
     {
         bool debugThis = true;
-        if (debugThis) Debug.Log("Persistence::Deserialize() - file: " + _file); //fileName
-                                                                                 // Intentamos abrir el archivo de guardado si existe.
+        if (debugThis) Debug.Log("Persistence::Deserialize() - file: " + _gestureFile); //fileName
+
+        // Intentamos abrir el archivo de guardado si existe.
         FileStream fileHandler;
         try
         {
-            fileHandler = new FileStream(_file, FileMode.Open); //fileName
+            fileHandler = new FileStream(_gestureFile, FileMode.Open); //fileName
         }
         catch (Exception)
         {
-            Debug.Log("Persistence::Deserialize() - WARNING: No se ha encontrado o podido abrir el archivo: " + _file);//Name);
-                                                                                                                       // Volvemos al init.
+            Debug.Log("Persistence::Deserialize() - WARNING: No se ha encontrado o podido abrir el archivo: " + _gestureFile);//Name);
+            // Volvemos al init.
             return false;
         }
 
@@ -222,6 +265,7 @@ public class Persistence : MonoBehaviour
             if (debugLoadedBones)
             {
                 Debug.Log("Gestos en archivo: " + gestos.Count);
+
                 foreach (Gesture gesto in gestos)
                 {
                     string datosGesto = "Gesto: " + gesto.gestureName + "\n" + "Mano usada: " + gesto.usedHand + "\n" + "Huesos: {\n";
@@ -230,7 +274,7 @@ public class Persistence : MonoBehaviour
                     {
                         foreach (BoneData huesoiz in gesto.RHBoneInfo)
                         {
-                            datosHueso = datosHueso + "    ID: " + huesoiz.id + "\n";
+                            datosHueso = datosHueso + "    ID: "  + huesoiz.id + "\n";
                             datosHueso = datosHueso + "    Pos: " + huesoiz.position + "\n";
                             datosHueso = datosHueso + "    Rot: " + huesoiz.rotation + "\n";
                             datosGesto = datosGesto + datosHueso;

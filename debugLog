@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <string>1: GestureRecognizer::Update() Intentando reconocer gesto</string>
+  <string>2: Recognize() Comparando con Gesto: A</string>
+  <string>3: Esqueleto de RH no encontrado. RH Descartada</string>
+  <string>4: Recognize() Distancia RH: 0</string>
+  <string>5: Recognize() Distancia LH: 0</string>
+  <string>6: GestureRecognizer::Update() Resultado: notFound</string>
+  <string>7: GestureRecognizer::Update() Gesto no reconocido.</string>
+  <string>8: GestureRecognizer::Update() Intentando reconocer gesto</string>
+  <string>9: Recognize() Comparando con Gesto: A</string>
+  <string>10: Esqueleto de RH no encontrado. RH Descartada</string>
+  <string>11: Recognize() Distancia RH: 0</string>
+  <string>12: Recognize() Distancia LH: 0</string>
+  <string>13: GestureRecognizer::Update() Resultado: notFound</string>
+  <string>14: GestureRecognizer::Update() Gesto no reconocido.</string>
+</ArrayOfString>
