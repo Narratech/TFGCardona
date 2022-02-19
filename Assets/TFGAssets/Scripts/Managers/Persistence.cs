@@ -74,7 +74,19 @@ public class Persistence : MonoBehaviour
             // Huesos
             toAddGesture.RHBoneInfo = new List<BoneData>();
             toAddGesture.LHBoneInfo = new List<BoneData>();
-            
+
+            // Hand Usage
+            toAddGesture.usedHand = gesto.usedHand;
+
+            // Tipos de gesto
+            toAddGesture.gTypes = new List<gestureType>();
+
+            // Transcripciones
+            toAddGesture.singleTranscription = gesto.singleTranscription;
+            toAddGesture.composedTranscription = new List<string>();
+
+            // Rellenamos las distintas listas de valores.
+
             foreach (BoneData rhbones in gesto.RHBoneInfo)
             {
                 toAddGesture.RHBoneInfo.Add(rhbones);
@@ -84,10 +96,17 @@ public class Persistence : MonoBehaviour
             {
                 toAddGesture.LHBoneInfo.Add(lhbones);
             }
-            
-            //Hand Usage
-            toAddGesture.usedHand = gesto.usedHand;
 
+            foreach (gestureType type in gesto.gTypes)
+            {
+                toAddGesture.gTypes.Add(type);
+            }
+
+            foreach (string transcription in gesto.composedTranscription)
+            {
+                toAddGesture.composedTranscription.Add(transcription);
+            }
+            
             // Añadir gesto a lista interna del persistance
             gestos.Add(toAddGesture);
         }
@@ -96,45 +115,50 @@ public class Persistence : MonoBehaviour
         Serialize();
     }
 
-    public void saveGesture(Gesture g)
+    public void saveGesture(Gesture gesto)
     {
         Debug.Log("Persistence::saveGesture()");
 
         Gesture toAddGesture = new Gesture();
 
         // Nombre
-        toAddGesture.gestureName = g.gestureName;
+        toAddGesture.gestureName = gesto.gestureName;
 
         // Huesos
         toAddGesture.RHBoneInfo = new List<BoneData>();
         toAddGesture.LHBoneInfo = new List<BoneData>();
 
-        if (g.RHBoneInfo != null)
+        // Hand Usage
+        toAddGesture.usedHand = gesto.usedHand;
+
+        // Tipos de gesto
+        toAddGesture.gTypes = new List<gestureType>();
+
+        // Transcripciones
+        toAddGesture.singleTranscription = gesto.singleTranscription;
+        toAddGesture.composedTranscription = new List<string>();
+
+        // Rellenamos las distintas listas de valores.
+
+        foreach (BoneData rhbones in gesto.RHBoneInfo)
         {
-            foreach (BoneData rhbones in g.RHBoneInfo)
-            {
-                toAddGesture.RHBoneInfo.Add(rhbones);
-            }
-        }
-        else
-        {
-            Debug.Log("Persistence::saveGesture() Right Hand Gesture not found.");
+            toAddGesture.RHBoneInfo.Add(rhbones);
         }
 
-        if (g.LHBoneInfo != null)
+        foreach (BoneData lhbones in gesto.LHBoneInfo)
         {
-            foreach (BoneData lhbones in g.LHBoneInfo)
-            {
-                toAddGesture.LHBoneInfo.Add(lhbones);
-            }
-        }
-        else
-        {
-            Debug.Log("Persistence::saveGesture() Left Hand Gesture not found.");
+            toAddGesture.LHBoneInfo.Add(lhbones);
         }
 
-        //Hand Usage
-        toAddGesture.usedHand = g.usedHand;
+        foreach (gestureType type in gesto.gTypes)
+        {
+            toAddGesture.gTypes.Add(type);
+        }
+
+        foreach (string transcription in gesto.composedTranscription)
+        {
+            toAddGesture.composedTranscription.Add(transcription);
+        }
 
         // Añadir gesto a lista interna del persistance
         gestos.Add(toAddGesture);

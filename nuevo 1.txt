@@ -1,0 +1,39 @@
+IDEAS Reunion 15/02/2022
+--------------
+Muestreo más rápido
+Guardar muestras obtenidas
+Ver cual es la más repetida
+Ver diferencia total entre ellas
+Si esta por debajo de un rango aceptarla como gesto
+
+Tareas (1 Marzo)
+--------------
+Añadir captura de gestos en movimiento
+1.- Captura gesto inicial
+2.- Captura gesto final
+
+Pasos:
+	- Logica de reconocimiento en movimiento [OK]
+	- Aumentar parametros de los gestos [Tipo y Transcripcion] [OK]
+	- Persistencia, añadir nuevos parametros [OK]
+	- Gestos actuales, añadir valores para Tipo y Transcripcion
+	- Crear Boton captura gestos inicio y gestos final.
+
+Escribir en el chat
+	- Marcador letras/Palabras
+	- Gesto de mandar al chat
+	- Ventanita que muestre que se escribe
+	- Gesto que es borrar último input
+
+--------------
+Cambiar nombre gestos.xml por LSEDB.xml
+--------------
+Capturar varias versiones de una letra complicada
+para facilitar su identificación
+--------------
+Crear objeto mano y proyectar el gesto almacenado en la DB
+--------------
+
+TO DOs
+-------------
+Arreglar guardar gestos (solo se puede 1 por ejecución ahora)
