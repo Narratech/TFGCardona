@@ -3,18 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum handRecord
-{
-    LEFT_HAND,
-    RIGHT_HAND,
-    BOTH_HANDS
-};
+enum orientation
+{ 
+    HORIZONTAL,
+    VERTICAL
+}
 
 public class RecordButton : MonoBehaviour
 {
+    // Behavior Selector
+    [SerializeField]
+    private orientation orientation;
+
     // Posiciones mínimas y máximas del boton
-    public float MinLocalY = 0.38f;
-    public float MaxLocalY = 0.40f;
+    [SerializeField]
+    private float MinLocalX = 0.105f;
+    [SerializeField]
+    private float MaxLocalX = 0.2f;
+    [SerializeField]
+    private float MinLocalY = 0.38f;
+    [SerializeField]
+    private float MaxLocalY = 0.40f;
+
+    private float minPos;
 
     // Gesture Recognizer GO
     [SerializeField]
@@ -22,8 +33,19 @@ public class RecordButton : MonoBehaviour
     [SerializeField]
     private TextMeshPro guideText;
 
+    // Configuración del boton
+    public string gestureName;
+    public handUsage handSelector;
+    public gesturePhase phase;    //
+    public gestureCategory category;
+    public string simpleTranscription;
+    public List<string> composedTranscription;
+
+    // Posicion
+    Vector3 buttonPressedPos;
+    Vector3 buttonUnpressedPos;
+
     // Booleans
-    public handRecord handSelector;
     public bool isBeingTouched = false;
     public bool isClicked = false;
     public bool isRunningLogic = false;
@@ -43,40 +65,82 @@ public class RecordButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.localPosition = new Vector3(transform.localPosition.x, MaxLocalY, transform.localPosition.z);
+        if (orientation == orientation.VERTICAL)
+            transform.localPosition = new Vector3(transform.localPosition.x, MaxLocalY, transform.localPosition.z);
+        else if (orientation == orientation.HORIZONTAL)
+            transform.localPosition = new Vector3(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
+        
+        // Inicializar vectores
+        buttonPressedPos = new Vector3(0f, 0f, 0f);
+        buttonUnpressedPos = new Vector3(0f, 0f, 0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 buttonDownPosition = new Vector3(transform.localPosition.x, MinLocalY, transform.localPosition.z);
-        Vector3 buttonUpPosition = new Vector3(transform.localPosition.x, MaxLocalY, transform.localPosition.z);
-
-        // Getting it back into normal position
-        if (!isBeingTouched && (transform.localPosition.y > MaxLocalY || transform.localPosition.y < MaxLocalY))
+        if (orientation == orientation.VERTICAL)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUpPosition, Time.deltaTime); // * Smooth)
-        }
+            buttonPressedPos.Set(transform.localPosition.x, MinLocalY, transform.localPosition.z);
+            buttonUnpressedPos.Set(transform.localPosition.x, MaxLocalY, transform.localPosition.z);
 
-        if (!isClicked)
-        {
-            if (transform.localPosition.y < MinLocalY)
+            // Getting it back into normal position
+            if (!isBeingTouched && (transform.localPosition.y > MaxLocalY || transform.localPosition.y < MaxLocalY))
             {
-                isClicked = true;
-                transform.localPosition = buttonDownPosition;
-                OnButtonDown(); 
+                transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUnpressedPos, Time.deltaTime); // * Smooth)
+            }
+
+            if (!isClicked)
+            {
+                if (transform.localPosition.y < MinLocalY)
+                {
+                    isClicked = true;
+                    transform.localPosition = buttonPressedPos;
+                    OnButtonDown();
+                }
+            }
+            else
+            {
+                if (transform.localPosition.y > MaxLocalY - 0.02f)
+                {
+                    isClicked = false;
+                    transform.localPosition = buttonUnpressedPos;
+                    OnButtonUp();
+                }
             }
         }
-        else
+        else if (orientation == orientation.HORIZONTAL)
         {
-            if (transform.localPosition.y > MaxLocalY - 0.01f)
+            buttonPressedPos.Set(MinLocalX, transform.localPosition.y, transform.localPosition.z);
+            buttonUnpressedPos.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
+
+            // Getting it back into normal position
+            if (!isBeingTouched && (transform.localPosition.x > MaxLocalX || transform.localPosition.x < MaxLocalX))
             {
-                isClicked = false;
-                transform.localPosition = buttonUpPosition;
-                OnButtonUp();
+                transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUnpressedPos, Time.deltaTime); // * Smooth)
+            }
+
+            if (!isClicked)
+            {
+                if (transform.localPosition.x < MinLocalX)
+                {
+                    isClicked = true;
+                    transform.localPosition = buttonPressedPos;
+                    OnButtonDown();
+                }
+            }
+            else
+            {
+                if (transform.localPosition.x > MaxLocalX - 0.02f)
+                {
+                    isClicked = false;
+                    transform.localPosition = buttonUnpressedPos;
+                    OnButtonUp();
+                }
             }
         }
 
+        
+     
         if (isRunningLogic)
         {
             // It's Clicked, so run logic.
@@ -126,21 +190,15 @@ public class RecordButton : MonoBehaviour
          
             if (!gestureRecorded)
             {
-                if (handSelector == handRecord.LEFT_HAND)
-                    GR.SaveLeftHandGesture();
-                else if (handSelector == handRecord.RIGHT_HAND)
-                    GR.SaveRightHandGesture();
-                else if (handSelector == handRecord.BOTH_HANDS)
-                    GR.SaveFullGesture();
-                else
-                    Debug.Log("RecordButton: Error! Could not decide which hand to record.");
-
+                GR.SaveGesture(handSelector, phase, category, simpleTranscription, composedTranscription, gestureName);
                 gestureRecorded = true;
             }
         }
         else if (timeAcu > 7.0f)
         {
-            guideText.text = "Gesture Captured.";
+            if (guideText != null) 
+                guideText.text = "Gesture Captured.";
+            
             isRunningLogic = false;
             timeAcu = 0.0f;
         }

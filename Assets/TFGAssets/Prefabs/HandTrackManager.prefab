@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &155575597750943159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 155575597750943152}
+  - component: {fileID: 155575597750943153}
+  m_Layer: 0
+  m_Name: HandTrackManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &155575597750943152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155575597750943159}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &155575597750943153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155575597750943159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51fede7e9433dbd48a6155d1102d5bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RHskeleton: {fileID: 0}
+  LHskeleton: {fileID: 0}
+  ChatTextPanel: {fileID: 0}
+  colorRojo: {fileID: 2100000, guid: 34ad0655dc65c3d45afefb51b1b1558b, type: 2}
+  colorAmarillo: {fileID: 2100000, guid: 5553345efa086f44ab3a73c480601a70, type: 2}
+  colorVerde: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
+  gesturesDB: []
+  debugManager: {fileID: 0}
+  _persistence: {fileID: 0}
+  debugMode: 1
+  gestureCaptured: 0
+  useDummyCapture: 1
+  isRecognizing: 0
+  textoTimer: {fileID: 0}

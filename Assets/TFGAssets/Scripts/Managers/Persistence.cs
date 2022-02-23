@@ -51,7 +51,6 @@ public class Persistence : MonoBehaviour
     ////////////////////////////////////////////////
     ///   SERIALIZADO DE GESTOS
     ////////////////////////////////////////////////
-
     public void SaveGestureList(List<Gesture> GL)
     {
         // Debug y trazas
@@ -67,10 +66,10 @@ public class Persistence : MonoBehaviour
         foreach (Gesture gesto in GL)
         {
             Gesture toAddGesture = new Gesture();
-            
+
             // Nombre
             toAddGesture.gestureName = gesto.gestureName;
-            
+
             // Huesos
             toAddGesture.RHBoneInfo = new List<BoneData>();
             toAddGesture.LHBoneInfo = new List<BoneData>();
@@ -79,7 +78,7 @@ public class Persistence : MonoBehaviour
             toAddGesture.usedHand = gesto.usedHand;
 
             // Tipos de gesto
-            toAddGesture.gTypes = new List<gestureType>();
+            toAddGesture.gPhases = new List<gesturePhase>();
 
             // Transcripciones
             toAddGesture.singleTranscription = gesto.singleTranscription;
@@ -91,22 +90,22 @@ public class Persistence : MonoBehaviour
             {
                 toAddGesture.RHBoneInfo.Add(rhbones);
             }
-            
+
             foreach (BoneData lhbones in gesto.LHBoneInfo)
             {
                 toAddGesture.LHBoneInfo.Add(lhbones);
             }
 
-            foreach (gestureType type in gesto.gTypes)
+            foreach (gesturePhase type in gesto.gPhases)
             {
-                toAddGesture.gTypes.Add(type);
+                toAddGesture.gPhases.Add(type);
             }
 
             foreach (string transcription in gesto.composedTranscription)
             {
                 toAddGesture.composedTranscription.Add(transcription);
             }
-            
+
             // Añadir gesto a lista interna del persistance
             gestos.Add(toAddGesture);
         }
@@ -132,7 +131,7 @@ public class Persistence : MonoBehaviour
         toAddGesture.usedHand = gesto.usedHand;
 
         // Tipos de gesto
-        toAddGesture.gTypes = new List<gestureType>();
+        toAddGesture.gPhases = new List<gesturePhase>();
 
         // Transcripciones
         toAddGesture.singleTranscription = gesto.singleTranscription;
@@ -150,9 +149,9 @@ public class Persistence : MonoBehaviour
             toAddGesture.LHBoneInfo.Add(lhbones);
         }
 
-        foreach (gestureType type in gesto.gTypes)
+        foreach (gesturePhase type in gesto.gPhases)
         {
-            toAddGesture.gTypes.Add(type);
+            toAddGesture.gPhases.Add(type);
         }
 
         foreach (string transcription in gesto.composedTranscription)

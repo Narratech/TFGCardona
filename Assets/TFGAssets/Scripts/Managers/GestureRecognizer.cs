@@ -13,14 +13,20 @@ public enum handUsage
     RIGHT_HAND_ONLY,
     BOTH_HANDS
 };
-public enum gestureType 
+
+public enum gesturePhase
 {
-    GESTURE_WORD,     // Si es una palabra (añadir espacio despues de ella)
-    GESTURE_LETTER,   // Si es una letra (no añadir espacio)
     GESTURE_SIMPLE,   // Gestos sin movimiento
     GESTURE_BEGIN,    // Inicio de gesto en movimiento
     GESTURE_END       // Fin gesto en movimiento
 }
+
+public enum gestureCategory
+{
+    GESTURE_WORD,     // Si es una palabra (añadir espacio despues de ella)
+    GESTURE_LETTER    // Si es una letra (no añadir espacio)
+}
+
 public enum ESLalphabet
 {
     A,
@@ -76,7 +82,8 @@ public struct Gesture
     public List<BoneData> LHBoneInfo;
     public UnityEvent onRecognized;            // Callback
     public handUsage usedHand;
-    public List<gestureType> gTypes;           // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
+    public gestureCategory gCategory;
+    public List<gesturePhase> gPhases;           // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
     public string singleTranscription;         // La transcripción de la componente simple del gesto.
     public List<string> composedTranscription; // Un gesto compuesto puede interpretarse de varias formas (yo, mi). Al inicio del proyecto solo usaremos la primera transcripción.
 };
@@ -84,21 +91,35 @@ public struct Gesture
 public class GestureRecognizer : MonoBehaviour
 {
     // Referencias Externas
-    public DebugManager debugManager;
-    public OVRSkeleton RHskeleton; // Esqueleto de la mano OVRRightHand
-    public OVRSkeleton LHskeleton; // Esqueleto de la mano OVRLeftHand
-    public List<Gesture> gesturesDB; // Base de datos de Gestos.
-    public Stack<Gesture> recogGestStack; // Pila de gestos reconocidos.
+    [SerializeField]
+    private OVRSkeleton RHskeleton; // Esqueleto de la mano OVRRightHand
+    [SerializeField]
+    private OVRSkeleton LHskeleton; // Esqueleto de la mano OVRLeftHand
+    [SerializeField]
+    private TextMeshPro ChatTextPanel;
 
-    private Gesture previousProcessedGesture;
-    private Gesture previousValidatedGesture;
-    public GameObject CuboReconocimiento;
-    public Material colorRojo;
-    public Material colorAmarillo;
-    public Material colorVerde;
+    // Materiales
+    [SerializeField]
+    private Material colorRojo;
+    [SerializeField]
+    private Material colorAmarillo;
+    [SerializeField]
+    private Material colorVerde;
+
+    // Databases
+    [SerializeField]
+    private List<Gesture> gesturesDB; // Base de datos de Gestos.
 
     // Gestores
-    public Persistence _persistence;
+    [SerializeField]
+    private DebugManager debugManager;
+    [SerializeField]
+    private Persistence _persistence;
+
+    // Variables internas
+    private Gesture previousProcessedGesture;
+    private Gesture previousValidatedGesture;
+    private Stack<Gesture> recogGestStack; // Pila de gestos reconocidos.
 
     // Bools
     public bool debugMode = true;
@@ -135,6 +156,9 @@ public class GestureRecognizer : MonoBehaviour
         previousValidatedGesture = new Gesture();
     }
 
+    ////////////////////////////////////////////////////////////////////
+    ///////////////////////  BASE DE DATOS DE GESTOS ///////////////////
+    ////////////////////////////////////////////////////////////////////
 
     public List<Gesture> getGestureList()
     {
@@ -212,179 +236,103 @@ public class GestureRecognizer : MonoBehaviour
         }
     }
 
-   
-
     ////////////////////////////////////////////////////////////////////
     ///////////////  METODOS DE GESTION DE GESTOS //////////////////////
     ////////////////////////////////////////////////////////////////////
 
-    /// <summary>
-    /// Permite almacenar un nuevo gesto dentro del sistema de Gestos.
-    /// </summary>
-    public void SaveFullGesture(gestureType fase = gestureType.GESTURE_SIMPLE, gestureType categoria = gestureType.GESTURE_LETTER, string simpleTranscription = "CHANGE_THIS", List<string> composedTranscription = null)
+    public void SaveGesture(handUsage handSelector, gesturePhase phase, gestureCategory category, string simpleTranscription, List<string> composedTranscription, string gestureName = "")
     {
-        // New gesture instantiation
+        // Instanciamos un nuevo gesto
         Gesture g = new Gesture();
+
+        // Inicializamos sus listas
         g.RHBoneInfo = new List<BoneData>();
         g.LHBoneInfo = new List<BoneData>();
+        g.gPhases = new List<gesturePhase>();
+        g.composedTranscription = new List<string>();
+
+        // Variables donde almacenamos la info de los huesos que vamos obteniendo.
         BoneData rhBoneData = new BoneData();
         BoneData lhBoneData = new BoneData();
 
-        // Obtain finger data for each hand
-        foreach (OVRBone bone in RHskeleton.Bones)
-        {
-            // Bone information
-            rhBoneData.id = bone.Id;
-            rhBoneData.position = RHskeleton.transform.InverseTransformPoint(bone.Transform.position);
-            rhBoneData.rotation = bone.Transform.rotation;
+        // Capturar la mano derecha si es necesario.
+        if (handSelector == handUsage.RIGHT_HAND_ONLY || handSelector == handUsage.BOTH_HANDS)
+        { 
+            // Obtain finger data for each hand
+            foreach (OVRBone bone in RHskeleton.Bones)
+            {
+                // Bone information
+                rhBoneData.id = bone.Id;
+                rhBoneData.position = RHskeleton.transform.InverseTransformPoint(bone.Transform.position);
+                rhBoneData.rotation = bone.Transform.rotation;
 
-            // Add to gesture bone list.
-            g.RHBoneInfo.Add(rhBoneData);
+                // Add to gesture bone list.
+                g.RHBoneInfo.Add(rhBoneData);
+            }
         }
 
-        // Obtain finger data for left hand
-        foreach (OVRBone bone in LHskeleton.Bones)
-        {
-            // Bone information
-            lhBoneData.id = bone.Id;
-            lhBoneData.position = LHskeleton.transform.InverseTransformPoint(bone.Transform.position);
-            lhBoneData.rotation = bone.Transform.rotation;
+        // Capturar la mano izquierda si es necesario.
+        if (handSelector == handUsage.LEFT_HAND_ONLY || handSelector == handUsage.BOTH_HANDS)
+        { 
+            // Obtain finger data for left hand
+            foreach (OVRBone bone in LHskeleton.Bones)
+            {
+                // Bone information
+                lhBoneData.id = bone.Id;
+                lhBoneData.position = LHskeleton.transform.InverseTransformPoint(bone.Transform.position);
+                lhBoneData.rotation = bone.Transform.rotation;
 
-            // Add to gesture bone list.
-            g.LHBoneInfo.Add(lhBoneData);
+                // Add to gesture bone list.
+                g.LHBoneInfo.Add(lhBoneData);
+            }
         }
 
-        // Le damos nombre
-        g.gestureName = "FullGesture-" + Time.time;
+        // Nombre del gesto si no ha sido aportado
+        if (gestureName == "")
+        {
+            switch (handSelector)
+            {
+                case handUsage.RIGHT_HAND_ONLY:
+                    g.gestureName = "RightGesture-" + Time.time;
+                    break;
+                case handUsage.LEFT_HAND_ONLY:
+                    g.gestureName = "LeftGesture-" + Time.time;
+                    break;
+                case handUsage.BOTH_HANDS:
+                    g.gestureName = "FullGesture-" + Time.time;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            g.gestureName = gestureName;
+        }
 
         // HAND USAGE
-        g.usedHand = handUsage.BOTH_HANDS;
+        g.usedHand = handSelector;
 
         // Tipos
-        g.gTypes.Add(fase);         // GESTURE_SIMPLE, GESTURE_BEGIN, GESTURE_END
-        g.gTypes.Add(categoria);    // GESTURE_WORD, GESTURE_LETTER
+        g.gPhases.Add(phase);      // GESTURE_SIMPLE, GESTURE_BEGIN, GESTURE_END
+        g.gCategory = category;    // GESTURE_WORD, GESTURE_LETTER
 
         // Transcripciones
+        // Simple
         g.singleTranscription = simpleTranscription;
+        // Compuesta
         if (composedTranscription != null)
         {
-            g.composedTranscription = new List<string>();
             foreach (string transcription in composedTranscription)
             {
                 g.composedTranscription.Add(transcription);
             }
         }
 
+        // Añadir gesto a la base de datos.
         gesturesDB.Add(g);
 
         // Guardamos en el archivo de persistencia el gesto capturado.
-        _persistence.saveGesture(g);
-    }
-
-
-    // TO DO: Multiple ways to compare a gesture
-    //----------------------
-    // local position
-    // local rotation
-    // flex / distance of fingers
-    // others...
-
-    /// <summary>
-    /// Permite almacenar un nuevo gesto de la mano derecha en el sistema de gestos.
-    /// </summary>
-    public void SaveRightHandGesture(gestureType fase = gestureType.GESTURE_SIMPLE, gestureType categoria = gestureType.GESTURE_LETTER, string simpleTranscription = "CHANGE_THIS", List<string> composedTranscription = null)
-    {
-        // New gesture instantiation
-        Gesture g = new Gesture();
-        g.RHBoneInfo = new List<BoneData>();
-        BoneData rhBoneData = new BoneData();
-
-        // Obtain finger data for each hand
-        foreach (OVRBone bone in RHskeleton.Bones)
-        {
-            // Bone information
-            rhBoneData.id = bone.Id;
-            rhBoneData.position = RHskeleton.transform.InverseTransformPoint(bone.Transform.position);
-            rhBoneData.rotation = bone.Transform.rotation;
-
-            // Add to gesture bone list.
-            g.RHBoneInfo.Add(rhBoneData);
-        }
-
-        // Le damos nombre
-        g.gestureName = "RightGesture-" + Time.time;
-
-        // HAND USAGE
-        g.usedHand = handUsage.RIGHT_HAND_ONLY;
-
-        // Tipos
-        g.gTypes.Add(fase);         // GESTURE_SIMPLE, GESTURE_BEGIN, GESTURE_END
-        g.gTypes.Add(categoria);    // GESTURE_WORD, GESTURE_LETTER
-
-        // Transcripciones
-        g.singleTranscription = simpleTranscription;
-        if (composedTranscription != null) 
-        {
-            g.composedTranscription = new List<string>();
-            foreach (string transcription in composedTranscription)
-            {
-                g.composedTranscription.Add(transcription);
-            }
-        }
-
-        gesturesDB.Add(g);
-
-        // Guardamos en el archivo de persistencia el gesto capturado.
-        _persistence.saveGesture(g);
-    }
-  
-    /// <summary>
-    /// Permite almacenar un nuevo gesto de la mano derecha en el sistema de gestos.
-    /// </summary>
-    public void SaveLeftHandGesture(gestureType fase = gestureType.GESTURE_SIMPLE, gestureType categoria = gestureType.GESTURE_LETTER, string simpleTranscription = "CHANGE_THIS", List<string> composedTranscription = null)
-    {
-        // New gesture instantiation
-        Gesture g = new Gesture();
-        g.LHBoneInfo = new List<BoneData>();
-        BoneData lhBoneData = new BoneData();
-
-        // Obtain finger data for left hand
-        foreach (OVRBone bone in LHskeleton.Bones)
-        {
-            // Bone information
-            lhBoneData.id = bone.Id;
-            lhBoneData.position = LHskeleton.transform.InverseTransformPoint(bone.Transform.position);
-            lhBoneData.rotation = bone.Transform.rotation;
-
-            // Add to gesture bone list.
-            g.LHBoneInfo.Add(lhBoneData);
-        }
-
-        // Le damos nombre
-        g.gestureName = "LeftGesture-" + Time.time;
-
-        // HAND USAGE
-        g.usedHand = handUsage.LEFT_HAND_ONLY;
-
-        // Tipos
-        g.gTypes.Add(fase);         // GESTURE_SIMPLE, GESTURE_BEGIN, GESTURE_END
-        g.gTypes.Add(categoria);    // GESTURE_WORD, GESTURE_LETTER
-
-        // Transcripciones
-        g.singleTranscription = simpleTranscription;
-        if (composedTranscription != null)
-        {
-            g.composedTranscription = new List<string>();
-            foreach (string transcription in composedTranscription)
-            {
-                g.composedTranscription.Add(transcription);
-            }
-        }
-
-        gesturesDB.Add(g);
-
-        // Guardamos en el archivo de persistencia el gesto capturado.
-        //_persistence.SaveGestureList(gestures);
         _persistence.saveGesture(g);
     }
 
@@ -665,16 +613,14 @@ public class GestureRecognizer : MonoBehaviour
         }
     }
 
-
-
     //////////////////////////////////////////////////
     ///////////// PROCESADO DEL GESTO ////////////////
     //////////////////////////////////////////////////
 
     private void ProcessRecognizedGesture(Gesture recognizedGesture)
     {
-        bool isCurrentPurelySimple = recognizedGesture.gTypes.Contains(gestureType.GESTURE_SIMPLE) && 
-            !(recognizedGesture.gTypes.Contains(gestureType.GESTURE_BEGIN) || recognizedGesture.gTypes.Contains(gestureType.GESTURE_END));
+        bool isCurrentPurelySimple = recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE) && 
+            !(recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_BEGIN) || recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_END));
 
         // Si el gesto reconocido solo es de tipo simple (Sin movimiento asociado)
         // Lo devolvemos para que se procese tal cual.
@@ -685,18 +631,18 @@ public class GestureRecognizer : MonoBehaviour
 
         // A partir de aqui el gesto tiene UNA única componente de movimiento (también puede contener además una componente de gesto simple)
         // Lo que nunca podrá tener al mismo tiempo es dos componentes de movimiento, como sería Gesture_Begin y Gesture_End.
-        if (recognizedGesture.gTypes.Contains(gestureType.GESTURE_BEGIN) && recognizedGesture.gTypes.Contains(gestureType.GESTURE_END))
+        if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_BEGIN) && recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_END))
         {
             Debug.Log("Recognize() - ERROR: Gesto Reconocido (" + recognizedGesture.gestureName + ") tiene componentes BEGIN y END. Revisar la DB y corregir.");
         }
-        else if (recognizedGesture.gTypes.Contains(gestureType.GESTURE_BEGIN))
+        else if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_BEGIN))
         {
             // Comprobará si es valido, verá si hay algun gesto compuesto con componente simple esperando ser procesado
             // y meterá el actual reconocido en la pila.
             ProcessBeginGesture(recognizedGesture);
 
         }
-        else if (recognizedGesture.gTypes.Contains(gestureType.GESTURE_END))
+        else if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_END))
         {
             ProcessEndGesture(recognizedGesture);
         }
@@ -718,7 +664,7 @@ public class GestureRecognizer : MonoBehaviour
             Gesture PreviousGestureInStack = recogGestStack.Peek();
             
             // Si tiene un componente simple, se valida
-            if (PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_SIMPLE))
+            if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
             {
                 ValidateAsSimple(PreviousGestureInStack);
             }
@@ -751,9 +697,9 @@ public class GestureRecognizer : MonoBehaviour
 
         // Si el stack no esta vacío debemos tener en consideración el gesto que contiene.
         Gesture PreviousGestureInStack = recogGestStack.Peek();
-        bool isPreviousPurelySimple = PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_SIMPLE) &&
-            !(PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_BEGIN) || PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_END));
-        bool isPreviousPurelyComposed = !PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_SIMPLE);
+        bool isPreviousPurelySimple = PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE) &&
+            !(PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_BEGIN) || PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_END));
+        bool isPreviousPurelyComposed = !PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE);
 
         // ¿El gesto previo reconocido era puramente simple o puramente compuesto?
         if (isPreviousPurelySimple || isPreviousPurelyComposed)
@@ -799,7 +745,7 @@ public class GestureRecognizer : MonoBehaviour
         // Si no tiene una componente simple, se devuelve un gesto No Reconocido.
         if (recogGestStack.Count == 0)
         {
-            if (recognizedGesture.gTypes.Contains(gestureType.GESTURE_SIMPLE))
+            if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
             {
                 // Es importante tener en cuenta que aunque devolvamos el GESTURE_END como reconocido
                 // el método OnRecognition() no lo dará por bueno si no existen en la pila de gestos
@@ -816,8 +762,8 @@ public class GestureRecognizer : MonoBehaviour
 
         // Si el stack de gestos NO esta vacío, debemos tener en cuenta el gesto anterior a la hora de validar el gesto actual.
         Gesture PreviousGestureInStack = recogGestStack.Peek();
-        bool isPreviousPurelySimple = PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_SIMPLE) &&
-            !(PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_BEGIN) || PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_END));
+        bool isPreviousPurelySimple = PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE) &&
+            !(PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_BEGIN) || PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_END));
 
         // ¿Este caso se puede dar? ¿Encolamos gestos puramente simples?
         if (isPreviousPurelySimple)
@@ -835,7 +781,7 @@ public class GestureRecognizer : MonoBehaviour
             if (PreviousGestureInStack.composedTranscription[0] == recognizedGesture.composedTranscription[0])
             {
                 // Y el gesto anterior corresponde al inicio del signo
-                if (PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_BEGIN))
+                if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_BEGIN))
                 {
                     // Añadimos el gesto END a la pila despues del BEGIN
                     recogGestStack.Push(recognizedGesture);
@@ -850,14 +796,14 @@ public class GestureRecognizer : MonoBehaviour
                     recogGestStack.Pop();
 
                     // Si el anterior tiene componente simple lo validamos.
-                    if (PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_SIMPLE))
+                    if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                     {
                         // Lo validamos
                         ValidateAsSimple(PreviousGestureInStack);
                     }
 
                     // Si el gesto actual GESTURE_END tiene componente simple
-                    if (recognizedGesture.gTypes.Contains(gestureType.GESTURE_SIMPLE))
+                    if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                     {
                         // Lo validamos
                         ValidateAsSimple(recognizedGesture);
@@ -872,14 +818,14 @@ public class GestureRecognizer : MonoBehaviour
                 recogGestStack.Pop();
 
                 // Si el anterior tiene componente simple lo validamos.
-                if (PreviousGestureInStack.gTypes.Contains(gestureType.GESTURE_SIMPLE))
+                if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                 {
                     // Lo validamos
                     ValidateAsSimple(PreviousGestureInStack);
                 }
 
                 // Si el gesto actual GESTURE_END tiene componente simple
-                if (recognizedGesture.gTypes.Contains(gestureType.GESTURE_SIMPLE))
+                if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                 {
                     // Lo validamos
                     ValidateAsSimple(recognizedGesture);
@@ -957,6 +903,7 @@ public class GestureRecognizer : MonoBehaviour
 
             // TO DO 
             // Añadir la transcripción del gesto a la ventana de input
+            debugManager.enqueueChatText(RecognizedSimpleGesture.singleTranscription);
         }
     }
 
@@ -978,6 +925,7 @@ public class GestureRecognizer : MonoBehaviour
 
             // TO DO 
             // Añadir la transcripción del gesto a la ventana de input
+            debugManager.enqueueChatText(RecognizedComposedGesture.composedTranscription[0]);
         }
     }
 }

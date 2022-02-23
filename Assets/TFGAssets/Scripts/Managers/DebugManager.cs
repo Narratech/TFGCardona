@@ -37,6 +37,8 @@ public class DebugManager : MonoBehaviour
     [SerializeField]
     private TextMeshPro textoChat;
     [SerializeField]
+    private TextMeshPro textoChatGUI;
+    [SerializeField]
     private TextMeshPro textoPersistencia;
 
     // Colas de texto
@@ -48,10 +50,10 @@ public class DebugManager : MonoBehaviour
     private List<string> persistLog;
 
     // Activadores de debugs
-    public bool updateDebug  = false;
+    public bool updateDebug  = true;
     public bool updateRecog  = true;
     public bool updateRecord = true;
-    public bool updateChat   = false;
+    public bool updateChat   = true;
     public bool updateBones  = false;
     
     // Parametros de paneles
@@ -183,13 +185,20 @@ public class DebugManager : MonoBehaviour
         Debug.Log("Actualizando panel Chat.");
         int index = 0;
         textoChat.text = "";
+        textoChatGUI.text = "";
 
         foreach (string line in chatTextQueue)
         {
             if (index < chatTextQueue.Count - 1)
+            { 
                 textoChat.text += line + "\n";
+                textoChatGUI.text += line + "\n";
+            }
             else
+            { 
                 textoChat.text += line;
+                textoChatGUI.text += line;
+            }
             index++;
         }
         saveLogs();
