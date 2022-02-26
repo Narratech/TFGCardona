@@ -31,6 +31,8 @@ public class RecordButton : MonoBehaviour
     [SerializeField]
     private GestureRecognizer GR;
     [SerializeField]
+    private DebugManager _debugManager;
+    [SerializeField]
     private TextMeshPro guideText;
 
     // Configuración del boton
@@ -78,6 +80,7 @@ public class RecordButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (orientation == orientation.VERTICAL)
         {
             buttonPressedPos.Set(transform.localPosition.x, MinLocalY, transform.localPosition.z);
@@ -138,8 +141,6 @@ public class RecordButton : MonoBehaviour
                 }
             }
         }
-
-        
      
         if (isRunningLogic)
         {
@@ -184,21 +185,23 @@ public class RecordButton : MonoBehaviour
             guideText.text = "Capture in 2 seconds.";
         else if (timeAcu > 4.0f && timeAcu < 5.0f)
             guideText.text = "Capture in 1 seconds.";
-        else if (timeAcu > 5.0f && timeAcu < 7.0f)
+        else if (timeAcu > 5.0f && timeAcu < 6.0f)
         {
             guideText.text = "Capturing gesture!!!.";
          
             if (!gestureRecorded)
             {
+                _debugManager.enqueuePersistenceText("RecordButton::runLogicOnButtonPush() - Llamando a GR.SaveGesture()");
                 GR.SaveGesture(handSelector, phase, category, simpleTranscription, composedTranscription, gestureName);
                 gestureRecorded = true;
             }
         }
-        else if (timeAcu > 7.0f)
+        else if (timeAcu > 6.0f)
         {
             if (guideText != null) 
                 guideText.text = "Gesture Captured.";
-            
+
+            gestureRecorded = false;
             isRunningLogic = false;
             timeAcu = 0.0f;
         }

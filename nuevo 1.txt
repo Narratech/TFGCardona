@@ -18,6 +18,14 @@ Pasos:
 	- Persistencia, añadir nuevos parametros [OK]
 	- Gestos actuales, añadir valores para Tipo y Transcripcion
 	- Crear Boton captura gestos inicio y gestos final.
+	
+TODO
+	- Arreglar guardado
+		- Funcionan botones, no panel
+		
+	- Arreglar captura y reconocimiento
+		- ver por que peta en single process
+			- Stack no inicializado (FIXED)
 
 Escribir en el chat
 	- Marcador letras/Palabras

@@ -15,9 +15,14 @@ Añadir captura de gestos en movimiento
 Pasos:
 	- Logica de reconocimiento en movimiento [OK]
 	- Aumentar parametros de los gestos [Tipo y Transcripcion] [OK]
-	- Persistencia, añadir nuevos parametros
+	- Persistencia, añadir nuevos parametros [OK]
 	- Gestos actuales, añadir valores para Tipo y Transcripcion
 	- Crear Boton captura gestos inicio y gestos final.
+	
+TODO
+	- Arreglar guardado
+	- Arreglar captura y reconocimiento (panel)
+	- 
 
 Escribir en el chat
 	- Marcador letras/Palabras

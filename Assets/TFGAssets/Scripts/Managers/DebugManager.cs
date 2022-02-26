@@ -37,9 +37,13 @@ public class DebugManager : MonoBehaviour
     [SerializeField]
     private TextMeshPro textoChat;
     [SerializeField]
+    private TextMeshPro textoPersistencia;
+
+    // TEXTO QUE VE EL JUGADOR
+    [SerializeField]
     private TextMeshPro textoChatGUI;
     [SerializeField]
-    private TextMeshPro textoPersistencia;
+    private TextMeshPro textoRecogGUI;
 
     // Colas de texto
     private Queue<string> debugTextQueue;
@@ -50,14 +54,23 @@ public class DebugManager : MonoBehaviour
     private List<string> persistLog;
 
     // Activadores de debugs
+    // Debug General
     public bool updateDebug  = true;
+    public bool saveDebug = false;
+    // Reconocimiento de gestos de la DB 
     public bool updateRecog  = true;
-    public bool updateRecord = true;
+    public bool saveRecog = false;
+    // Captura de nuevos gestos
+    public bool updateCapture = true;
+    public bool saveCapture = false;
+    // Chat
     public bool updateChat   = true;
+    public bool saveChat = false;
+    // Debug Huesos de la mano
     public bool updateBones  = false;
     
     // Parametros de paneles
-    public int debugTextMaxLines = 40;
+    public int debugTextMaxLines = 35;
     public int chatTextMaxLines = 5;
     public int persistTextMaxLines = 10;
     private int debugTextIndex = 0;
@@ -86,23 +99,33 @@ public class DebugManager : MonoBehaviour
         enqueueChatText("Session: " + nowTime);
     }
 
-    /////////////////////////////////////////
-    ///  GESTION DEL PERSITENCIA          ///
-    /////////////////////////////////////////
-    
     /// <summary>
     /// Metodo que llama a la persistencia para guardar los archivos de log con los datos almacenados en el debug y chat.
     /// </summary>
     private void saveLogs()
     {
-        Debug.Log("saveLogs() - Guardando archivos de Debug.");
-        persistenceManager.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-debugLog.xml", debugLog);
-        Debug.Log("saveLogs() - Guardando archivos de Chat.");
-        persistenceManager.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-chatLog.xml", chatLog);
+        if (saveDebug)
+        { 
+            Debug.Log("saveLogs() - Guardando archivos de Debug.");
+            persistenceManager.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-debugLog.xml", debugLog);
+        }
+
+        if (saveChat)
+        { 
+            Debug.Log("saveLogs() - Guardando archivos de Chat.");
+            persistenceManager.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-chatLog.xml", chatLog);
+        }
+
+        
         // No guardamos por que sino estaríamos haciendo un bucle ciclico que guarda lo guardado y intenta guardar los nuevos mensajes de guardado ad infinitum.
+        //if (save
         //Debug.Log("saveLogs() - Guardando archivos de Persistencia.");
         //persistenceManager.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-persistLog.xml", persistLog);
     }
+
+    /////////////////////////////////////////
+    ///  MENSAJES DE PERSITENCIA          ///
+    /////////////////////////////////////////
 
     /// <summary>
     /// Encola un nuevo mensaje en la cola manteniendo un limite de líneas y manda imprimir
@@ -145,9 +168,8 @@ public class DebugManager : MonoBehaviour
         }
     }
 
-
     /////////////////////////////////////////
-    ///  GESTION DEL CHAT                 ///
+    ///  MENSAJES DEL CHAT                ///
     /////////////////////////////////////////
 
     /// <summary>
@@ -201,12 +223,13 @@ public class DebugManager : MonoBehaviour
             }
             index++;
         }
-        saveLogs();
+
+        if (saveChat) saveLogs();
     }
 
-    /////////////////////////////////////////
-    ///  GESTION DEL DEBUG                ///
-    /////////////////////////////////////////
+    /////////////////////////////////////
+    ///  MENSAJES DEBUG               ///
+    /////////////////////////////////////
 
     /// <summary>
     /// Encola un nuevo mensaje en la cola manteniendo un limite de líneas y manda imprimir
@@ -262,7 +285,7 @@ public class DebugManager : MonoBehaviour
             }
 
             textoDebug.text = newText;
-            saveLogs();
+            if (saveDebug) saveLogs();
         }
         else
         {
@@ -270,18 +293,27 @@ public class DebugManager : MonoBehaviour
         }
     }
 
+    /////////////////////////////////////
+    ///  MENSAJES CAPTURA GESTOS      ///
+    /////////////////////////////////////
+
     /// <summary>
     /// Panel de reconocimiento
     /// </summary>
     /// <param name="newText"></param>
-    public void setRecordPanel(string newText)
+    public void setCapturePanel(string newText)
     {
         textoGuardarGesto.text = newText;
     }
-    public void appendRecordPanel(string nextText)
+
+    public void appendCapturePanel(string nextText)
     {
         textoGuardarGesto.text = textoGuardarGesto.text + "\n" + nextText;
     }
+
+    /////////////////////////////////////
+    ///  MENSAJES RECONOCIMIENTO      ///
+    /////////////////////////////////////
 
     /// <summary>
     /// Panel De reconocimiento
@@ -293,7 +325,7 @@ public class DebugManager : MonoBehaviour
     }
 
     /////////////////////////////////////////
-    ///  GESTION DE LOS HUESOS            ///
+    ///  MENSAJES DE LOS HUESOS           ///
     /////////////////////////////////////////
     public void updateBonePanels()
     {
@@ -332,4 +364,16 @@ public class DebugManager : MonoBehaviour
         }
     }
 
+
+    /////////////////////////////////////////
+    ///  GUI RECONOCIMIENTO JUGADOR       ///
+    /////////////////////////////////////////
+    /// <summary>
+    /// Panel De reconocimiento
+    /// </summary>
+    /// <param name="newText"></param>
+    public void setRecogGUIText(string newText)
+    {
+        textoRecogGUI.text = newText;
+    }
 }
