@@ -191,7 +191,7 @@ public class RecordButton : MonoBehaviour
          
             if (!gestureRecorded)
             {
-                _debugManager.enqueuePersistenceText("RecordButton::runLogicOnButtonPush() - Llamando a GR.SaveGesture()");
+                _debugManager.EnqueuePersistenceText("RecordButton::runLogicOnButtonPush() - Llamando a GR.SaveGesture()");
                 GR.SaveGesture(handSelector, phase, category, simpleTranscription, composedTranscription, gestureName);
                 gestureRecorded = true;
             }

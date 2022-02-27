@@ -44,11 +44,14 @@ public class DebugManager : MonoBehaviour
     private TextMeshPro textoChatGUI;
     [SerializeField]
     private TextMeshPro textoRecogGUI;
+    [SerializeField]
+    private TextMeshPro chatBufferGUI;
 
     // Colas de texto
     private Queue<string> debugTextQueue;
     private List<string> debugLog;
     private Queue<string> chatTextQueue;
+    private string chatBuffer;
     private List<string> chatLog;
     private Queue<string> persistTextQueue;
     private List<string> persistLog;
@@ -95,14 +98,17 @@ public class DebugManager : MonoBehaviour
         // First message.
         string nowTime = DateTime.Now.ToString();
         sessionStart = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-        enqueueDebugText("Session: " + nowTime);
-        enqueueChatText("Session: " + nowTime);
+        EnqueueDebugText("Session: " + nowTime);
+        EnqueueChatText("Session: " + nowTime);
+
+        // Chat Buffer
+        chatBuffer = "";
     }
 
     /// <summary>
     /// Metodo que llama a la persistencia para guardar los archivos de log con los datos almacenados en el debug y chat.
     /// </summary>
-    private void saveLogs()
+    private void SaveLogs()
     {
         if (saveDebug)
         { 
@@ -132,7 +138,7 @@ public class DebugManager : MonoBehaviour
     /// el texto en el panel correspondiente de la escena.
     /// </summary>
     /// <param name="line"></param>
-    public void enqueuePersistenceText(string line)
+    public void EnqueuePersistenceText(string line)
     {
         Debug.Log("enqueuePersistenceText() - Encolando texto: " + line);
         persistTextIndex++;
@@ -146,13 +152,13 @@ public class DebugManager : MonoBehaviour
             persistTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
         }
 
-        updatePersistPanel();
+        UpdatePersistPanel();
     }
 
     /// <summary>
     /// Actualiza el texto del panel de persistencia en la escena.
     /// </summary>
-    public void updatePersistPanel()
+    public void UpdatePersistPanel()
     {
         Debug.Log("Actualizando panel Persistencia.");
         int index = 0;
@@ -177,7 +183,7 @@ public class DebugManager : MonoBehaviour
     /// el texto en el panel correspondiente de la escena.
     /// </summary>
     /// <param name="line"></param>
-    public void enqueueChatText(string line)
+    public void EnqueueChatText(string line)
     {
         if (updateChat)
         {
@@ -193,7 +199,7 @@ public class DebugManager : MonoBehaviour
                 chatTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
             }
 
-            updateChatPanel();
+            UpdateChatPanel();
         }
         else
             Debug.Log("Update Chat Panel is deactivated.");
@@ -202,7 +208,7 @@ public class DebugManager : MonoBehaviour
     /// <summary>
     /// Actualiza el texto del panel de chat en la escena.
     /// </summary>
-    public void updateChatPanel()
+    public void UpdateChatPanel()
     {
         Debug.Log("Actualizando panel Chat.");
         int index = 0;
@@ -224,7 +230,7 @@ public class DebugManager : MonoBehaviour
             index++;
         }
 
-        if (saveChat) saveLogs();
+        if (saveChat) SaveLogs();
     }
 
     /////////////////////////////////////
@@ -236,7 +242,7 @@ public class DebugManager : MonoBehaviour
     /// el texto en el panel correspondiente de la escena.
     /// </summary>
     /// <param name="line"></param>
-    public void enqueueDebugText(string line)
+    public void EnqueueDebugText(string line)
     {
         if (updateDebug)
         {
@@ -254,7 +260,7 @@ public class DebugManager : MonoBehaviour
             }
 
             // Mandamos imprimir
-            updateDebugPanel();
+            UpdateDebugPanel();
         }
         else
         {
@@ -265,7 +271,7 @@ public class DebugManager : MonoBehaviour
     /// <summary>
     /// Actualiza el texto del panel de debug en la escena.
     /// </summary>
-    public void updateDebugPanel()
+    public void UpdateDebugPanel()
     {
         if (updateDebug)
         {
@@ -285,7 +291,7 @@ public class DebugManager : MonoBehaviour
             }
 
             textoDebug.text = newText;
-            if (saveDebug) saveLogs();
+            if (saveDebug) SaveLogs();
         }
         else
         {
@@ -301,12 +307,12 @@ public class DebugManager : MonoBehaviour
     /// Panel de reconocimiento
     /// </summary>
     /// <param name="newText"></param>
-    public void setCapturePanel(string newText)
+    public void SetCapturePanel(string newText)
     {
         textoGuardarGesto.text = newText;
     }
 
-    public void appendCapturePanel(string nextText)
+    public void AppendCapturePanel(string nextText)
     {
         textoGuardarGesto.text = textoGuardarGesto.text + "\n" + nextText;
     }
@@ -319,7 +325,7 @@ public class DebugManager : MonoBehaviour
     /// Panel De reconocimiento
     /// </summary>
     /// <param name="newText"></param>
-    public void setRecogText(string newText)
+    public void SetRecogText(string newText)
     {
         textoRecog.text = newText;
     }
@@ -327,7 +333,7 @@ public class DebugManager : MonoBehaviour
     /////////////////////////////////////////
     ///  MENSAJES DE LOS HUESOS           ///
     /////////////////////////////////////////
-    public void updateBonePanels()
+    public void UpdateBonePanels()
     {
         if (updateBones)
         {
@@ -364,7 +370,6 @@ public class DebugManager : MonoBehaviour
         }
     }
 
-
     /////////////////////////////////////////
     ///  GUI RECONOCIMIENTO JUGADOR       ///
     /////////////////////////////////////////
@@ -372,8 +377,96 @@ public class DebugManager : MonoBehaviour
     /// Panel De reconocimiento
     /// </summary>
     /// <param name="newText"></param>
-    public void setRecogGUIText(string newText)
+    public void SetRecogGUIText(string newText)
     {
         textoRecogGUI.text = newText;
+    }
+
+    /////////////////////////////////////////
+    ///  GUI RECONOCIMIENTO JUGADOR       ///
+    /////////////////////////////////////////
+
+    /// <summary>
+    /// Agrega un texto al buffer de chat.
+    /// El parametro addSpace permite añadir un espacio entre el texto existente
+    /// en el buffer y el que se quiere agregar.
+    /// </summary>
+    /// <param name="txtToAppend"></param>
+    /// <param name="addSpace"></param>
+    public void AppendChatBuffer(string txtToAppend, bool addSpace = false)
+    {
+        // Concatenamos el nuevo texto al buffer
+        if (addSpace)
+        {
+            chatBuffer = chatBuffer + " ";
+            chatBuffer = String.Concat(chatBuffer, txtToAppend);
+        }
+        else
+        {
+            chatBuffer = String.Concat(chatBuffer, txtToAppend);
+        }
+        
+        // Actualizamos el texto del GUI
+        chatBufferGUI.text = chatBuffer;
+    }
+
+    public void ClearChatBuffer()
+    {
+        // Vaciamos el Buffer
+        chatBuffer = "";
+        // Actualizamos el texto del GUI
+        chatBufferGUI.text = chatBuffer;
+    }
+
+    /// <summary>
+    /// Elimina el último caracter de la cadena de texto.
+    /// 
+    /// ESTO VA CARACTER A CARACTER
+    /// CONSIDERAR HACER UNA LISTA DE STRINGS COMO CHAT BUFFER
+    /// PARA PODER ELIMINAR PALABRAS COMPLETAS CON EL BACKSPACE
+    /// FINALMENTE UNIFICAR LA LISTA EN UN STRING AL RECIBIR
+    /// COMMANDO SEND
+    /// 
+    /// </summary>
+    public void BackspaceOnBuffer()
+    {
+        string textEdited = "";
+
+        // Eliminamos el último caracter
+        if (chatBuffer.Length > 1)
+        {
+            textEdited = chatBuffer.Remove(chatBuffer.Length - 1);
+        }
+        else
+        { 
+            textEdited = "";
+        }
+
+        Debug.Log("Original text: (" + chatBuffer + ")");
+        Debug.Log("Text edited: (" + textEdited + ")");
+        EnqueueDebugText("BACKSPACE - Original text: (" + chatBuffer + ")");
+        EnqueueDebugText("BACKSPACE - Edited text: (" + textEdited + ")");
+
+        chatBuffer = textEdited;
+
+        // Actualizamos el texto del GUI
+        chatBufferGUI.text = chatBuffer;
+    }
+
+
+    /////////////////////////////////////////
+    ///          COMANDOS DE CHAT         ///
+    /////////////////////////////////////////
+    public void OnSendCommand()
+    {
+        // Mandamos el texto del buffer al chat
+        chatTextQueue.Enqueue(chatBuffer);
+        // Actualizamos la ventana de chat
+        UpdateChatPanel();
+
+        // Vaciamos el buffer
+        chatBuffer = "";
+        // Actualizamos el bufferGUI
+        chatBufferGUI.text = chatBuffer;
     }
 }
