@@ -81,13 +81,18 @@ public struct Gesture
     public UnityEvent onRecognized;            // Callback
     public handUsage usedHand;
     public gestureCategory gCategory;
-    public List<gesturePhase> gPhases;           // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
+    public List<gesturePhase> gPhases;         // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
     public string singleTranscription;         // La transcripción de la componente simple del gesto.
     public List<string> composedTranscription; // Un gesto compuesto puede interpretarse de varias formas (yo, mi). Al inicio del proyecto solo usaremos la primera transcripción.
 };
 
 public class GestureRecognizer : MonoBehaviour
 {
+    [SerializeField]
+    private OVRHand LeftHand;
+    [SerializeField]
+    private OVRHand RightHand;
+
     // Referencias Externas
     [SerializeField]
     private OVRSkeleton RHskeleton; // Esqueleto de la mano OVRRightHand
@@ -554,11 +559,15 @@ public class GestureRecognizer : MonoBehaviour
             else
             {
                 bool handNotUsed = !(gesture.usedHand == handUsage.LEFT_HAND_ONLY || gesture.usedHand == handUsage.BOTH_HANDS);
-                if (LHskeleton.Bones.Count == 0)
-                    Debug.Log("No Skeleton Found.");
-                if (handNotUsed)
-                    Debug.Log("hand not used in this gesture.");
-                Debug.Log("LEFT Hand Discarded.");
+
+                if (displayInDebug)
+                { 
+                    if (LHskeleton.Bones.Count == 0)
+                        Debug.Log("No Skeleton Found.");
+                    if (handNotUsed)
+                        Debug.Log("hand not used in this gesture.");
+                    Debug.Log("LEFT Hand Discarded.");
+                }
                 isDiscardedLH = true;
             }
 
@@ -764,6 +773,7 @@ public class GestureRecognizer : MonoBehaviour
         // Si el stack de gestos esta vacío, añadimos el gesto reconocido al stack esperando al siguiente ciclo para ser validada y volvemos.
         if (recogGestStack.Count == 0)
         {
+            debugManager.EnqueueDebugText("ProcessBeginGesture() Stack vacío, pusheando gesto inicial al stack.");
             // Informamos del procesado
             OnProcessed(recognizedGesture);
             // Metemos en la pila
@@ -781,6 +791,7 @@ public class GestureRecognizer : MonoBehaviour
         // ¿El gesto previo reconocido era puramente simple o puramente compuesto?
         if (isPreviousPurelySimple || isPreviousPurelyComposed)
         {
+            debugManager.EnqueueDebugText("ProcessBeginGesture() Gesto previo era puro simple o puro compuesto.");
             // Si el gesto previo es puramente simple, fue procesado directamente en el anterior ciclo.
             // Si el gesto previo es puramente compuesto, o era un END ya procesado, o era un BEGIN que no ha sido validado.
             // En ambos casos podemos eliminarlo de la pila como un descarte.
@@ -796,7 +807,7 @@ public class GestureRecognizer : MonoBehaviour
         else 
         {
             // Si el gesto anterior tenía una componente simple además de la compuesta, esta esperando a ser validada.
-            
+            debugManager.EnqueueDebugText("ProcessBeginGesture() Gesto previo tenía componente simple.");
             // Como el nuevo gesto no valida la componente compuesta del gesto anterior,
             // pero este gesto anterior tiene un componente simple, debemos mostrar el
             // gesto simple detectado anteriormente.
@@ -818,6 +829,8 @@ public class GestureRecognizer : MonoBehaviour
     private void ProcessEndGesture(Gesture recognizedGesture)
     {
         if (slowCaptureMode) debugManager.EnqueueDebugText("ProcessEndGesture()");
+
+        
         // Si el stack de gestos esta vacío, el gesto actual compuesto no puede validarse.
         // Si tiene una componente simple, se valida con esta.
         // Si no tiene una componente simple, se devuelve un gesto No Reconocido.
@@ -825,6 +838,7 @@ public class GestureRecognizer : MonoBehaviour
         {
             if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
             {
+                debugManager.EnqueueDebugText("ProcessEndGesture() Stack vacío y gesto compuesto con componente simple.");
                 // Es importante tener en cuenta que aunque devolvamos el GESTURE_END como reconocido
                 // el método OnRecognition() no lo dará por bueno si no existen en la pila de gestos
                 // tanto el GESTURE_BEGIN como el GESTURE_END.
@@ -833,6 +847,7 @@ public class GestureRecognizer : MonoBehaviour
             }
             else
             {
+                debugManager.EnqueueDebugText("ProcessEndGesture() Stack vacío, descartamos gesto.");
                 // Solo informamos del gesto reconocido.
                 OnProcessed(recognizedGesture);
             }
@@ -846,9 +861,19 @@ public class GestureRecognizer : MonoBehaviour
         // ¿Este caso se puede dar? ¿Encolamos gestos puramente simples?
         if (isPreviousPurelySimple)
         {
+            debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo puramente simple. Descartando gesto END.");
             // Si el gesto anterior era puramente Simple, ya ha sido procesado
             // Podemos eliminarlo del stack.
             recogGestStack.Pop();
+
+            // Si el gesto actual GESTURE_END tiene componente simple
+            if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
+            {
+                debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo simple ya procesado."); 
+                debugManager.EnqueueDebugText("ProcessEndGesture() Gesto actual con componente Simple. Validando simple.");
+                // Lo validamos
+                ValidateAsSimple(recognizedGesture);
+            }
 
             // el gesto actual de tipo END no puede validarse y se descarta.
         }
@@ -858,12 +883,16 @@ public class GestureRecognizer : MonoBehaviour
             // Si el gesto anterior corresponde al mismo signo
             if (PreviousGestureInStack.composedTranscription[0] == recognizedGesture.composedTranscription[0])
             {
+                debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo del mismo SIGNO que el actual.");
                 // Y el gesto anterior corresponde al inicio del signo
                 if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_BEGIN))
                 {
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo es la componente BEGIN del Gesto actual.");
+
                     // Añadimos el gesto END a la pila despues del BEGIN
                     recogGestStack.Push(recognizedGesture);
 
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Validando gesto en su componente compuesta.");
                     // Y lo devolvemos como reconocido
                     ValidateAsComposed(recognizedGesture);
                 }
@@ -872,10 +901,12 @@ public class GestureRecognizer : MonoBehaviour
                 {
                     // Eliminamos el gesto anterior de la pila.
                     recogGestStack.Pop();
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo no es de la componente Begin.");
 
                     // Si el anterior tiene componente simple lo validamos.
                     if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                     {
+                        debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo tiene componente simple, validando.");
                         // Lo validamos
                         ValidateAsSimple(PreviousGestureInStack);
                     }
@@ -883,21 +914,28 @@ public class GestureRecognizer : MonoBehaviour
                     // Si el gesto actual GESTURE_END tiene componente simple
                     if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                     {
+                        debugManager.EnqueueDebugText("ProcessEndGesture() Gesto actual tiene componente simple, validando.");
                         // Lo validamos
                         ValidateAsSimple(recognizedGesture);
                     }
+                    else
+                    {
+                        debugManager.EnqueueDebugText("ProcessEndGesture() Descartamos gesto actual.");
+                        // Si no tiene componente simple, simplemente no pasa a la fase de validación.
+                    }
 
-                    // Si no tiene componente simple, simplemente no pasa a la fase de validación.
                 }
             }
             else
             {
+                debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo corresponde a otro SIGNO.");
                 // Eliminamos el gesto anterior de la pila.
                 recogGestStack.Pop();
 
                 // Si el anterior tiene componente simple lo validamos.
                 if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                 {
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo tiene componente simple. Validando.");
                     // Lo validamos
                     ValidateAsSimple(PreviousGestureInStack);
                 }
@@ -905,6 +943,7 @@ public class GestureRecognizer : MonoBehaviour
                 // Si el gesto actual GESTURE_END tiene componente simple
                 if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                 {
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Gesto actual tiene componente simple. Validando (Ya que es un end).");
                     // Lo validamos
                     ValidateAsSimple(recognizedGesture);
                 }
@@ -983,6 +1022,7 @@ public class GestureRecognizer : MonoBehaviour
 
     private void ValidateCommand(Gesture RecognizedCommandGesture)
     {
+        debugManager.EnqueueDebugText("ValidateCommand() : " + RecognizedCommandGesture.gestureName);
         // Actualizar RecogGUI Jugador
         debugManager.SetRecogGUIText(RecognizedCommandGesture.gestureName);
 
@@ -1001,7 +1041,7 @@ public class GestureRecognizer : MonoBehaviour
                 case "SPACE":
                     if (lastCommand != "SPACE")
                     { 
-                        debugManager.AppendChatBuffer(" ");
+                        debugManager.AppendChatBuffer(RecognizedCommandGesture.singleTranscription);
                         lastCommand = "SPACE";
                     }
                     break;
@@ -1021,6 +1061,7 @@ public class GestureRecognizer : MonoBehaviour
     /// <param name="RecognizedSimpleGesture"></param>
     private void ValidateAsSimple(Gesture RecognizedSimpleGesture)
     {
+        debugManager.EnqueueDebugText("ValidateAsSimple() : " + RecognizedSimpleGesture.gestureName);
         // Si el anterior NO es el mismo gesto ni tiene la misma transcripción simple.
         if (!RecognizedSimpleGesture.Equals(previousValidatedGesture) && RecognizedSimpleGesture.singleTranscription != previousValidatedGesture.singleTranscription)
         {
@@ -1036,8 +1077,13 @@ public class GestureRecognizer : MonoBehaviour
 
             // Actualizar RecogGUI Jugador
             debugManager.SetRecogGUIText(RecognizedSimpleGesture.gestureName);
+            
             // Añadir la transcripción del gesto a la ventana del buffer
-            debugManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription);
+            // Si es una palabra, añadir un espacio.
+            if (RecognizedSimpleGesture.gCategory == gestureCategory.GESTURE_WORD)
+                debugManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription, true); // add space
+            else
+                debugManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription, false);
         }
     }
 
@@ -1047,6 +1093,7 @@ public class GestureRecognizer : MonoBehaviour
     /// <param name="RecognizedComposedGesture"></param>
     private void ValidateAsComposed(Gesture RecognizedComposedGesture)
     {
+        debugManager.EnqueueDebugText("ValidateAsComposed() : " + RecognizedComposedGesture.gestureName);
         if (!RecognizedComposedGesture.Equals(previousValidatedGesture))
         {
             // New Gesture
@@ -1062,8 +1109,15 @@ public class GestureRecognizer : MonoBehaviour
 
             // Añadir la transcripción del gesto a la ventana de input
             debugManager.SetRecogGUIText(RecognizedComposedGesture.gestureName);
+            
+
             // Añadir la transcripción del gesto a la ventana del buffer
-            debugManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], true);
+            // Si es una palabra, añadir un espacio.
+            if (RecognizedComposedGesture.gCategory == gestureCategory.GESTURE_WORD)
+                // Añadir la transcripción del gesto a la ventana del buffer
+                debugManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], true); // add space
+            else
+                debugManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], false);
         }
     }
 }

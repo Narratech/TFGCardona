@@ -4,6 +4,13 @@ using UnityEngine;
 using TMPro;
 using System;
 
+public enum eMessageSource
+{
+    DEBUG,
+    VOICE,
+    HAND_SIGN    
+}
+
 public class DebugManager : MonoBehaviour
 {
     // Referencias Externas
@@ -99,7 +106,7 @@ public class DebugManager : MonoBehaviour
         string nowTime = DateTime.Now.ToString();
         sessionStart = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
         EnqueueDebugText("Session: " + nowTime);
-        EnqueueChatText("Session: " + nowTime);
+        EnqueueChatText("Session: " + nowTime, eMessageSource.DEBUG);
 
         // Chat Buffer
         chatBuffer = "";
@@ -183,15 +190,30 @@ public class DebugManager : MonoBehaviour
     /// el texto en el panel correspondiente de la escena.
     /// </summary>
     /// <param name="line"></param>
-    public void EnqueueChatText(string line)
+    public void EnqueueChatText(string line, eMessageSource eTextSource)
     {
         if (updateChat)
         {
             Debug.Log("enqueueChatText() - Encolando texto: " + line);
             chatTextIndex++;
 
+            // Añadimos iconos
+            string textIntoChat;
+            if (eTextSource == eMessageSource.VOICE)
+            {
+                textIntoChat = "<sprite=\"IconosChat\" name=\"IconosChat_0\">" + line;
+            }
+            else if (eTextSource == eMessageSource.HAND_SIGN)
+            {
+                textIntoChat = "<sprite=\"IconosChat\" index=1> " + line;
+            }
+            else
+            {
+                textIntoChat = line;
+            }
+
             // Add line
-            chatTextQueue.Enqueue(line);
+            chatTextQueue.Enqueue(textIntoChat);
             chatLog.Add(chatTextIndex + ": " + line);
 
             if (chatTextQueue.Count > chatTextMaxLines)
@@ -398,8 +420,8 @@ public class DebugManager : MonoBehaviour
         // Concatenamos el nuevo texto al buffer
         if (addSpace)
         {
-            chatBuffer = chatBuffer + " ";
             chatBuffer = String.Concat(chatBuffer, txtToAppend);
+            chatBuffer = chatBuffer + "_";
         }
         else
         {
@@ -459,10 +481,16 @@ public class DebugManager : MonoBehaviour
     /////////////////////////////////////////
     public void OnSendCommand()
     {
+        // Sustituimos los "_" por espacios en blanco
+        string processedText = chatBuffer.Replace("_", " ");
+
+
+        EnqueueChatText(processedText, eMessageSource.HAND_SIGN);
+
         // Mandamos el texto del buffer al chat
-        chatTextQueue.Enqueue(chatBuffer);
+        // chatTextQueue.Enqueue(processedText);
         // Actualizamos la ventana de chat
-        UpdateChatPanel();
+        // UpdateChatPanel();
 
         // Vaciamos el buffer
         chatBuffer = "";

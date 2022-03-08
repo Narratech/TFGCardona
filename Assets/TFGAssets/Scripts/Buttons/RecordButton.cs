@@ -9,6 +9,12 @@ enum orientation
     VERTICAL
 }
 
+enum eButtonMode
+{ 
+    GESTURE_CAPTURE,
+    SEND_COMMAND
+}
+
 public class RecordButton : MonoBehaviour
 {
     // Behavior Selector
@@ -34,6 +40,9 @@ public class RecordButton : MonoBehaviour
     private DebugManager _debugManager;
     [SerializeField]
     private TextMeshPro guideText;
+
+    [SerializeField]
+    private eButtonMode onClickBehavior;
 
     // Configuración del boton
     public string gestureName;
@@ -67,6 +76,7 @@ public class RecordButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Inicializamos la posición
         if (orientation == orientation.VERTICAL)
             transform.localPosition = new Vector3(transform.localPosition.x, MaxLocalY, transform.localPosition.z);
         else if (orientation == orientation.HORIZONTAL)
@@ -80,7 +90,6 @@ public class RecordButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (orientation == orientation.VERTICAL)
         {
             buttonPressedPos.Set(transform.localPosition.x, MinLocalY, transform.localPosition.z);
@@ -113,28 +122,46 @@ public class RecordButton : MonoBehaviour
         }
         else if (orientation == orientation.HORIZONTAL)
         {
+            Debug.Log("MinLocalX: " + MinLocalX);
+            Debug.Log("MaxLocalY: " + MaxLocalX);
+
             buttonPressedPos.Set(MinLocalX, transform.localPosition.y, transform.localPosition.z);
             buttonUnpressedPos.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
 
+            Debug.Log("buttonPressedPos (" + buttonPressedPos + ")");
+            Debug.Log("buttonUnpressedPos (" + buttonUnpressedPos + ")");
+
             // Getting it back into normal position
-            if (!isBeingTouched && (transform.localPosition.x > MaxLocalX || transform.localPosition.x < MaxLocalX))
+            if (!isBeingTouched && (transform.localPosition.x < MaxLocalX))
             {
+                Debug.Log("Lerping to position");
                 transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUnpressedPos, Time.deltaTime); // * Smooth)
             }
-
-            if (!isClicked)
+            else if (!isBeingTouched && (transform.localPosition.x > MaxLocalX))
             {
+                Debug.Log("Setting position to max");
+                transform.localPosition.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
+            }
+            
+            // Si no esta clicado
+                if (!isClicked)
+            {
+                // Y su posición es menor a la mínima local
                 if (transform.localPosition.x < MinLocalX)
                 {
+                    Debug.Log("Is not clicked and pos (" + transform.localPosition.x + ") < MinLocalX: " + MinLocalX);
                     isClicked = true;
                     transform.localPosition = buttonPressedPos;
                     OnButtonDown();
                 }
             }
+            // Si esta clicado
             else
             {
-                if (transform.localPosition.x > MaxLocalX - 0.02f)
+                // Y su posición es MAYOR al máximo local
+                if (transform.localPosition.x > MaxLocalX)// - 0.02f)
                 {
+                    Debug.Log("Is clicked and pos > MinLocalX");
                     isClicked = false;
                     transform.localPosition = buttonUnpressedPos;
                     OnButtonUp();
@@ -144,8 +171,15 @@ public class RecordButton : MonoBehaviour
      
         if (isRunningLogic)
         {
-            // It's Clicked, so run logic.
-            runLogicOnButtonPush();
+            if (onClickBehavior == eButtonMode.GESTURE_CAPTURE)
+            { 
+                // It's Clicked, so run logic.
+                RunCaptureLogic();
+            }
+            else if (onClickBehavior == eButtonMode.SEND_COMMAND)
+            {
+                RunSendCommandLogic();
+            }
         }
     }
 
@@ -170,7 +204,7 @@ public class RecordButton : MonoBehaviour
         GetComponent<Collider>().isTrigger = false;
     }
 
-    void runLogicOnButtonPush()
+    void RunCaptureLogic()
     {
         // Acumulamos tiempo
         timeAcu += Time.deltaTime;
@@ -205,6 +239,26 @@ public class RecordButton : MonoBehaviour
             isRunningLogic = false;
             timeAcu = 0.0f;
         }
+    }
+
+    void RunSendCommandLogic() 
+    {
+        switch (gestureName)
+        { 
+            case "SEND":
+                _debugManager.OnSendCommand();
+                break;
+            case "CLEAR":
+                _debugManager.ClearChatBuffer();
+                break;
+            case "BACKSPACE":
+                _debugManager.BackspaceOnBuffer();
+                break;
+            default:
+                Debug.Log("RunSendCommandLogic(): Gesture name not recognized");
+                break;
+        }
+        isRunningLogic = false;
     }
 
     private void OnTriggerEnter(Collider other)
