@@ -8,7 +8,7 @@ public class V2T_TextObserver : MonoBehaviour
     [SerializeField]
     private TextMeshPro Voice2TextOutput;
     [SerializeField]
-    private DebugManager debugManager;
+    private TextManager textManager;
 
     private string lastText;
 
@@ -24,7 +24,7 @@ public class V2T_TextObserver : MonoBehaviour
         if (Voice2TextOutput.text != lastText)
         { 
             lastText = Voice2TextOutput.text;
-            debugManager.EnqueueChatText(lastText, eMessageSource.VOICE);
+            textManager.EnqueueChatText(lastText, eMessageSource.VOICE);
         }
     }
 }

@@ -1,0 +1,35 @@
+TFG-Cardona - HowTo-SetupNewScene.txt
+--------------------------------------------
+Create Empty Object named GestureManager
+	Add Gesture Manager Script to it
+Create Empty Object named TextManager
+	Add Debug Manager Script to it
+	Add Persistence Manager Reference to it (drag Persistence Object)
+	Add Hands Skeleton reference to it (drag OVRHands)
+	Add Texto Chat GUI reference to it (from Center Eye Anchor-> PlayerGUI->
+Create Empty Object named Persistencemanager
+	Add Persistence Script to it
+	Add Gesture Manager reference to Persistence Script
+	Add Text Manager reference to Persistence Script
+Create Empty Object named Voice2TextManager
+	Add Log Text
+	Add Result Text
+		-> Add V2T_Text Observer Script to it
+		-> Add Text manager reference (debug manager)
+	Add SpeechRecognitionSystem (SpeechRecognitionSystem/Prefabs/SpeechRecognitionSystem
+		Audio Recorder 	-> Microphone Index 0
+						-> Mic Ready SpeechRecognizer.OnDataProviderReady
+		Speech Recognizer 	-> Language Model Dir Path = SpeechRecognitionSystem/model/spanish
+							-> Añadir Result Text a Result Received, function TextMeshPro.text, Disable Mesh Renderer.
+							-> Añadir Log Text a Log Message Received
+Add OVRPlayerController from Oculus to the scene
+Add PlayerGUI Prefab as child of OVR CenterEyeAnchor
+Add OVRLeftHand and OVRRightHand to Left/RightHandAnchor (OVRHandPrefab)
+	Set in each hand this parameters to its scripts
+		- OVR Hand -> Hand Type: HandRight or HandLeft
+		- OVR Skeleton Renderer -> Skeleton Material Hands_striped
+		- OVR Mesh Renderer -> OVR Mesh -> OVRHandPrefab (OVR Mesh)
+							   OVR Skeleton	-> OVRHandPrefab (OVR Skeleton)
+		- Skinned Mesh Render -> Mesh -> hands:Lhand / Rhand
+							  -> Root Bone -> LeftHandAnchor(transform) /RightHandAnchor
+Add SpeechRecognitionSystem

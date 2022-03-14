@@ -6,7 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/TFGAssets/Scenes/Main_Scene.unity
+    path: Assets/TFGAssets/Scenes/HR_Gathering_Scene.unity
+    guid: c0ec5fba8b3073643b312141614d3b6e
+  - enabled: 1
+    path: Assets/TFGAssets/Scenes/Dev_Scene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 116d543c21e684843a2050d9a79b4f76, type: 2}
