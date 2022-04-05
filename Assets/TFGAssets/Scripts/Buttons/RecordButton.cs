@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-enum orientation
-{ 
-    HORIZONTAL,
-    VERTICAL
-}
-
 enum eButtonMode
 { 
     GESTURE_CAPTURE,
@@ -122,24 +116,24 @@ public class RecordButton : MonoBehaviour
         }
         else if (orientation == orientation.HORIZONTAL)
         {
-            Debug.Log("MinLocalX: " + MinLocalX);
-            Debug.Log("MaxLocalY: " + MaxLocalX);
+            //Debug.Log("MinLocalX: " + MinLocalX);
+            //Debug.Log("MaxLocalY: " + MaxLocalX);
 
             buttonPressedPos.Set(MinLocalX, transform.localPosition.y, transform.localPosition.z);
             buttonUnpressedPos.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
 
-            Debug.Log("buttonPressedPos (" + buttonPressedPos + ")");
-            Debug.Log("buttonUnpressedPos (" + buttonUnpressedPos + ")");
+            //Debug.Log("buttonPressedPos (" + buttonPressedPos + ")");
+            //Debug.Log("buttonUnpressedPos (" + buttonUnpressedPos + ")");
 
             // Getting it back into normal position
             if (!isBeingTouched && (transform.localPosition.x < MaxLocalX))
             {
-                Debug.Log("Lerping to position");
+                //Debug.Log("Lerping to position");
                 transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUnpressedPos, Time.deltaTime); // * Smooth)
             }
             else if (!isBeingTouched && (transform.localPosition.x > MaxLocalX))
             {
-                Debug.Log("Setting position to max");
+                //Debug.Log("Setting position to max");
                 transform.localPosition.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
             }
             
@@ -149,7 +143,7 @@ public class RecordButton : MonoBehaviour
                 // Y su posición es menor a la mínima local
                 if (transform.localPosition.x < MinLocalX)
                 {
-                    Debug.Log("Is not clicked and pos (" + transform.localPosition.x + ") < MinLocalX: " + MinLocalX);
+                    //Debug.Log("Is not clicked and pos (" + transform.localPosition.x + ") < MinLocalX: " + MinLocalX);
                     isClicked = true;
                     transform.localPosition = buttonPressedPos;
                     OnButtonDown();
@@ -161,7 +155,7 @@ public class RecordButton : MonoBehaviour
                 // Y su posición es MAYOR al máximo local
                 if (transform.localPosition.x > MaxLocalX)// - 0.02f)
                 {
-                    Debug.Log("Is clicked and pos > MinLocalX");
+                    //Debug.Log("Is clicked and pos > MinLocalX");
                     isClicked = false;
                     transform.localPosition = buttonUnpressedPos;
                     OnButtonUp();

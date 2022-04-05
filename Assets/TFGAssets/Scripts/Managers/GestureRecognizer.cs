@@ -134,13 +134,13 @@ public class GestureRecognizer : MonoBehaviour
     private string minNameFound = "";    // Nombre de gesto más parecido sin ser reconocido
 
     // CHAT
-    private string chatBuffer = "";
+    //private string chatBuffer = "";
     
     // Controladores de comandos
     // Sirve para el control del tiempo entre
     // comandos consecutivos del mismo tipo
     // desde el gesture recognizer.
-    private bool allowRepeatCommand = true;
+    //private bool allowRepeatCommand = true;
     private string lastCommand = "";
     private float timeFromLastCommand = 0.0f;
     private float timeBetweenSameCommand = 1.0f;

@@ -464,10 +464,10 @@ public class TextManager : MonoBehaviour
             textEdited = "";
         }
 
-        Debug.Log("Original text: (" + chatBuffer + ")");
-        Debug.Log("Text edited: (" + textEdited + ")");
-        EnqueueDebugText("BACKSPACE - Original text: (" + chatBuffer + ")");
-        EnqueueDebugText("BACKSPACE - Edited text: (" + textEdited + ")");
+        //Debug.Log("Original text: (" + chatBuffer + ")");
+        //Debug.Log("Text edited: (" + textEdited + ")");
+        //EnqueueDebugText("BACKSPACE - Original text: (" + chatBuffer + ")");
+        //EnqueueDebugText("BACKSPACE - Edited text: (" + textEdited + ")");
 
         chatBuffer = textEdited;
 
