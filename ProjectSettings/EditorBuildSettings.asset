@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/TFGAssets/Scenes/HR_Gathering_Scene.unity
     guid: c0ec5fba8b3073643b312141614d3b6e
   - enabled: 1

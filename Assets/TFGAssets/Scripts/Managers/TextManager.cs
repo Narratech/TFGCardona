@@ -32,13 +32,13 @@ public class TextManager : MonoBehaviour
     private List<OVRBone> RHfingerBones;
     private List<OVRBone> LHfingerBones;
 
-    // Textos para escena de captura
+    // Textos que se actualizan por ocmpleto
     [SerializeField]
     private TextMeshPro textoRecog;
     [SerializeField]
     private TextMeshPro textoGuardarGesto; // Record Panel
     
-    // Textos con colas de registro (Solo para escenas de debug) - OPCIONALES
+    // Textos con colas de registro
     [SerializeField]
     private TextMeshPro textoDebug;
     [SerializeField]
@@ -53,8 +53,6 @@ public class TextManager : MonoBehaviour
     private TextMeshPro textoRecogGUI;
     [SerializeField]
     private TextMeshPro chatBufferGUI;
-    [SerializeField]
-    private TextMeshPro topHeadTextField;
 
     // Colas de texto
     private Queue<string> debugTextQueue;
@@ -69,20 +67,17 @@ public class TextManager : MonoBehaviour
     // Debug General
     public bool updateDebug  = true;
     public bool saveDebug = false;
-    // Persistencia
-    public bool updatePersistence = false;
     // Reconocimiento de gestos de la DB 
-    //public bool updateRecog  = true;
-    //public bool saveRecog = false;
+    public bool updateRecog  = true;
+    public bool saveRecog = false;
     // Captura de nuevos gestos
-    //public bool updateCapture = true;
-    //public bool saveCapture = false;
-    // Chat (Actualizar panel)
-    public bool updateChatGUI = true;
-    public bool updateChatLog = true;
+    public bool updateCapture = true;
+    public bool saveCapture = false;
+    // Chat
+    public bool updateChat   = true;
     public bool saveChat = false;
-    // Debug Huesos de la mano (Actualizar panel)
-    public bool updateBones  = false; 
+    // Debug Huesos de la mano
+    public bool updateBones  = false;
     
     // Parametros de paneles
     public int debugTextMaxLines = 35;
@@ -113,11 +108,6 @@ public class TextManager : MonoBehaviour
         EnqueueDebugText("Session: " + nowTime);
         EnqueueChatText("Session: " + nowTime, eMessageSource.DEBUG);
 
-        // Control Nullptr
-        if (textoDebug == null) { updateDebug = false; saveDebug = false; }
-        if (textoChat == null) updateChatLog = false;
-        if (textoPersistencia == null) updatePersistence = false; 
-
         // Chat Buffer
         chatBuffer = "";
     }
@@ -127,17 +117,23 @@ public class TextManager : MonoBehaviour
     /// </summary>
     private void SaveLogs()
     {
-        if (saveDebug && debugLog != null)
+        if (saveDebug)
         { 
             Debug.Log("saveLogs() - Guardando archivos de Debug.");
             persistenceManager.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-debugLog.xml", debugLog);
         }
 
-        if (saveChat && chatLog != null)
+        if (saveChat)
         { 
             Debug.Log("saveLogs() - Guardando archivos de Chat.");
             persistenceManager.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-chatLog.xml", chatLog);
         }
+
+        
+        // No guardamos por que sino estaríamos haciendo un bucle ciclico que guarda lo guardado y intenta guardar los nuevos mensajes de guardado ad infinitum.
+        //if (save
+        //Debug.Log("saveLogs() - Guardando archivos de Persistencia.");
+        //persistenceManager.saveTextLog(Application.persistentDataPath + "/" + sessionStart + "-persistLog.xml", persistLog);
     }
 
     /////////////////////////////////////////
@@ -151,23 +147,19 @@ public class TextManager : MonoBehaviour
     /// <param name="line"></param>
     public void EnqueuePersistenceText(string line)
     {
-        if (updatePersistence)
-        { 
-            Debug.Log("enqueuePersistenceText() - Encolando texto: " + line);
-            persistTextIndex++;
+        Debug.Log("enqueuePersistenceText() - Encolando texto: " + line);
+        persistTextIndex++;
 
-            // Add line
-            persistTextQueue.Enqueue(line);
-            persistLog.Add(persistTextIndex + ": " + line);
+        // Add line
+        persistTextQueue.Enqueue(line);
+        persistLog.Add(persistTextIndex + ": " + line);
 
-            if (persistTextQueue.Count > persistTextMaxLines)
-            {
-                persistTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
-            }
-
-            if (textoPersistencia != null) UpdatePersistPanel();
-            else Debug.Log("No se ha establecido un panel para mostrar mensajes persistencia.");
+        if (persistTextQueue.Count > persistTextMaxLines)
+        {
+            persistTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
         }
+
+        UpdatePersistPanel();
     }
 
     /// <summary>
@@ -200,7 +192,7 @@ public class TextManager : MonoBehaviour
     /// <param name="line"></param>
     public void EnqueueChatText(string line, eMessageSource eTextSource)
     {
-        if (updateChatGUI)
+        if (updateChat)
         {
             Debug.Log("enqueueChatText() - Encolando texto: " + line);
             chatTextIndex++;
@@ -229,56 +221,38 @@ public class TextManager : MonoBehaviour
                 chatTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
             }
 
-            if (updateChatGUI) UpdateChatGUI();
-            if (updateChatLog) UpdateChatPanel(); // Optional object on scene.
+            UpdateChatPanel();
         }
         else
-            Debug.Log("Update Chat is deactivated.");
+            Debug.Log("Update Chat Panel is deactivated.");
     }
 
     /// <summary>
     /// Actualiza el texto del panel de chat en la escena.
     /// </summary>
-    public void UpdateChatGUI()
+    public void UpdateChatPanel()
     {
-        Debug.Log("Actualizando GUI Chat.");
+        Debug.Log("Actualizando panel Chat.");
         int index = 0;
+        textoChat.text = "";
         textoChatGUI.text = "";
 
         foreach (string line in chatTextQueue)
         {
             if (index < chatTextQueue.Count - 1)
             { 
+                textoChat.text += line + "\n";
                 textoChatGUI.text += line + "\n";
             }
             else
             { 
+                textoChat.text += line;
                 textoChatGUI.text += line;
             }
             index++;
         }
 
-        //if (saveChat) SaveLogs();
-    }
-
-    public void UpdateChatPanel()
-    {
-        Debug.Log("Actualizando panel Chat.");
-        int index = 0;
-        textoChat.text = "";
-
-        foreach (string line in chatTextQueue)
-        {
-            if (index < chatTextQueue.Count - 1)
-            {
-                textoChat.text += line + "\n";
-            }
-            else
-            {
-                textoChat.text += line;
-            }
-            index++;
-        }
+        if (saveChat) SaveLogs();
     }
 
     /////////////////////////////////////
@@ -308,8 +282,7 @@ public class TextManager : MonoBehaviour
             }
 
             // Mandamos imprimir
-            if (textoDebug != null) UpdateDebugPanel();
-            else Debug.Log("No se ha establecido un panel para mostrar mensajes debug.");
+            UpdateDebugPanel();
         }
         else
         {
@@ -340,7 +313,7 @@ public class TextManager : MonoBehaviour
             }
 
             textoDebug.text = newText;
-            //if (saveDebug) SaveLogs();
+            if (saveDebug) SaveLogs();
         }
         else
         {
@@ -358,18 +331,12 @@ public class TextManager : MonoBehaviour
     /// <param name="newText"></param>
     public void SetCapturePanel(string newText)
     {
-        if (textoGuardarGesto != null)
-            textoGuardarGesto.text = newText;
-        else
-            Debug.Log("No se ha establecido un panel para mostrar mensajes de captura de gestos.");
+        textoGuardarGesto.text = newText;
     }
 
     public void AppendCapturePanel(string nextText)
     {
-        if (textoGuardarGesto != null)
-            textoGuardarGesto.text = textoGuardarGesto.text + "\n" + nextText;
-        else
-            Debug.Log("No se ha establecido un panel para mostrar mensajes de captura de gestos.");
+        textoGuardarGesto.text = textoGuardarGesto.text + "\n" + nextText;
     }
 
     /////////////////////////////////////
@@ -382,10 +349,7 @@ public class TextManager : MonoBehaviour
     /// <param name="newText"></param>
     public void SetRecogText(string newText)
     {
-        if (textoRecog != null)
-            textoRecog.text = newText;
-        else
-            Debug.Log("No se ha establecido un panel para mostrar mensajes de reconocimiento de gestos.");
+        textoRecog.text = newText;
     }
 
     /////////////////////////////////////////
@@ -419,10 +383,8 @@ public class TextManager : MonoBehaviour
                 }
             }
 
-            if (RHDebugText != null) RHDebugText.text = RHtext;
-            else Debug.Log("No se ha establecido un panel para mostrar mensajes de los huesos de mano derecha.");
-            if (LHDebugText != null) LHDebugText.text = LHtext;
-            else Debug.Log("No se ha establecido un panel para mostrar mensajes de los huesos de mano izquierda.");
+            RHDebugText.text = RHtext;
+            LHDebugText.text = LHtext;
         }
         else 
         {
@@ -534,7 +496,5 @@ public class TextManager : MonoBehaviour
         chatBuffer = "";
         // Actualizamos el bufferGUI
         chatBufferGUI.text = chatBuffer;
-        // Actualizamos el texto sobre la cabeza de jugador.
-        topHeadTextField.text = chatBuffer;
     }
 }

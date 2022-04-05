@@ -349,7 +349,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: 
@@ -690,7 +690,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: LSE-RH-Hola-Begin
@@ -1011,7 +1011,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: 
@@ -2110,6 +2110,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505332098}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &538624127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 538624128}
+  m_Layer: 0
+  m_Name: Panels
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &538624128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538624127}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.826, z: -1.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 868370203}
+  - {fileID: 1506376070}
+  m_Father: {fileID: 1490394375}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &564720241
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,9 +2169,9 @@ Transform:
   m_LocalPosition: {x: 1.473, y: 3.758, z: -1.8495175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1503002023}
   - {fileID: 2000204835}
   - {fileID: 2122365182}
-  - {fileID: 1503002023}
   m_Father: {fileID: 1390306930}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2708,16 +2740,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644168191}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -1.325}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 53.250008}
+  m_LocalScale: {x: 10, y: 50, z: 3.3333325}
   m_Children: []
-  m_Father: {fileID: 1490394375}
+  m_Father: {fileID: 1506376070}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.272, y: 0.789}
+  m_AnchoredPosition: {x: -4.6100006, y: 0.011333048}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &644168193
@@ -4084,7 +4116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5802773769885215812, guid: 025ccf1046e1e3747b1b7ff7b65b6739, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5802773769885215814, guid: 025ccf1046e1e3747b1b7ff7b65b6739, type: 3}
       propertyPath: m_Pivot.x
@@ -4132,7 +4164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5802773769885215814, guid: 025ccf1046e1e3747b1b7ff7b65b6739, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.669
+      value: -1.462
       objectReference: {fileID: 0}
     - target: {fileID: 5802773769885215814, guid: 025ccf1046e1e3747b1b7ff7b65b6739, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4698,7 +4730,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: LSE-2H-Nombre-End
@@ -5095,13 +5127,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868370202}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.189, y: 1.477, z: -1.3284}
-  m_LocalScale: {x: 0.1, y: 0.3, z: 0.05}
+  m_LocalScale: {x: 0.1, y: 0.3, z: 0.050000004}
   m_Children:
   - {fileID: 459421252}
-  m_Father: {fileID: 1490394375}
-  m_RootOrder: 4
+  - {fileID: 1445255197}
+  m_Father: {fileID: 538624128}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!64 &868370204
 MeshCollider:
@@ -5387,15 +5420,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.149
+      value: -0.093
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.98
+      value: 1.137
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.482
+      value: -0.657
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5506,7 +5539,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: LSE-RH-YO
@@ -5966,7 +5999,7 @@ RectTransform:
   - {fileID: 1551921850}
   - {fileID: 1486482709}
   m_Father: {fileID: 1490394375}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6072,7 +6105,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: LSE-2H-Nombre-Begin
@@ -7244,7 +7277,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: LSE-RH-Hola-Begin
@@ -7530,8 +7563,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1390306930}
   - component: {fileID: 1390306931}
+  - component: {fileID: 1390306932}
   m_Layer: 0
-  m_Name: DebugManager
+  m_Name: TextManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7583,6 +7617,50 @@ MonoBehaviour:
   textoChatGUI: {fileID: 215628465}
   textoRecogGUI: {fileID: 78337892}
   chatBufferGUI: {fileID: 1767159430}
+  topHeadTextField: {fileID: 7001723379991263555}
+  debugLog: []
+  chatBuffer: 
+  chatLog: []
+  persistLog: []
+  showUpdateDebug: 1
+  showPersistenceDebug: 1
+  showBonesDebug: 0
+  showChatGUI: 1
+  showChatLogDebug: 1
+  saveDebug: 0
+  saveChat: 0
+  debugTextMaxLines: 40
+  chatTextMaxLines: 5
+  persistTextMaxLines: 5
+  debugTextIndex: 0
+  chatTextIndex: 0
+  persistTextIndex: 0
+  sessionStart: 
+--- !u!114 &1390306932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390306929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d595c91f762dee843b47cda8e78a6d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistenceManager: {fileID: 1572297039}
+  RHskeleton: {fileID: 1628573613}
+  LHskeleton: {fileID: 1516107172}
+  RHDebugText: {fileID: 1191725331}
+  LHDebugText: {fileID: 481667690}
+  textoRecog: {fileID: 1647477466}
+  textoGuardarGesto: {fileID: 1647477466}
+  textoDebug: {fileID: 1565854169}
+  textoChat: {fileID: 1303502024}
+  textoPersistencia: {fileID: 2122365183}
+  textoChatGUI: {fileID: 215628465}
+  textoRecogGUI: {fileID: 78337892}
+  chatBufferGUI: {fileID: 1767159430}
   updateDebug: 1
   saveDebug: 0
   updateRecog: 1
@@ -7592,9 +7670,9 @@ MonoBehaviour:
   updateChat: 1
   saveChat: 0
   updateBones: 0
-  debugTextMaxLines: 40
+  debugTextMaxLines: 35
   chatTextMaxLines: 5
-  persistTextMaxLines: 5
+  persistTextMaxLines: 10
 --- !u!1 &1445255196
 GameObject:
   m_ObjectHideFlags: 0
@@ -7621,16 +7699,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445255196}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -1.324}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 7.019999}
+  m_LocalScale: {x: 10, y: 20, z: 3.3333325}
   m_Children: []
-  m_Father: {fileID: 1490394375}
+  m_Father: {fileID: 868370203}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.659, y: 1.126}
+  m_AnchoredPosition: {x: 4.7000003, y: 0.014666557}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1445255198
@@ -7779,7 +7857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Voice2TextOutput: {fileID: 1445255198}
-  debugManager: {fileID: 1390306931}
+  textManager: {fileID: 1390306932}
 --- !u!1 &1486482708
 GameObject:
   m_ObjectHideFlags: 0
@@ -7886,12 +7964,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 644168192}
-  - {fileID: 1445255197}
   - {fileID: 1124144843}
+  - {fileID: 538624128}
   - {fileID: 685667541}
-  - {fileID: 868370203}
-  - {fileID: 1506376070}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7926,7 +8001,7 @@ Transform:
   m_LocalScale: {x: 0.10000001, y: 0.05, z: 0.07}
   m_Children: []
   m_Father: {fileID: 564720242}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
 --- !u!64 &1503002024
 MeshCollider:
@@ -8113,12 +8188,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506376069}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.189, y: 1.854, z: -1.3284}
-  m_LocalScale: {x: 0.1, y: 0.3, z: 0.02}
-  m_Children: []
-  m_Father: {fileID: 1490394375}
-  m_RootOrder: 5
+  m_LocalScale: {x: 0.1, y: 0.3, z: 0.019999998}
+  m_Children:
+  - {fileID: 644168192}
+  m_Father: {fileID: 538624128}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!64 &1506376071
 MeshCollider:
@@ -8569,7 +8645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 1390306932}
   debugMode: 1
 --- !u!4 &1572297040
 Transform:
@@ -8870,7 +8946,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: 
@@ -11373,7 +11449,7 @@ RectTransform:
   m_LocalScale: {x: 0.05000002, y: 0.050000004, z: 0.05000001}
   m_Children: []
   m_Father: {fileID: 564720242}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11582,7 +11658,7 @@ MonoBehaviour:
   MinLocalY: 0.38
   MaxLocalY: 0.4
   GR: {fileID: 1693158253}
-  _debugManager: {fileID: 1390306931}
+  _debugManager: {fileID: 0}
   guideText: {fileID: 360976229}
   onClickBehavior: 0
   gestureName: CLEAR
@@ -12194,7 +12270,7 @@ RectTransform:
   m_LocalScale: {x: 0.050000016, y: 0.050000004, z: 0.050000004}
   m_Children: []
   m_Father: {fileID: 564720242}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -12248,8 +12324,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -12284,7 +12360,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.13084984, y: 2.791817, z: 0.12558937, w: -8.924403}
+  m_margin: {x: 0.20605469, y: 2.791817, z: 0.34804344, w: -8.924403}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -12393,7 +12469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2146134944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12514,17 +12590,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1954605210}
     - target: {fileID: 155575597750943153, guid: e762877436bd05d438e6e42da4484a55, type: 3}
+      propertyPath: textManager
+      value: 
+      objectReference: {fileID: 1390306931}
+    - target: {fileID: 155575597750943153, guid: e762877436bd05d438e6e42da4484a55, type: 3}
       propertyPath: _persistence
       value: 
       objectReference: {fileID: 1572297039}
     - target: {fileID: 155575597750943153, guid: e762877436bd05d438e6e42da4484a55, type: 3}
       propertyPath: debugManager
       value: 
-      objectReference: {fileID: 1390306931}
+      objectReference: {fileID: 1390306932}
     - target: {fileID: 155575597750943153, guid: e762877436bd05d438e6e42da4484a55, type: 3}
       propertyPath: ChatTextPanel
       value: 
       objectReference: {fileID: 215628465}
+    - target: {fileID: 155575597750943153, guid: e762877436bd05d438e6e42da4484a55, type: 3}
+      propertyPath: gestureCaptured
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 155575597750943159, guid: e762877436bd05d438e6e42da4484a55, type: 3}
       propertyPath: m_Name
       value: HandTrackManager
@@ -12588,3 +12672,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
+--- !u!114 &7001723379991263555 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5600886277545636329, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
+  m_PrefabInstance: {fileID: 7001723379991263554}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

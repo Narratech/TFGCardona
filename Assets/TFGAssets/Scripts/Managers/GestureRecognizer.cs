@@ -105,14 +105,9 @@ public class GestureRecognizer : MonoBehaviour
 
     // Gestores
     [SerializeField]
-    private TextManager textManager;
+    private TextManager debugManager;
     [SerializeField]
     private Persistence _persistence;
-
-    // Reconocimiento Signos
-    // Si es true, permitira la validación de Signos a texto.
-    // Si es false, omitira Signos y solo gestionará comandos.
-    private bool bRecognizeSigns;
 
     // Variables internas
     private Gesture previousProcessedGesture;
@@ -126,8 +121,8 @@ public class GestureRecognizer : MonoBehaviour
     public bool isRecognizing = false;
 
     // Timers
-    //[SerializeField]
-    //private TextMeshPro textoTimer;
+    [SerializeField]
+    private TextMeshPro textoTimer;
     private bool slowCaptureMode = false;
     private float timeAcu = 0.0f;
     private float timeBetweenRecognition = 5.0f; // 5 seconds
@@ -165,8 +160,8 @@ public class GestureRecognizer : MonoBehaviour
         }
 
         // Debug Manager
-        if (textManager == null) textManager = new TextManager();
-        textManager.Init();
+        if (debugManager == null) debugManager = new TextManager();
+        debugManager.Init();
         
         // Persistencia
         if (_persistence == null) _persistence = new Persistence();
@@ -194,7 +189,7 @@ public class GestureRecognizer : MonoBehaviour
         gesturesDB.AddRange(newList);
 
         // Debug
-        bool debugLoadedBones = false;
+        bool debugLoadedBones = true;
         if (debugLoadedBones)
         {
             Debug.Log("GestureRecognizer::setGestureList() Gestos en Manager: " + gesturesDB.Count);
@@ -237,8 +232,8 @@ public class GestureRecognizer : MonoBehaviour
         if (slowCaptureMode)
         {
             float nextIn = 6.0f - timeAcu;
-            // if (!isRecognizing) textoTimer.text = "Siguiente intento en: " + (int)nextIn + " seg.";
-            if (timeAcu > 3.5f) textManager.SetRecogText("");
+            if (!isRecognizing) textoTimer.text = "Siguiente intento en: " + (int)nextIn + " seg.";
+            if (timeAcu > 3.5f) debugManager.SetRecogText("");
         }
 
         // GESTURE RECOGNITION
@@ -250,8 +245,8 @@ public class GestureRecognizer : MonoBehaviour
             if (slowCaptureMode)
             { 
                 Debug.Log("Update() - Intentando reconocer gesto.");
-                textManager.EnqueueDebugText("-------------------------------------------");
-                textManager.EnqueueDebugText("Update() Intentando reconocer gesto actual.");
+                debugManager.EnqueueDebugText("-------------------------------------------");
+                debugManager.EnqueueDebugText("Update() Intentando reconocer gesto actual.");
             }
 
             // WORKFLOW DEL RECONOCIMIENTO GESTO
@@ -367,7 +362,7 @@ public class GestureRecognizer : MonoBehaviour
 
         // Guardamos en el archivo de persistencia el gesto capturado.
         Debug.Log("Llamando a guardar gesto.");
-        textManager.EnqueuePersistenceText("GestureRecognizer::SaveGesture() llamando a guardar gesto.");
+        debugManager.EnqueuePersistenceText("GestureRecognizer::SaveGesture() llamando a guardar gesto.");
         _persistence.SaveGesture(g);
     }
 
@@ -432,7 +427,7 @@ public class GestureRecognizer : MonoBehaviour
         {
             if (displayInDebug)
             { 
-                textManager.EnqueueDebugText("Recognize() Comparando con Gesto: " + gesture.gestureName);
+                debugManager.EnqueueDebugText("Recognize() Comparando con Gesto: " + gesture.gestureName);
                 Debug.Log("Recognize() Comparando con Gesto: " + gesture.gestureName);
             }
 
@@ -462,7 +457,7 @@ public class GestureRecognizer : MonoBehaviour
 
                     if (displayInDebug)
                     {
-                        textManager.EnqueueDebugText("Distancia Pos hueso RH " + gesture.RHBoneInfo[i].id + " : " + RHPosDistance);
+                        debugManager.EnqueueDebugText("Distancia Pos hueso RH " + gesture.RHBoneInfo[i].id + " : " + RHPosDistance);
                         Debug.Log("Captured RH Pos: " + currentRHData);
                         Debug.Log("Stored RH Pos: " + gesture.LHBoneInfo[i].position);
                     }
@@ -473,7 +468,7 @@ public class GestureRecognizer : MonoBehaviour
 
                     if (displayInDebug)
                     {
-                        textManager.EnqueueDebugText("Distancia Rot hueso RH " + gesture.RHBoneInfo[i].id + " : " + RHRotDistance);
+                        debugManager.EnqueueDebugText("Distancia Rot hueso RH " + gesture.RHBoneInfo[i].id + " : " + RHRotDistance);
                         Debug.Log("Captured RH Rot: " + currentRHRotData);
                         Debug.Log("Stored RH Rot: " + gesture.LHBoneInfo[i].rotation);
                     }
@@ -493,7 +488,7 @@ public class GestureRecognizer : MonoBehaviour
                         if (displayInDebug)
                         { 
                             Debug.Log("Distance too great, discarding hand.");
-                            textManager.EnqueueDebugText("Distancia demasiado grande (" + sumDistanceRH + "/" + threshold + "), descartando mano.");
+                            debugManager.EnqueueDebugText("Distancia demasiado grande (" + sumDistanceRH + "/" + threshold + "), descartando mano.");
                         }
 
                         break;
@@ -509,14 +504,14 @@ public class GestureRecognizer : MonoBehaviour
                 if (RHskeleton.Bones.Count == 0 && displayInDebug)
                 {
                     Debug.Log("No Skeleton Found.");
-                    textManager.EnqueueDebugText("Esqueleto de RH no encontrado. RH Descartada");
+                    debugManager.EnqueueDebugText("Esqueleto de RH no encontrado. RH Descartada");
                     Debug.Log("RIGHT Hand Discarded.");
                 }
 
                 if (handNotUsed && displayInDebug)
                 { 
                     Debug.Log("hand not used in this gesture.");
-                    textManager.EnqueueDebugText("Mano RH no usada en este gesto. RH Descartada");
+                    debugManager.EnqueueDebugText("Mano RH no usada en este gesto. RH Descartada");
                     Debug.Log("RIGHT Hand Discarded.");
                 }
 
@@ -536,7 +531,7 @@ public class GestureRecognizer : MonoBehaviour
 
                     if (displayInDebug)
                     {
-                        textManager.EnqueueDebugText("Distancia Pos hueso LH " + gesture.LHBoneInfo[i].id + " : " + LHPosDistance);
+                        debugManager.EnqueueDebugText("Distancia Pos hueso LH " + gesture.LHBoneInfo[i].id + " : " + LHPosDistance);
                         Debug.Log("Captured LH Pos: " + currentLHData);
                         Debug.Log("Stored LH Pos: " + gesture.LHBoneInfo[i].position);
                     }
@@ -547,7 +542,7 @@ public class GestureRecognizer : MonoBehaviour
 
                     if (displayInDebug)
                     {
-                        textManager.EnqueueDebugText("Distancia Rot hueso LH " + gesture.LHBoneInfo[i].id + " : " + LHRotDistance);
+                        debugManager.EnqueueDebugText("Distancia Rot hueso LH " + gesture.LHBoneInfo[i].id + " : " + LHRotDistance);
                         Debug.Log("Captured LH Rot: " + currentLHRotData);
                         Debug.Log("Stored LH Rot: " + gesture.LHBoneInfo[i].rotation);
                     }
@@ -581,15 +576,15 @@ public class GestureRecognizer : MonoBehaviour
             if (displayInDebug)
             {
                 Debug.Log("Distancia RH: " + sumDistanceRH);
-                textManager.EnqueueDebugText("Recognize() Distancia RH: " + sumDistanceRH);
-                //textManager.enqueueDebugText("Recognize() Distancia LH: " + sumDistanceLH);
+                debugManager.EnqueueDebugText("Recognize() Distancia RH: " + sumDistanceRH);
+                //debugManager.enqueueDebugText("Recognize() Distancia LH: " + sumDistanceLH);
             }
 
             if (gesture.usedHand == handUsage.BOTH_HANDS)
             {
                 if (!isDiscardedRH && !isDiscardedLH && sumDistanceRH < RHcurrentMin && sumDistanceLH < LHcurrentMin)
                 {
-                    if (displayInDebug) textManager.EnqueueDebugText("Recognize() Nuevo minimo encontrado con gesto: " + gesture.gestureName);
+                    if (displayInDebug) debugManager.EnqueueDebugText("Recognize() Nuevo minimo encontrado con gesto: " + gesture.gestureName);
                     RHcurrentMin = sumDistanceRH;
                     LHcurrentMin = sumDistanceLH;
                     currentGesture = gesture;
@@ -604,7 +599,7 @@ public class GestureRecognizer : MonoBehaviour
                 // establecemos este gesto almacenado como el gesto actual reconocido más cercano
                 if (!isDiscardedRH && sumDistanceRH < RHcurrentMin)
                 {
-                    if (displayInDebug) textManager.EnqueueDebugText("Recognize() Nuevo minimo encontrado con gesto: " + gesture.gestureName);
+                    if (displayInDebug) debugManager.EnqueueDebugText("Recognize() Nuevo minimo encontrado con gesto: " + gesture.gestureName);
                     RHcurrentMin = sumDistanceRH;
                     currentGesture = gesture;
                     recognizedDist = RHcurrentMin;
@@ -613,11 +608,11 @@ public class GestureRecognizer : MonoBehaviour
                 {
                     if (isDiscardedRH && displayInDebug)
                     {
-                        textManager.EnqueueDebugText("Recognize() RH Descartada para gesto: " + gesture.gestureName);
+                        debugManager.EnqueueDebugText("Recognize() RH Descartada para gesto: " + gesture.gestureName);
                     }
                     else if (sumDistanceRH >= RHcurrentMin && displayInDebug)
                     {
-                        textManager.EnqueueDebugText("Recognize() Suma distancias RH (" + sumDistanceRH + ") > minimo actual : " + RHcurrentMin);
+                        debugManager.EnqueueDebugText("Recognize() Suma distancias RH (" + sumDistanceRH + ") > minimo actual : " + RHcurrentMin);
                     }
                 }
             }
@@ -632,11 +627,11 @@ public class GestureRecognizer : MonoBehaviour
                 {
                     if (isDiscardedRH && displayInDebug)
                     {
-                        textManager.EnqueueDebugText("Recognize() LH Descartada para gesto : " + gesture.gestureName);
+                        debugManager.EnqueueDebugText("Recognize() LH Descartada para gesto : " + gesture.gestureName);
                     }
                     else if (sumDistanceRH >= RHcurrentMin && displayInDebug)
                     {
-                        textManager.EnqueueDebugText("Recognize() Suma distancias LH (" + sumDistanceLH + ") >= minimo actual : " + RHcurrentMin);
+                        debugManager.EnqueueDebugText("Recognize() Suma distancias LH (" + sumDistanceLH + ") >= minimo actual : " + RHcurrentMin);
                     }
                 }
             }
@@ -655,12 +650,12 @@ public class GestureRecognizer : MonoBehaviour
         // Finalmente mete en la pila el gesto.
         if (currentGesture.gestureName != "Unknown")
         {
-            if (slowCaptureMode) textManager.EnqueueDebugText("Recognize: Gesto candidato encontrado en Recognize. Llamando a procesado.");
+            if (slowCaptureMode) debugManager.EnqueueDebugText("Recognize: Gesto candidato encontrado en Recognize. Llamando a procesado.");
             ProcessRecognizedGesture(currentGesture);
         }
         else
         {
-            if (slowCaptureMode) textManager.EnqueueDebugText("Recognize: Gesto no reconocido.");
+            if (slowCaptureMode) debugManager.EnqueueDebugText("Recognize: Gesto no reconocido.");
             // Los gestos no procesados
             OnProcessed(currentGesture);
         }
@@ -690,7 +685,7 @@ public class GestureRecognizer : MonoBehaviour
             {
                 if (showDebugInfo && slowCaptureMode)
                 {
-                    textManager.EnqueueDebugText("ProcessRecognizedGesture() - Gesto reconocido solo tiene componente simple.");
+                    debugManager.EnqueueDebugText("ProcessRecognizedGesture() - Gesto reconocido solo tiene componente simple.");
                 }
                 ProcessSimpleGesture(recognizedGesture);
             }
@@ -702,14 +697,14 @@ public class GestureRecognizer : MonoBehaviour
                 if (showDebugInfo && slowCaptureMode) 
                 { 
                     Debug.Log("ProcessRecognizedGesture() - ERROR: Gesto Reconocido (" + recognizedGesture.gestureName + ") tiene componentes BEGIN y END. Revisar la DB y corregir.");
-                    textManager.EnqueueDebugText("ProcessRecognizedGesture() - ERROR: Gesto Reconocido (" + recognizedGesture.gestureName + ") tiene componentes BEGIN y END. Revisar la DB y corregir.");
+                    debugManager.EnqueueDebugText("ProcessRecognizedGesture() - ERROR: Gesto Reconocido (" + recognizedGesture.gestureName + ") tiene componentes BEGIN y END. Revisar la DB y corregir.");
                 } 
             }
             else if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_BEGIN))
             {
                 if (showDebugInfo && slowCaptureMode)
                 {
-                    textManager.EnqueueDebugText("ProcessRecognizedGesture() - Gesto reconocido tiene componente BEGIN.");
+                    debugManager.EnqueueDebugText("ProcessRecognizedGesture() - Gesto reconocido tiene componente BEGIN.");
                 }
                 // Comprobará si es valido, verá si hay algun gesto compuesto con componente simple esperando ser procesado
                 // y meterá el actual reconocido en la pila.
@@ -720,7 +715,7 @@ public class GestureRecognizer : MonoBehaviour
             {
                 if (showDebugInfo && slowCaptureMode)
                 {
-                    textManager.EnqueueDebugText("ProcessRecognizedGesture() - Gesto reconocido tiene componente END.");
+                    debugManager.EnqueueDebugText("ProcessRecognizedGesture() - Gesto reconocido tiene componente END.");
                 }
                 ProcessEndGesture(recognizedGesture);
             }
@@ -729,7 +724,7 @@ public class GestureRecognizer : MonoBehaviour
                 if (showDebugInfo && slowCaptureMode)
                 { 
                     Debug.Log("processRecognizedGesture() Error - Gesto reconocido que no es puro, pero no contiene GESTURE_BEGIN ni GESTURE_END. ¡No debería suceder!");
-                    textManager.EnqueueDebugText("processRecognizedGesture() Error - Gesto reconocido que no es puro, pero no contiene GESTURE_BEGIN ni GESTURE_END. ¡No debería suceder!");
+                    debugManager.EnqueueDebugText("processRecognizedGesture() Error - Gesto reconocido que no es puro, pero no contiene GESTURE_BEGIN ni GESTURE_END. ¡No debería suceder!");
                 } 
             }
         }
@@ -743,7 +738,7 @@ public class GestureRecognizer : MonoBehaviour
     {
         bool showDebugInfo = true;
         
-        if (showDebugInfo && slowCaptureMode) textManager.EnqueueDebugText("ProcessSimpleGesture()");
+        if (showDebugInfo && slowCaptureMode) debugManager.EnqueueDebugText("ProcessSimpleGesture()");
 
         if (recogGestStack.Count != 0)
         {
@@ -774,11 +769,11 @@ public class GestureRecognizer : MonoBehaviour
     /// <returns></returns>
     private void ProcessBeginGesture(Gesture recognizedGesture)
     {
-        if (slowCaptureMode) textManager.EnqueueDebugText("ProcessBeginGesture()");
+        if (slowCaptureMode) debugManager.EnqueueDebugText("ProcessBeginGesture()");
         // Si el stack de gestos esta vacío, añadimos el gesto reconocido al stack esperando al siguiente ciclo para ser validada y volvemos.
         if (recogGestStack.Count == 0)
         {
-            textManager.EnqueueDebugText("ProcessBeginGesture() Stack vacío, pusheando gesto inicial al stack.");
+            debugManager.EnqueueDebugText("ProcessBeginGesture() Stack vacío, pusheando gesto inicial al stack.");
             // Informamos del procesado
             OnProcessed(recognizedGesture);
             // Metemos en la pila
@@ -796,7 +791,7 @@ public class GestureRecognizer : MonoBehaviour
         // ¿El gesto previo reconocido era puramente simple o puramente compuesto?
         if (isPreviousPurelySimple || isPreviousPurelyComposed)
         {
-            textManager.EnqueueDebugText("ProcessBeginGesture() Gesto previo era puro simple o puro compuesto.");
+            debugManager.EnqueueDebugText("ProcessBeginGesture() Gesto previo era puro simple o puro compuesto.");
             // Si el gesto previo es puramente simple, fue procesado directamente en el anterior ciclo.
             // Si el gesto previo es puramente compuesto, o era un END ya procesado, o era un BEGIN que no ha sido validado.
             // En ambos casos podemos eliminarlo de la pila como un descarte.
@@ -812,7 +807,7 @@ public class GestureRecognizer : MonoBehaviour
         else 
         {
             // Si el gesto anterior tenía una componente simple además de la compuesta, esta esperando a ser validada.
-            textManager.EnqueueDebugText("ProcessBeginGesture() Gesto previo tenía componente simple.");
+            debugManager.EnqueueDebugText("ProcessBeginGesture() Gesto previo tenía componente simple.");
             // Como el nuevo gesto no valida la componente compuesta del gesto anterior,
             // pero este gesto anterior tiene un componente simple, debemos mostrar el
             // gesto simple detectado anteriormente.
@@ -833,7 +828,7 @@ public class GestureRecognizer : MonoBehaviour
 
     private void ProcessEndGesture(Gesture recognizedGesture)
     {
-        if (slowCaptureMode) textManager.EnqueueDebugText("ProcessEndGesture()");
+        if (slowCaptureMode) debugManager.EnqueueDebugText("ProcessEndGesture()");
 
         
         // Si el stack de gestos esta vacío, el gesto actual compuesto no puede validarse.
@@ -843,7 +838,7 @@ public class GestureRecognizer : MonoBehaviour
         {
             if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
             {
-                textManager.EnqueueDebugText("ProcessEndGesture() Stack vacío y gesto compuesto con componente simple.");
+                debugManager.EnqueueDebugText("ProcessEndGesture() Stack vacío y gesto compuesto con componente simple.");
                 // Es importante tener en cuenta que aunque devolvamos el GESTURE_END como reconocido
                 // el método OnRecognition() no lo dará por bueno si no existen en la pila de gestos
                 // tanto el GESTURE_BEGIN como el GESTURE_END.
@@ -852,7 +847,7 @@ public class GestureRecognizer : MonoBehaviour
             }
             else
             {
-                textManager.EnqueueDebugText("ProcessEndGesture() Stack vacío, descartamos gesto.");
+                debugManager.EnqueueDebugText("ProcessEndGesture() Stack vacío, descartamos gesto.");
                 // Solo informamos del gesto reconocido.
                 OnProcessed(recognizedGesture);
             }
@@ -866,7 +861,7 @@ public class GestureRecognizer : MonoBehaviour
         // ¿Este caso se puede dar? ¿Encolamos gestos puramente simples?
         if (isPreviousPurelySimple)
         {
-            textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo puramente simple. Descartando gesto END.");
+            debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo puramente simple. Descartando gesto END.");
             // Si el gesto anterior era puramente Simple, ya ha sido procesado
             // Podemos eliminarlo del stack.
             recogGestStack.Pop();
@@ -874,8 +869,8 @@ public class GestureRecognizer : MonoBehaviour
             // Si el gesto actual GESTURE_END tiene componente simple
             if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
             {
-                textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo simple ya procesado."); 
-                textManager.EnqueueDebugText("ProcessEndGesture() Gesto actual con componente Simple. Validando simple.");
+                debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo simple ya procesado."); 
+                debugManager.EnqueueDebugText("ProcessEndGesture() Gesto actual con componente Simple. Validando simple.");
                 // Lo validamos
                 ValidateAsSimple(recognizedGesture);
             }
@@ -888,16 +883,16 @@ public class GestureRecognizer : MonoBehaviour
             // Si el gesto anterior corresponde al mismo signo
             if (PreviousGestureInStack.composedTranscription[0] == recognizedGesture.composedTranscription[0])
             {
-                textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo del mismo SIGNO que el actual.");
+                debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo del mismo SIGNO que el actual.");
                 // Y el gesto anterior corresponde al inicio del signo
                 if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_BEGIN))
                 {
-                    textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo es la componente BEGIN del Gesto actual.");
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo es la componente BEGIN del Gesto actual.");
 
                     // Añadimos el gesto END a la pila despues del BEGIN
                     recogGestStack.Push(recognizedGesture);
 
-                    textManager.EnqueueDebugText("ProcessEndGesture() Validando gesto en su componente compuesta.");
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Validando gesto en su componente compuesta.");
                     // Y lo devolvemos como reconocido
                     ValidateAsComposed(recognizedGesture);
                 }
@@ -906,12 +901,12 @@ public class GestureRecognizer : MonoBehaviour
                 {
                     // Eliminamos el gesto anterior de la pila.
                     recogGestStack.Pop();
-                    textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo no es de la componente Begin.");
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo no es de la componente Begin.");
 
                     // Si el anterior tiene componente simple lo validamos.
                     if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                     {
-                        textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo tiene componente simple, validando.");
+                        debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo tiene componente simple, validando.");
                         // Lo validamos
                         ValidateAsSimple(PreviousGestureInStack);
                     }
@@ -919,13 +914,13 @@ public class GestureRecognizer : MonoBehaviour
                     // Si el gesto actual GESTURE_END tiene componente simple
                     if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                     {
-                        textManager.EnqueueDebugText("ProcessEndGesture() Gesto actual tiene componente simple, validando.");
+                        debugManager.EnqueueDebugText("ProcessEndGesture() Gesto actual tiene componente simple, validando.");
                         // Lo validamos
                         ValidateAsSimple(recognizedGesture);
                     }
                     else
                     {
-                        textManager.EnqueueDebugText("ProcessEndGesture() Descartamos gesto actual.");
+                        debugManager.EnqueueDebugText("ProcessEndGesture() Descartamos gesto actual.");
                         // Si no tiene componente simple, simplemente no pasa a la fase de validación.
                     }
 
@@ -933,14 +928,14 @@ public class GestureRecognizer : MonoBehaviour
             }
             else
             {
-                textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo corresponde a otro SIGNO.");
+                debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo corresponde a otro SIGNO.");
                 // Eliminamos el gesto anterior de la pila.
                 recogGestStack.Pop();
 
                 // Si el anterior tiene componente simple lo validamos.
                 if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                 {
-                    textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo tiene componente simple. Validando.");
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Gesto previo tiene componente simple. Validando.");
                     // Lo validamos
                     ValidateAsSimple(PreviousGestureInStack);
                 }
@@ -948,7 +943,7 @@ public class GestureRecognizer : MonoBehaviour
                 // Si el gesto actual GESTURE_END tiene componente simple
                 if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
                 {
-                    textManager.EnqueueDebugText("ProcessEndGesture() Gesto actual tiene componente simple. Validando (Ya que es un end).");
+                    debugManager.EnqueueDebugText("ProcessEndGesture() Gesto actual tiene componente simple. Validando (Ya que es un end).");
                     // Lo validamos
                     ValidateAsSimple(recognizedGesture);
                 }
@@ -966,33 +961,33 @@ public class GestureRecognizer : MonoBehaviour
     /// <param name="ProcessedGesture"></param>
     private void OnProcessed(Gesture ProcessedGesture)
     {
-        bool showDebug = true;
+        bool showDebug = false;
 
         // Vemos si se ha encontrado alguno
         bool hasRecognized = ProcessedGesture.gestureName != "Unknown";
         
         if (ProcessedGesture.gestureName == "Unknown")
-            textManager.SetRecogGUIText("?");
+            debugManager.SetRecogGUIText("?");
 
         if (showDebug && slowCaptureMode)
         {
             Debug.Log("Resultado de procesado: " + ProcessedGesture.gestureName);
-            textManager.EnqueueDebugText("onProcessed() Resultado: " + ProcessedGesture.gestureName);
+            debugManager.EnqueueDebugText("onProcessed() Resultado: " + ProcessedGesture.gestureName);
 
             if (ProcessedGesture.gestureName == "Unknown")
-                textManager.SetRecogText(ProcessedGesture.gestureName + "\nMinFound: " + minDistFound + "\nGesture: " + minNameFound);
+                debugManager.SetRecogText(ProcessedGesture.gestureName + "\nMinFound: " + minDistFound + "\nGesture: " + minNameFound);
             else
             {
                 if (ProcessedGesture.gCategory == gestureCategory.GESTURE_COMMAND)
                 {
-                    textManager.SetRecogText(ProcessedGesture.gestureName);
+                    debugManager.SetRecogText(ProcessedGesture.gestureName);
                 }
                 else if (ProcessedGesture.usedHand == handUsage.BOTH_HANDS)
                 {
-                    textManager.SetRecogText(ProcessedGesture.gestureName + "\nSuma Dist Ambas Manos: " + recognizedDist);
+                    debugManager.SetRecogText(ProcessedGesture.gestureName + "\nSuma Dist Ambas Manos: " + recognizedDist);
                 }
                 else
-                    textManager.SetRecogText(ProcessedGesture.gestureName + "\nDist: " + recognizedDist);
+                    debugManager.SetRecogText(ProcessedGesture.gestureName + "\nDist: " + recognizedDist);
             }
 
             // Check if new gesture
@@ -1000,19 +995,19 @@ public class GestureRecognizer : MonoBehaviour
             {
                 // New Gesture
                 Debug.Log("New Gesture Found: " + ProcessedGesture.gestureName);
-                textManager.EnqueueDebugText("onProcessed() New Gesture Found: " + ProcessedGesture.gestureName);
+                debugManager.EnqueueDebugText("onProcessed() New Gesture Found: " + ProcessedGesture.gestureName);
             }
             else
             {
                 if (!hasRecognized)
                 {
                     Debug.Log("Gesto no reconocido.");
-                    textManager.EnqueueDebugText("onProcessed() Gesto no reconocido.");
+                    debugManager.EnqueueDebugText("onProcessed() Gesto no reconocido.");
                 }
                 if (ProcessedGesture.Equals(previousProcessedGesture))
                 {
                     Debug.Log("Mismo gesto que el anterior reconocido.");
-                    textManager.EnqueueDebugText("onProcessed() Mismo gesto que el anterior.");
+                    debugManager.EnqueueDebugText("onProcessed() Mismo gesto que el anterior.");
                 }
             }
         }
@@ -1027,31 +1022,31 @@ public class GestureRecognizer : MonoBehaviour
 
     private void ValidateCommand(Gesture RecognizedCommandGesture)
     {
-        textManager.EnqueueDebugText("ValidateCommand() : " + RecognizedCommandGesture.gestureName);
+        debugManager.EnqueueDebugText("ValidateCommand() : " + RecognizedCommandGesture.gestureName);
         // Actualizar RecogGUI Jugador
-        textManager.SetRecogGUIText(RecognizedCommandGesture.gestureName);
+        debugManager.SetRecogGUIText(RecognizedCommandGesture.gestureName);
 
         if (lastCommand != RecognizedCommandGesture.gestureName || timeBetweenSameCommand < timeFromLastCommand)
         { 
             switch (RecognizedCommandGesture.gestureName)
             {
                 case "SEND":
-                    textManager.OnSendCommand();
+                    debugManager.OnSendCommand();
                     lastCommand = "SEND";
                     break;
                 case "CLEAR":
-                    textManager.ClearChatBuffer();
+                    debugManager.ClearChatBuffer();
                     lastCommand = "CLEAR";
                     break;
                 case "SPACE":
                     if (lastCommand != "SPACE")
                     { 
-                        textManager.AppendChatBuffer(RecognizedCommandGesture.singleTranscription);
+                        debugManager.AppendChatBuffer(RecognizedCommandGesture.singleTranscription);
                         lastCommand = "SPACE";
                     }
                     break;
                 case "BACKSPACE":
-                    textManager.BackspaceOnBuffer();
+                    debugManager.BackspaceOnBuffer();
                     lastCommand = "BACKSPACE";
                     break;
             }
@@ -1066,31 +1061,29 @@ public class GestureRecognizer : MonoBehaviour
     /// <param name="RecognizedSimpleGesture"></param>
     private void ValidateAsSimple(Gesture RecognizedSimpleGesture)
     {
-        if (bRecognizeSigns)
+        debugManager.EnqueueDebugText("ValidateAsSimple() : " + RecognizedSimpleGesture.gestureName);
+        // Si el anterior NO es el mismo gesto ni tiene la misma transcripción simple.
+        if (!RecognizedSimpleGesture.Equals(previousValidatedGesture) && RecognizedSimpleGesture.singleTranscription != previousValidatedGesture.singleTranscription)
         {
-            textManager.EnqueueDebugText("ValidateAsSimple() : " + RecognizedSimpleGesture.gestureName);
-            // Si el anterior NO es el mismo gesto ni tiene la misma transcripción simple.
-            if (!RecognizedSimpleGesture.Equals(previousValidatedGesture) && RecognizedSimpleGesture.singleTranscription != previousValidatedGesture.singleTranscription)
+            if (slowCaptureMode)
             {
-                if (slowCaptureMode)
-                {
-                    Debug.Log("New Simple Gesture Validated: " + RecognizedSimpleGesture.gestureName);
-                    textManager.EnqueueDebugText("ValidateAsSimple() Gesto Simple VALIDADO: " + RecognizedSimpleGesture.gestureName);
-                    textManager.EnqueueDebugText("ValidateAsSimple() Transcribiendo: " + RecognizedSimpleGesture.singleTranscription);
-                }
-
-                previousValidatedGesture = RecognizedSimpleGesture;
-
-                // Actualizar RecogGUI Jugador
-                textManager.SetRecogGUIText(RecognizedSimpleGesture.gestureName);
-            
-                // Añadir la transcripción del gesto a la ventana del buffer
-                // Si es una palabra, añadir un espacio.
-                if (RecognizedSimpleGesture.gCategory == gestureCategory.GESTURE_WORD)
-                    textManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription, true); // add space
-                else
-                    textManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription, false);
+                Debug.Log("New Simple Gesture Validated: " + RecognizedSimpleGesture.gestureName);
+                debugManager.EnqueueDebugText("ValidateAsSimple() Gesto Simple VALIDADO: " + RecognizedSimpleGesture.gestureName);
+                debugManager.EnqueueDebugText("ValidateAsSimple() Transcribiendo: " + RecognizedSimpleGesture.singleTranscription);
             }
+
+            previousValidatedGesture = RecognizedSimpleGesture;
+            //currentGesture.onRecognized.Invoke(); // Callback of that gesture
+
+            // Actualizar RecogGUI Jugador
+            debugManager.SetRecogGUIText(RecognizedSimpleGesture.gestureName);
+            
+            // Añadir la transcripción del gesto a la ventana del buffer
+            // Si es una palabra, añadir un espacio.
+            if (RecognizedSimpleGesture.gCategory == gestureCategory.GESTURE_WORD)
+                debugManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription, true); // add space
+            else
+                debugManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription, false);
         }
     }
 
@@ -1100,34 +1093,31 @@ public class GestureRecognizer : MonoBehaviour
     /// <param name="RecognizedComposedGesture"></param>
     private void ValidateAsComposed(Gesture RecognizedComposedGesture)
     {
-        if (bRecognizeSigns)
+        debugManager.EnqueueDebugText("ValidateAsComposed() : " + RecognizedComposedGesture.gestureName);
+        if (!RecognizedComposedGesture.Equals(previousValidatedGesture))
         {
-            textManager.EnqueueDebugText("ValidateAsComposed() : " + RecognizedComposedGesture.gestureName);
-            if (!RecognizedComposedGesture.Equals(previousValidatedGesture))
+            // New Gesture
+            if (slowCaptureMode)
             {
-                // New Gesture
-                if (slowCaptureMode)
-                {
-                    Debug.Log("New Composed Gesture Validated: " + RecognizedComposedGesture.gestureName);
-                    textManager.EnqueueDebugText("ValidateAsComposed() Composed Gesture Validated: " + RecognizedComposedGesture.gestureName);
-                    textManager.EnqueueDebugText("ValidateAsComposed() Transcribiendo: " + RecognizedComposedGesture.composedTranscription[0]);
-                }
+                Debug.Log("New Composed Gesture Validated: " + RecognizedComposedGesture.gestureName);
+                debugManager.EnqueueDebugText("ValidateAsComposed() Composed Gesture Validated: " + RecognizedComposedGesture.gestureName);
+                debugManager.EnqueueDebugText("ValidateAsComposed() Transcribiendo: " + RecognizedComposedGesture.composedTranscription[0]);
+            }
 
-                previousValidatedGesture = RecognizedComposedGesture;
-                //currentGesture.onRecognized.Invoke(); // Callback of that gesture
+            previousValidatedGesture = RecognizedComposedGesture;
+            //currentGesture.onRecognized.Invoke(); // Callback of that gesture
 
-                // Añadir la transcripción del gesto a la ventana de input
-                textManager.SetRecogGUIText(RecognizedComposedGesture.gestureName);
+            // Añadir la transcripción del gesto a la ventana de input
+            debugManager.SetRecogGUIText(RecognizedComposedGesture.gestureName);
             
 
+            // Añadir la transcripción del gesto a la ventana del buffer
+            // Si es una palabra, añadir un espacio.
+            if (RecognizedComposedGesture.gCategory == gestureCategory.GESTURE_WORD)
                 // Añadir la transcripción del gesto a la ventana del buffer
-                // Si es una palabra, añadir un espacio.
-                if (RecognizedComposedGesture.gCategory == gestureCategory.GESTURE_WORD)
-                    // Añadir la transcripción del gesto a la ventana del buffer
-                    textManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], true); // add space
-                else
-                    textManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], false);
-            }
+                debugManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], true); // add space
+            else
+                debugManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], false);
         }
     }
 }

@@ -37,7 +37,7 @@ public class RecordButton : MonoBehaviour
     [SerializeField]
     private GestureRecognizer GR;
     [SerializeField]
-    private TextManager _textManager;
+    private TextManager _debugManager;
     [SerializeField]
     private TextMeshPro guideText;
 
@@ -225,7 +225,7 @@ public class RecordButton : MonoBehaviour
          
             if (!gestureRecorded)
             {
-                _textManager.EnqueuePersistenceText("RecordButton::runLogicOnButtonPush() - Llamando a GR.SaveGesture()");
+                _debugManager.EnqueuePersistenceText("RecordButton::runLogicOnButtonPush() - Llamando a GR.SaveGesture()");
                 GR.SaveGesture(handSelector, phase, category, simpleTranscription, composedTranscription, gestureName);
                 gestureRecorded = true;
             }
@@ -246,13 +246,13 @@ public class RecordButton : MonoBehaviour
         switch (gestureName)
         { 
             case "SEND":
-                _textManager.OnSendCommand();
+                _debugManager.OnSendCommand();
                 break;
             case "CLEAR":
-                _textManager.ClearChatBuffer();
+                _debugManager.ClearChatBuffer();
                 break;
             case "BACKSPACE":
-                _textManager.BackspaceOnBuffer();
+                _debugManager.BackspaceOnBuffer();
                 break;
             default:
                 Debug.Log("RunSendCommandLogic(): Gesture name not recognized");
