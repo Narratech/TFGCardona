@@ -224,6 +224,8 @@ public class GestureRecognizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        debugManager.UpdateBonePanels();
+
         // Actualizar temporizadores
         timeAcu += Time.deltaTime;
         timeFromLastCommand += Time.deltaTime;

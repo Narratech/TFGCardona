@@ -22,6 +22,11 @@ public class TextManager : MonoBehaviour
     [SerializeField]
     private OVRSkeleton LHskeleton;
 
+    [SerializeField]
+    private Transform RHAnchor;
+    [SerializeField]
+    private Transform LHAnchor;
+
     // Texto 3D donde se muestra la info
     [SerializeField]
     private TextMeshPro RHDebugText;
@@ -77,7 +82,7 @@ public class TextManager : MonoBehaviour
     public bool updateChat   = true;
     public bool saveChat = false;
     // Debug Huesos de la mano
-    public bool updateBones  = false;
+    public bool updateBones  = true;
     
     // Parametros de paneles
     public int debugTextMaxLines = 35;
@@ -365,6 +370,8 @@ public class TextManager : MonoBehaviour
             //RH Information
             if (RHfingerBones != null)
             {
+                RHtext = RHtext + "RHAnchor: POS(" + RHAnchor.position.x + ", " + RHAnchor.position.y + ", " + RHAnchor.position.z + ")\n";
+                RHtext = RHtext + "          ROT(" + RHAnchor.rotation.x + ", " + RHAnchor.rotation.y + ", " + RHAnchor.rotation.z + ", " + RHAnchor.rotation.w + ")\n";
                 foreach (OVRBone rhbone in RHfingerBones)
                 {
                     RHtext = RHtext + rhbone.Id + " P: ";
@@ -375,6 +382,8 @@ public class TextManager : MonoBehaviour
             //LH Information
             if (LHfingerBones != null)
             {
+                LHtext = LHtext + "LHAnchor: POS(" + LHAnchor.position.x + ", " + LHAnchor.position.y + ", " + LHAnchor.position.z + ")\n";
+                LHtext = LHtext + "          ROT(" + LHAnchor.rotation.x + ", " + LHAnchor.rotation.y + ", " + LHAnchor.rotation.z + ", " + LHAnchor.rotation.w + ")\n";
                 foreach (OVRBone lhbone in LHfingerBones)
                 {
                     LHtext = LHtext + lhbone.Id + " P: ";

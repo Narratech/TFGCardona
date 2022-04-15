@@ -1,196 +1,163 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-enum orientation
-{
-    HORIZONTAL,
-    VERTICAL
-}
+using TMPro;
 
 public class VR_Button_Template : MonoBehaviour
-{    
-    // Behavior Selector
-    [SerializeField]
-    private orientation orientation;
-
+{
     // Posiciones mínimas y máximas del boton
+    // Horizontal
     [SerializeField]
     private float MinLocalX = 0.105f;
     [SerializeField]
+    private float TriggerPosX = 0.125f;
+    [SerializeField]
+    private float UntriggerPosX = 0.190f;
+    [SerializeField]
     private float MaxLocalX = 0.2f;
     [SerializeField]
-    private float MinLocalY = 0.38f;
-    [SerializeField]
-    private float MaxLocalY = 0.40f;
-
-    private float minPos;
-
-    // Posicion
-    Vector3 buttonPressedPos;
-    Vector3 buttonUnpressedPos;
+    private TextMeshPro debug;
 
     // Booleans
-    public bool isBeingTouched = false;
-    public bool isClicked = false;
-    public bool isRunningLogic = false;
+    private bool isClicked = false;
 
     // Color del boton
     public Material greenMat;
     public Material redMat;
 
-    // Movimiento Recuperacion boton
-    public float smooth = 0f;
+    // Position
+    Vector3 OriginalPosition;
 
-    // Timers
-    public float timeAcu = 0.0f;
-    public float waitTime = 5.0f;
+    // Movimiento Recuperacion boton
+    public float recoverySpeed = 0.01f;
 
     void Start()
     {
-        // Inicializamos la posición
-        if (orientation == orientation.VERTICAL)
-            transform.localPosition = new Vector3(transform.localPosition.x, MaxLocalY, transform.localPosition.z);
-        else if (orientation == orientation.HORIZONTAL)
-            transform.localPosition = new Vector3(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
-
-        // Inicializar vectores
-        buttonPressedPos = new Vector3(0f, 0f, 0f);
-        buttonUnpressedPos = new Vector3(0f, 0f, 0f);
+        // Set position to unpushed
+        transform.localPosition = new Vector3(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
+        OriginalPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
     }
 
-    void Update()
+    /* TFG Cardona -> Need of vr physical buttons.
+     * 
+     * VR "Physical" BUTTON
+     * ---------------------
+     * 
+     * Block Y & Z Movement on unity editor.
+     * Block ALL rotation on unity editor.
+     * 
+     *         MaxPos_ _____________________________
+     *   UnTriggerPos_|                             |
+     *                |                             |
+     *                |                             |
+     *     TriggerPos_|                             |
+     *                |                             |
+     *         MinPos_|                             |
+     *          _____________________________________________
+     *                
+     *   BUTTON POSITION
+     *   If Pos > Max Pos -> Pos = MaxPos
+     *   If Pos < Max Pos && Pos > MinPos -> Lerp to MaxPos
+     *   If Pos < Min Pos -> Pos = MinPos
+     *
+     *   TRIGGER EFFECTS
+     *   If Pos < TriggerPos -> isClicked = true.
+     *   If Pos > Untrigger Pos -> isClicked = false.                
+     */
+    virtual public void Update()
     {
-        if (orientation == orientation.VERTICAL)
+        string debugText = "";
+        // Constrain movement to only allow movement in X axys in LOCAL space.
+        // This is a fix to avoid using Rigidbody constraints that only work on Global Space.
+        //Vector3 localVelocity = transform.InverseTransformDirection(gameObject.GetComponent<Rigidbody>().velocity);
+        //localVelocity.y = 0;
+        //localVelocity.z = 0;
+        //gameObject.GetComponent<Rigidbody>().velocity = transform.TransformDirection(localVelocity);
+
+        // ------- MOVEMENT CONTROL ------------
+        // Getting it back into normal position (X)
+        if (transform.localPosition.x < MaxLocalX)
         {
-            buttonPressedPos.Set(transform.localPosition.x, MinLocalY, transform.localPosition.z);
-            buttonUnpressedPos.Set(transform.localPosition.x, MaxLocalY, transform.localPosition.z);
-
-            // Getting it back into normal position
-            if (!isBeingTouched && (transform.localPosition.y > MaxLocalY || transform.localPosition.y < MaxLocalY))
-            {
-                transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUnpressedPos, Time.deltaTime); // * Smooth)
-            }
-
-            if (!isClicked)
-            {
-                if (transform.localPosition.y < MinLocalY)
-                {
-                    isClicked = true;
-                    transform.localPosition = buttonPressedPos;
-                    OnButtonDown();
-                }
-            }
-            else
-            {
-                if (transform.localPosition.y > MaxLocalY - 0.02f)
-                {
-                    isClicked = false;
-                    transform.localPosition = buttonUnpressedPos;
-                    OnButtonUp();
-                }
-            }
+            debugText = "Recovering: X = ";
+            // Be sure object speed is 0.
+            gameObject.GetComponent<Rigidbody>().velocity.Set(0f, 0f, 0f);
+            // Recover
+            transform.Translate((float)recoverySpeed * Time.deltaTime, 0f, 0f);
         }
-        else if (orientation == orientation.HORIZONTAL)
+        else
         {
-            //Debug.Log("MinLocalX: " + MinLocalX);
-            //Debug.Log("MaxLocalY: " + MaxLocalX);
-
-            buttonPressedPos.Set(MinLocalX, transform.localPosition.y, transform.localPosition.z);
-            buttonUnpressedPos.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
-
-            //Debug.Log("buttonPressedPos (" + buttonPressedPos + ")");
-            //Debug.Log("buttonUnpressedPos (" + buttonUnpressedPos + ")");
-
-            // Getting it back into normal position
-            if (!isBeingTouched && (transform.localPosition.x < MaxLocalX))
-            {
-                //Debug.Log("Lerping to position");
-                transform.localPosition = Vector3.Lerp(transform.localPosition, buttonUnpressedPos, Time.deltaTime); // * Smooth)
-            }
-            else if (!isBeingTouched && (transform.localPosition.x > MaxLocalX))
-            {
-                //Debug.Log("Setting position to max");
-                transform.localPosition.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
-            }
-
-            // Si no esta clicado
-            if (!isClicked)
-            {
-                // Y su posición es menor a la mínima local
-                if (transform.localPosition.x < MinLocalX)
-                {
-                    //Debug.Log("Is not clicked and pos (" + transform.localPosition.x + ") < MinLocalX: " + MinLocalX);
-                    isClicked = true;
-                    transform.localPosition = buttonPressedPos;
-                    OnButtonDown();
-                }
-            }
-            // Si esta clicado
-            else
-            {
-                // Y su posición es MAYOR al máximo local
-                if (transform.localPosition.x > MaxLocalX)// - 0.02f)
-                {
-                    //Debug.Log("Is clicked and pos > MinLocalX");
-                    isClicked = false;
-                    transform.localPosition = buttonUnpressedPos;
-                    OnButtonUp();
-                }
-            }
+            debugText = "Other: X = ";
+            //Debug.Log("Setting position to max");
+            transform.localPosition.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
         }
 
-        if (isRunningLogic)
+        // Reset Z e Y
+        transform.localPosition.Set(transform.localPosition.x, OriginalPosition.y, OriginalPosition.z);
+        
+        // Text
+        debugText = debugText + transform.localPosition.x;
+        debug.text = debugText;
+
+        // ---------- CLICK LOGIC ---------------
+        // If it's not clicked
+        if (!isClicked)
         {
-            // CREATE AND CALL A LOGIC METHOD
-            // Method that should be called once.
-            isRunningLogic = false;
+            // And it's position is below the trigger position.
+            if (transform.localPosition.x < TriggerPosX)
+            {
+                isClicked = true;
+                OnButtonDown();
+            }
+        }
+        // If it is already clicked
+        else
+        {
+            // Reset when reaching MaxLocalX.
+            if (transform.localPosition.x > UntriggerPosX)// - 0.02f)
+            {
+                isClicked = false;
+                OnButtonUp();
+            }
         }
     }
 
-    // Que pasa al pulsar el boton
     void OnButtonDown()
     {
         GetComponent<MeshRenderer>().material = greenMat;
         GetComponent<Collider>().isTrigger = true;
-        if (!isRunningLogic)
-        {
-            timeAcu = 0.0f;
-            isRunningLogic = true;
-        }
+
+        // Call to the method that does something when the button is clicked
+        OnClick();
     }
 
-    /// <summary>
-    /// Que pasa al volver al estado inicial
-    /// </summary>
     void OnButtonUp()
     {
         GetComponent<MeshRenderer>().material = redMat;
         GetComponent<Collider>().isTrigger = false;
     }
 
+    public virtual void OnClick()
+    {
+        //...
+    }
+
+    // Methods for collision reaction, not used here.
     private void OnTriggerEnter(Collider other)
     {
-        if (isClicked)
-        {
-            // do something...
-        }
+        // do something...
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        // do something...
+    }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.gameObject.tag != "BackButton")
-        {
-            isBeingTouched = true;
-        }
+        // do something...
     }
-
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.gameObject.tag != "BackButton")
-        {
-            isBeingTouched = false;
-        }
+        // do something...
     }
 }

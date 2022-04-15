@@ -10,6 +10,7 @@ using TMPro;
 /// </summary>
 public class SkeletonDebug : MonoBehaviour
 {
+    /*
     // Esqueletos de ambas manos
     [SerializeField]
     private OVRSkeleton RHskeleton;
@@ -63,4 +64,5 @@ public class SkeletonDebug : MonoBehaviour
         RHDebugText.text = RHtext;
         LHDebugText.text = LHtext;
     }
+    */
 }
