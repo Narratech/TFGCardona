@@ -15,8 +15,8 @@ public class VR_Button_Template : MonoBehaviour
     private float UntriggerPosX = 0.190f;
     [SerializeField]
     private float MaxLocalX = 0.2f;
-    [SerializeField]
-    private TextMeshPro debug;
+    //[SerializeField]
+    //private TextMeshPro debug;
 
     // Booleans
     private bool isClicked = false;
@@ -102,8 +102,8 @@ public class VR_Button_Template : MonoBehaviour
         transform.localPosition.Set(transform.localPosition.x, OriginalPosition.y, OriginalPosition.z);
         
         // Text
-        debugText = debugText + transform.localPosition.x;
-        debug.text = debugText;
+        //debugText = debugText + transform.localPosition.x;
+        //debug.text = debugText;
 
         // ---------- CLICK LOGIC ---------------
         // If it's not clicked

@@ -408,6 +408,10 @@ public class GestureRecognizer : MonoBehaviour
         // Debug de este método
         bool displayInDebug = false;
 
+        // NO REALIZAR RECONOCIMIENTO SI NO SE ESTA TRAQUEANDO ALGUNA DE LAS MANOS O NO HAY SUFICIENTE CONFIANZA.
+        if (!RHskeleton.IsDataHighConfidence || !LHskeleton.IsDataHighConfidence || !RightHand.IsTracked || !LeftHand.IsTracked)
+            return;
+
         // Inicializamos el gesto a devolver
         Gesture currentGesture = new Gesture();
         currentGesture.gestureName = "Unknown";

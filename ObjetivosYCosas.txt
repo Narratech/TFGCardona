@@ -15,3 +15,11 @@ Radius 0.5
 Default No KN
 
 Captura -> Fondo, iluminación
+
+Update-> Recognize -> ProcessRecognizedGesture -> ValidateCommand() 	 -> OnProcessed()     						// Exito Comando
+				   -> OnProcessed              -> ProcessSimpleGesture() -> ValidateAsSimple() -> OnProcessed()		// Existo Simple
+				                               -> ProcessBeginGesture()  -> ValidateAsSimple() -> OnProcessed()		// Exito Previo Simple
+																		 -> OnProcessed() 							// Exito Begin
+											   -> ProcessEndGesture()    -> ValidateAsSimple() -> OnProcessed()		// Exito Previo Simple
+											                             -> ValidateAsComposed() -> OnProcessed()	// Exito Compuesto
+																		 -> OnProcessed()							// Fracaso
