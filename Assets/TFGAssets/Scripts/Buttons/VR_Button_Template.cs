@@ -27,6 +27,8 @@ public class VR_Button_Template : MonoBehaviour
 
     // Position
     Vector3 OriginalPosition;
+    Vector3 MinimalPosition;
+    Vector3 ZeroSpeed;
 
     // Movimiento Recuperacion boton
     public float recoverySpeed = 0.01f;
@@ -36,6 +38,8 @@ public class VR_Button_Template : MonoBehaviour
         // Set position to unpushed
         transform.localPosition = new Vector3(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
         OriginalPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
+        MinimalPosition = new Vector3(MinLocalX, transform.localPosition.y, transform.localPosition.z);
+        ZeroSpeed = new Vector3(0f, 0f, 0f);
     }
 
     /* TFG Cardona -> Need of vr physical buttons.
@@ -69,10 +73,10 @@ public class VR_Button_Template : MonoBehaviour
         string debugText = "";
         // Constrain movement to only allow movement in X axys in LOCAL space.
         // This is a fix to avoid using Rigidbody constraints that only work on Global Space.
-        //Vector3 localVelocity = transform.InverseTransformDirection(gameObject.GetComponent<Rigidbody>().velocity);
-        //localVelocity.y = 0;
-        //localVelocity.z = 0;
-        //gameObject.GetComponent<Rigidbody>().velocity = transform.TransformDirection(localVelocity);
+        Vector3 localVelocity = transform.InverseTransformDirection(gameObject.GetComponent<Rigidbody>().velocity);
+        localVelocity.y = 0;
+        localVelocity.z = 0;
+        gameObject.GetComponent<Rigidbody>().velocity = transform.TransformDirection(localVelocity);
 
         // ------- MOVEMENT CONTROL ------------
         // Getting it back into normal position (X)
@@ -80,15 +84,18 @@ public class VR_Button_Template : MonoBehaviour
         {
             debugText = "Recovering: X = ";
             // Be sure object speed is 0.
-            gameObject.GetComponent<Rigidbody>().velocity.Set(0f, 0f, 0f);
+            gameObject.GetComponent<Rigidbody>().velocity = ZeroSpeed;
             // Recover
             transform.Translate((float)recoverySpeed * Time.deltaTime, 0f, 0f);
         }
-        else
+        else if (transform.localPosition.x >= MaxLocalX)
         {
             debugText = "Other: X = ";
-            //Debug.Log("Setting position to max");
-            transform.localPosition.Set(MaxLocalX, transform.localPosition.y, transform.localPosition.z);
+            gameObject.transform.localPosition = OriginalPosition;
+        }
+        else if (transform.localPosition.x < MinLocalX)
+        {
+            gameObject.transform.localPosition = MinimalPosition;
         }
 
         // Reset Z e Y

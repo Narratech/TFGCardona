@@ -11,3 +11,8 @@ Pos -> -0.2, 0 , 0
 Scale -> 0.01, 0.01, 0.01
 Material < none >
 Radius 0.5
+
+Default No KN
+VR Kinetic
+
+Captura -> Fondo, iluminación
