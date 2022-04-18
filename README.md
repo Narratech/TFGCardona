@@ -37,6 +37,8 @@ Developed using Unity 2020.3.19f1 and the following packages:
 
 · Realistic Tree: https://assetstore.unity.com/packages/3d/vegetation/trees/realistic-tree-9-rainbow-tree-54622#description
 
+· Low Poly Office Pack: https://assetstore.unity.com/packages/3d/characters/low-poly-office-pack-characters-props-119386#description
+
 # Project Set Up
 
 · Download Project: git clone ...
