@@ -78,13 +78,11 @@ public class TouchBallScript : MonoBehaviour
 {
     [SerializeField]
     private OVRSkeleton handSkeleton;
+    [SerializeField]
+    private OVRHand hand;
 
     [SerializeField]
     public finger chosenFinger;
-
-    //Debug
-    [SerializeField]
-    private TextMeshPro debugTextField;
 
     // Position of the selected finger
     private Vector3 fingerPos;
@@ -98,6 +96,15 @@ public class TouchBallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // NO REALIZAR RECONOCIMIENTO SI NO SE ESTA TRAQUEANDO ALGUNA DE LAS MANOS O NO HAY SUFICIENTE CONFIANZA.
+        if (!handSkeleton.IsDataHighConfidence || !hand.IsTracked)
+        {
+            return;
+        }
+
+        // While in Unity Editor.
+        if (handSkeleton.Bones.Count == 0) return;
+
         switch (chosenFinger) 
         {
             case finger.WRISTROOT:
@@ -176,10 +183,7 @@ public class TouchBallScript : MonoBehaviour
                 break;
         }
 
-        //debugTextField.text = "fingerPos: (x: " + fingerPos.x + ", y: " + fingerPos.y + ", z: " + fingerPos.z + ")"; 
-
         // Move sphere to finger position
         gameObject.transform.position = fingerPos;
-        //debugTextField.text = debugTextField.text + "\n fingerPos: (x: " + gameObject.transform.position.x + ", y: " + gameObject.transform.position.y + ", z: " + gameObject.transform.position.z + ")";
     }
 }

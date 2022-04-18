@@ -252,7 +252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.022539496
+      value: 0.959
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -333,6 +333,17 @@ Transform:
   m_Father: {fileID: 1075775063}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &417505279 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114428879332287356, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
+  m_PrefabInstance: {fileID: 1873180494}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7623a8f0b49cf4dbaa40aea4d4be64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &420847884
 Transform:
   m_ObjectHideFlags: 0
@@ -416,7 +427,7 @@ GameObject:
   - component: {fileID: 510711045}
   - component: {fileID: 510711047}
   - component: {fileID: 510711046}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Background (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,6 +521,7 @@ Transform:
   - {fileID: 789164355}
   - {fileID: 4259889452115358785}
   - {fileID: 2108208687}
+  - {fileID: 1080556819}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -769,7 +781,7 @@ GameObject:
   - component: {fileID: 813478447}
   - component: {fileID: 813478446}
   - component: {fileID: 813478445}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -994,7 +1006,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1075775063}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Keyboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1050,6 +1062,268 @@ RectTransform:
   m_AnchoredPosition: {x: -23.41, y: -53}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1080556818
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 522458205}
+    m_Modifications:
+    - target: {fileID: 438421066056785942, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066142956683, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066259110450, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066273456978, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066286287029, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066286287031, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: hand
+      value: 
+      objectReference: {fileID: 417505279}
+    - target: {fileID: 438421066286287031, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: handSkeleton
+      value: 
+      objectReference: {fileID: 80531737}
+    - target: {fileID: 438421066306467243, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066388233326, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066438342082, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066450850211, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066450850213, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: hand
+      value: 
+      objectReference: {fileID: 2079580285}
+    - target: {fileID: 438421066450850213, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: handSkeleton
+      value: 
+      objectReference: {fileID: 524854330}
+    - target: {fileID: 438421066455338675, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066456341150, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066521021099, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066563350620, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066578764062, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066590166849, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066729512600, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066736979349, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066857004511, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066873397879, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066882145173, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421066909302812, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067142429554, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067153177306, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067158283202, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067219259007, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067219659152, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067290870388, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067351858302, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067375431568, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067409591236, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067459420613, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067542297463, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067548888373, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067566392040, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067623025222, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067623153009, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067659431870, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067729596427, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067747338912, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067818294133, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067830559965, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638608, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_Name
+      value: FingerMarkers
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067874265137, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067910856282, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421067955977306, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421068180497290, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438421068184980877, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+--- !u!4 &1080556819 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 438421067844638609, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+  m_PrefabInstance: {fileID: 1080556818}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1099130006
 Transform:
   m_ObjectHideFlags: 0
@@ -1079,7 +1353,7 @@ GameObject:
   - component: {fileID: 1144659769}
   - component: {fileID: 1144659768}
   - component: {fileID: 1144659767}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1256,7 +1530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1177199198
 Transform:
   m_ObjectHideFlags: 0
@@ -1410,6 +1684,37 @@ Transform:
   m_Father: {fileID: 1075775063}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1272886684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272886685}
+  m_Layer: 0
+  m_Name: VR-Keyboard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1272886685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272886684}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.67836463, y: 0.00000023841858, z: 3.8296957}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1433089078}
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1285718599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,22 +1727,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 0
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 0
 --- !u!1 &1286323462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,6 +2077,76 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &1433089077
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1272886685}
+    m_Modifications:
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.039999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.20000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303771950646923020, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+      propertyPath: m_Name
+      value: Keyboard-Key-Q
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+--- !u!4 &1433089078 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1700252253041625467, guid: 8f5bb05e7f498184e91d6067735cbb9e, type: 3}
+  m_PrefabInstance: {fileID: 1433089077}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1488622889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1789,7 +2158,7 @@ GameObject:
   - component: {fileID: 1488622890}
   - component: {fileID: 1488622892}
   - component: {fileID: 1488622891}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1973,6 +2342,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 234455083}
     m_Modifications:
+    - target: {fileID: 3990081235187417116, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5600886277545636329, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
       propertyPath: m_text
       value: TopHeadText
@@ -2021,6 +2394,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7001723379318304369, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001723379446117287, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001723380493542877, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8811658702185524248, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
       propertyPath: m_Name
       value: PlayerGUI
@@ -2057,22 +2442,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cb41cbed2778546ba63579a07e95d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
+  MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
+  MaxLocalX: 0.169
+  greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
+  redMat: {fileID: 2100000, guid: 34ad0655dc65c3d45afefb51b1b1558b, type: 2}
+  recoverySpeed: 0.01
   tipoConexion: 1
   ConnectOptionPanel: {fileID: 4259889452908425487}
   ConnectWithNamePanel: {fileID: 4259889453811011715}
-  MinLocalX: 0.105
-  MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
-  greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
-  redMat: {fileID: 2100000, guid: 34ad0655dc65c3d45afefb51b1b1558b, type: 2}
-  smooth: 0.1
-  timeAcu: 0
-  waitTime: 5
   loginManager: {fileID: 1045232244}
 --- !u!1001 &1574883898
 PrefabInstance:
@@ -2159,11 +2538,6 @@ PrefabInstance:
       objectReference: {fileID: 630802645}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
---- !u!4 &1645605754 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6078945147552126479, guid: 9f4e8f2ae302a934cab02d788bec73e6, type: 3}
-  m_PrefabInstance: {fileID: 1512198718}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1765155114
 Transform:
   m_ObjectHideFlags: 0
@@ -2182,71 +2556,6 @@ Transform:
   m_Father: {fileID: 1075775063}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1823609318
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1645605754}
-    m_Modifications:
-    - target: {fileID: 656788606210426475, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2358229838650507380, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6698639957168452362, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_Name
-      value: Avatar1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686800500755628313, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
 --- !u!1 &1838982743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,7 +2566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1838982744}
   - component: {fileID: 1838982745}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-BACK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2495,7 +2804,7 @@ GameObject:
   - component: {fileID: 1946370798}
   - component: {fileID: 1946370797}
   - component: {fileID: 1946370796}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2528,22 +2837,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 29
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 29
 --- !u!54 &1946370797
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2634,7 +2937,7 @@ GameObject:
   - component: {fileID: 1954889834}
   - component: {fileID: 1954889833}
   - component: {fileID: 1954889832}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2758,6 +3061,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1870938896605422, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
   m_PrefabInstance: {fileID: 1574883898}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2079580285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114428879332287356, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
+  m_PrefabInstance: {fileID: 1574883898}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079580280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7623a8f0b49cf4dbaa40aea4d4be64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &2079580286
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2994,7 +3308,7 @@ GameObject:
   - component: {fileID: 1523477799029160218}
   - component: {fileID: 2803918274818440510}
   - component: {fileID: 1472205064019604306}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3061,7 +3375,7 @@ GameObject:
   - component: {fileID: 8812651858167302056}
   - component: {fileID: 444509566985240893}
   - component: {fileID: 357500829309996533}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3147,7 +3461,7 @@ GameObject:
   - component: {fileID: 2444125156433897859}
   - component: {fileID: 7492990905669904737}
   - component: {fileID: 136275873192336441}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3282,7 +3596,7 @@ GameObject:
   - component: {fileID: 5102539622399391658}
   - component: {fileID: 7570452829034669104}
   - component: {fileID: 6344410338474010562}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3299,7 +3613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 798167325}
   - component: {fileID: 2725060021619925287}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3397,7 +3711,7 @@ GameObject:
   - component: {fileID: 4414005228940042224}
   - component: {fileID: 1793304185876051638}
   - component: {fileID: 7121087481396470392}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3468,7 +3782,7 @@ GameObject:
   - component: {fileID: 2457906072835315439}
   - component: {fileID: 2396665798741877683}
   - component: {fileID: 5116517287853345508}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3528,22 +3842,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 17
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 17
 --- !u!33 &366624819917330040
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3654,7 +3962,7 @@ GameObject:
   m_Component:
   - component: {fileID: 590414854}
   - component: {fileID: 948767491578846242}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3726,7 +4034,7 @@ GameObject:
   - component: {fileID: 3373432647637621364}
   - component: {fileID: 9180496941944541370}
   - component: {fileID: 2992093373554218420}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3816,7 +4124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 595037310}
   - component: {fileID: 6297893018565400372}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-O
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4004,7 +4312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 851873437}
   - component: {fileID: 4427128493006929567}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-Y
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4057,7 +4365,7 @@ GameObject:
   - component: {fileID: 6517253910484618634}
   - component: {fileID: 4208107406708768066}
   - component: {fileID: 5451463437602386598}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4239,7 +4547,7 @@ GameObject:
   - component: {fileID: 874558517397024685}
   - component: {fileID: 3343848735503275974}
   - component: {fileID: 5036819557470502461}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4320,7 +4628,7 @@ GameObject:
   - component: {fileID: 8834530194576143924}
   - component: {fileID: 7640850349198639596}
   - component: {fileID: 8956699601254876070}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4452,7 +4760,7 @@ GameObject:
   - component: {fileID: 6182822388226905917}
   - component: {fileID: 7210593299566361891}
   - component: {fileID: 2597851451122034618}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4494,7 +4802,7 @@ GameObject:
   - component: {fileID: 3566776927418878614}
   - component: {fileID: 7596812193764808104}
   - component: {fileID: 652952786462155660}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4513,7 +4821,7 @@ GameObject:
   - component: {fileID: 7193254871935305919}
   - component: {fileID: 1880969830343940777}
   - component: {fileID: 4195544555046453211}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4559,7 +4867,7 @@ GameObject:
   m_Component:
   - component: {fileID: 198296270}
   - component: {fileID: 4899221401798924523}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4868,7 +5176,7 @@ GameObject:
   - component: {fileID: 3054804062805209459}
   - component: {fileID: 4904924361539834900}
   - component: {fileID: 2952424100999431246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4909,22 +5217,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 25
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 25
 --- !u!224 &1216484523633055523
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5087,7 +5389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 590718967}
   - component: {fileID: 1344745132204787242}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5106,7 +5408,7 @@ GameObject:
   - component: {fileID: 1432017537897639709}
   - component: {fileID: 4245731283798990757}
   - component: {fileID: 8549106544433099661}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5310,22 +5612,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 20
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 20
 --- !u!65 &1280827613198266724
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5353,7 +5649,7 @@ GameObject:
   - component: {fileID: 4092344194820542256}
   - component: {fileID: 4082806127339080330}
   - component: {fileID: 1285718599}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5374,7 +5670,7 @@ GameObject:
   - component: {fileID: 4092344193299697789}
   - component: {fileID: 4082806129044641223}
   - component: {fileID: 1285045664784039842}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5393,22 +5689,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cb41cbed2778546ba63579a07e95d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
+  MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
+  MaxLocalX: 0.169
+  greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
+  redMat: {fileID: 2100000, guid: 34ad0655dc65c3d45afefb51b1b1558b, type: 2}
+  recoverySpeed: 0.01
   tipoConexion: 0
   ConnectOptionPanel: {fileID: 4259889453877438248}
   ConnectWithNamePanel: {fileID: 4259889453833423204}
-  MinLocalX: 0.105
-  MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
-  greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
-  redMat: {fileID: 2100000, guid: 34ad0655dc65c3d45afefb51b1b1558b, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
   loginManager: {fileID: 1045232244}
 --- !u!1 &1285045665230888470
 GameObject:
@@ -5424,7 +5714,7 @@ GameObject:
   - component: {fileID: 4092344193125937610}
   - component: {fileID: 4082806129000445040}
   - component: {fileID: 1560725333}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5455,7 +5745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 826927925}
   - component: {fileID: 468525783223918730}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-BCKSPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5657,7 +5947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1228970134}
   - component: {fileID: 7717117238889372269}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-Enter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5675,7 +5965,7 @@ GameObject:
   - component: {fileID: 1216484523633055523}
   - component: {fileID: 6244405164847931263}
   - component: {fileID: 6188551304833348503}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5694,22 +5984,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 23
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 23
 --- !u!65 &1472205064019604306
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5750,7 +6034,7 @@ GameObject:
   - component: {fileID: 6108544365731670118}
   - component: {fileID: 8991751779067631041}
   - component: {fileID: 4595861142109039749}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5809,7 +6093,7 @@ GameObject:
   m_Component:
   - component: {fileID: 420847884}
   - component: {fileID: 3956351870058591308}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5828,22 +6112,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 14
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 14
 --- !u!33 &1680706912848293712
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5894,7 +6172,7 @@ GameObject:
   - component: {fileID: 1261481595351625371}
   - component: {fileID: 2476193885197579003}
   - component: {fileID: 663615793680224543}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5952,7 +6230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 158532041}
   - component: {fileID: 868538800584631805}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6142,7 +6420,7 @@ GameObject:
   - component: {fileID: 7343028256477887017}
   - component: {fileID: 3431855321314357103}
   - component: {fileID: 3801258994608613681}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6177,22 +6455,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 18
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 18
 --- !u!1 &1850871652164711709
 GameObject:
   m_ObjectHideFlags: 0
@@ -6205,7 +6477,7 @@ GameObject:
   - component: {fileID: 751700208038455502}
   - component: {fileID: 1819136728469017961}
   - component: {fileID: 1379778675835568271}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6289,7 +6561,7 @@ GameObject:
   - component: {fileID: 2714888156917564041}
   - component: {fileID: 7352046040530826234}
   - component: {fileID: 677237170475824617}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6307,7 +6579,7 @@ GameObject:
   - component: {fileID: 97830070875503241}
   - component: {fileID: 4931962436044575268}
   - component: {fileID: 2635824735763580240}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6326,22 +6598,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 19
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 19
 --- !u!1 &1974749679962299438
 GameObject:
   m_ObjectHideFlags: 0
@@ -6353,7 +6619,7 @@ GameObject:
   - component: {fileID: 1006451937217582184}
   - component: {fileID: 8085132345858720596}
   - component: {fileID: 2544730788887550693}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6374,7 +6640,7 @@ GameObject:
   - component: {fileID: 6848003165605541044}
   - component: {fileID: 8612784751412625277}
   - component: {fileID: 4994813958713341766}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6863,7 +7129,7 @@ GameObject:
   - component: {fileID: 894055262392489984}
   - component: {fileID: 1277364016698870676}
   - component: {fileID: 3648998336392656705}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6882,7 +7148,7 @@ GameObject:
   - component: {fileID: 894055262834575181}
   - component: {fileID: 1277364017141650649}
   - component: {fileID: 3648998335408711692}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6901,7 +7167,7 @@ GameObject:
   - component: {fileID: 894055262912472826}
   - component: {fileID: 1277364017353831790}
   - component: {fileID: 3648998335905434043}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7122,7 +7388,7 @@ GameObject:
   - component: {fileID: 6163348721259845949}
   - component: {fileID: 2210501137126645995}
   - component: {fileID: 1196365320196596012}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7329,7 +7595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1988656490}
   - component: {fileID: 7385657565581821089}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-T
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7549,7 +7815,7 @@ GameObject:
   - component: {fileID: 171682174687228450}
   - component: {fileID: 7248663695242800746}
   - component: {fileID: 5311940334703434041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7622,22 +7888,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 5
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 5
 --- !u!1 &2604984065907197905
 GameObject:
   m_ObjectHideFlags: 0
@@ -7652,7 +7912,7 @@ GameObject:
   - component: {fileID: 5015718288472633536}
   - component: {fileID: 1428114656250613534}
   - component: {fileID: 3600799105148153122}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7763,7 +8023,7 @@ GameObject:
   - component: {fileID: 3683103886360300300}
   - component: {fileID: 1789569761398195186}
   - component: {fileID: 4348814782581268532}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7891,7 +8151,7 @@ GameObject:
   - component: {fileID: 3278758570823847695}
   - component: {fileID: 994586696586512761}
   - component: {fileID: 2121332000645093625}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7917,7 +8177,7 @@ GameObject:
   - component: {fileID: 2537613000844602140}
   - component: {fileID: 6064771714603526616}
   - component: {fileID: 8883444037043325359}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7948,7 +8208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1497260756}
   - component: {fileID: 1837824229448601983}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8024,7 +8284,7 @@ GameObject:
   - component: {fileID: 4832148413896494547}
   - component: {fileID: 7260849653102009986}
   - component: {fileID: 115785274342814970}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8238,7 +8498,7 @@ GameObject:
   - component: {fileID: 715040577006193013}
   - component: {fileID: 7983268345654170187}
   - component: {fileID: 401365818646231723}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8486,7 +8746,7 @@ GameObject:
   - component: {fileID: 2701176156559008116}
   - component: {fileID: 4617360596112562901}
   - component: {fileID: 6734664002506600761}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8570,7 +8830,7 @@ GameObject:
   - component: {fileID: 627533076373095042}
   - component: {fileID: 2454280341939044347}
   - component: {fileID: 1471055157080964890}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8729,7 +8989,7 @@ GameObject:
   - component: {fileID: 6832708975723898027}
   - component: {fileID: 9058128431334562191}
   - component: {fileID: 3720407588718047494}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8937,7 +9197,7 @@ GameObject:
   - component: {fileID: 2648674851563629331}
   - component: {fileID: 3886528647460335123}
   - component: {fileID: 3826925926656307457}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9040,7 +9300,7 @@ GameObject:
   - component: {fileID: 4252717863514606093}
   - component: {fileID: 4440229894482760093}
   - component: {fileID: 6648321830219010693}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9085,7 +9345,7 @@ GameObject:
   - component: {fileID: 8845322509575027185}
   - component: {fileID: 3404655250619122020}
   - component: {fileID: 1850062395747053023}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9104,7 +9364,7 @@ GameObject:
   - component: {fileID: 5660480691268244929}
   - component: {fileID: 3975072985282173136}
   - component: {fileID: 768737058258893209}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9207,7 +9467,7 @@ GameObject:
   - component: {fileID: 3627385597239729901}
   - component: {fileID: 3245846317780174818}
   - component: {fileID: 6557980217623030816}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9307,7 +9567,7 @@ GameObject:
   - component: {fileID: 1821398477911954297}
   - component: {fileID: 5737148069208343217}
   - component: {fileID: 1242416570466046420}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9400,22 +9660,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 1
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 1
 --- !u!33 &3618167035360713191
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9765,7 +10019,7 @@ GameObject:
   m_Component:
   - component: {fileID: 719850197115949784}
   - component: {fileID: 2363030941113680174}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-Q
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9782,7 +10036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 719850197703273506}
   - component: {fileID: 2363030939419344852}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ConnectWithNameVRButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9799,7 +10053,7 @@ GameObject:
   m_Component:
   - component: {fileID: 719850197210664341}
   - component: {fileID: 2363030939077795427}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ConnectAnonymouslyVRButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9818,7 +10072,7 @@ GameObject:
   - component: {fileID: 8918618334473985802}
   - component: {fileID: 2692580689465007393}
   - component: {fileID: 6537853688656718272}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9836,7 +10090,7 @@ GameObject:
   - component: {fileID: 138305753929901781}
   - component: {fileID: 4624872952252027007}
   - component: {fileID: 2194827173939826530}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9871,7 +10125,7 @@ GameObject:
   - component: {fileID: 289027911547205116}
   - component: {fileID: 5943481016203118180}
   - component: {fileID: 1280827613198266724}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10031,22 +10285,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 22
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 22
 --- !u!33 &3809417848871044413
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10167,22 +10415,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 16
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 16
 --- !u!4 &3844723974949375149
 Transform:
   m_ObjectHideFlags: 0
@@ -10248,7 +10490,7 @@ GameObject:
   - component: {fileID: 3097165058469740558}
   - component: {fileID: 7832344631293721312}
   - component: {fileID: 3309536816274204072}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10384,7 +10626,7 @@ GameObject:
   - component: {fileID: 920464792424265842}
   - component: {fileID: 5697455389822002626}
   - component: {fileID: 3152792995794805948}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10429,7 +10671,7 @@ GameObject:
   - component: {fileID: 5998477926771994806}
   - component: {fileID: 6548088777673911901}
   - component: {fileID: 7237806651266975341}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10576,7 +10818,7 @@ GameObject:
   - component: {fileID: 2085851135895214368}
   - component: {fileID: 8256795065486445425}
   - component: {fileID: 2117064581766525064}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10886,22 +11128,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 2
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 2
 --- !u!23 &4245731283798990757
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11085,7 +11321,7 @@ GameObject:
   - component: {fileID: 4259889452173584164}
   - component: {fileID: 4259889452173584187}
   - component: {fileID: 4259889452173584186}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Button_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11318,7 +11554,7 @@ GameObject:
   - component: {fileID: 4259889452202890759}
   - component: {fileID: 4259889452202890753}
   - component: {fileID: 4259889452202890752}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11471,7 +11707,7 @@ GameObject:
   - component: {fileID: 4259889452204201008}
   - component: {fileID: 4259889452204201010}
   - component: {fileID: 4259889452204201009}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11651,7 +11887,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &4259889453052148184
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11672,7 +11908,7 @@ GameObject:
   - component: {fileID: 4259889453052148184}
   - component: {fileID: 4259889453052148191}
   - component: {fileID: 4259889453052148190}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Button_Connect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11963,7 +12199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4259889453128361812}
   - component: {fileID: 4259889453128361813}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11982,7 +12218,7 @@ GameObject:
   - component: {fileID: 4259889453408781294}
   - component: {fileID: 4259889453408781293}
   - component: {fileID: 4259889453408781292}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: InputField_Playername
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12341,7 +12577,7 @@ GameObject:
   - component: {fileID: 4259889453528640647}
   - component: {fileID: 4259889453528640641}
   - component: {fileID: 4259889453528640640}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12376,7 +12612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4259889453811011724}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: ConnectWithName_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12712,7 +12948,7 @@ GameObject:
   - component: {fileID: 5395568472904258634}
   - component: {fileID: 8105323995708140514}
   - component: {fileID: 3721285123181119800}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12733,7 +12969,7 @@ GameObject:
   - component: {fileID: 4406250566824929404}
   - component: {fileID: 7539444762995688319}
   - component: {fileID: 8458808059143691164}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13018,7 +13254,7 @@ GameObject:
   - component: {fileID: 9032444067692330612}
   - component: {fileID: 3031684341994371293}
   - component: {fileID: 915678202216868765}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13037,22 +13273,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 28
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 28
 --- !u!1 &4560568402343853909
 GameObject:
   m_ObjectHideFlags: 0
@@ -13063,7 +13293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2040315205}
   - component: {fileID: 2957753353427413895}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-Z
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13095,22 +13325,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 12
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 12
 --- !u!65 &4599616081176242886
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13135,7 +13359,7 @@ GameObject:
   - component: {fileID: 1838660361503443979}
   - component: {fileID: 5466028926854911766}
   - component: {fileID: 8267682975432466380}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13223,7 +13447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1559052346}
   - component: {fileID: 1865283819345809749}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13283,7 +13507,7 @@ GameObject:
   - component: {fileID: 8487082922803915455}
   - component: {fileID: 4911063547959981324}
   - component: {fileID: 6841356716531117764}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13310,7 +13534,7 @@ GameObject:
   - component: {fileID: 7824826471689956393}
   - component: {fileID: 8353124195519224565}
   - component: {fileID: 3420509913660322078}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13329,7 +13553,7 @@ GameObject:
   - component: {fileID: 6675328652828033508}
   - component: {fileID: 8273072736398944935}
   - component: {fileID: 8739310811744254293}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13404,7 +13628,7 @@ GameObject:
   - component: {fileID: 1251043227060061922}
   - component: {fileID: 7179621699857585550}
   - component: {fileID: 7727790080924782441}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13645,22 +13869,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 11
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 11
 --- !u!65 &4930348982670848698
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13846,7 +14064,7 @@ GameObject:
   - component: {fileID: 6106879142375211920}
   - component: {fileID: 3653709106346420711}
   - component: {fileID: 5794545234934684790}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13906,22 +14124,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 13
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 13
 --- !u!65 &5015718288472633536
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13947,7 +14159,7 @@ GameObject:
   - component: {fileID: 950831131613072745}
   - component: {fileID: 5084622967149339144}
   - component: {fileID: 4595639797407234240}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14057,7 +14269,7 @@ GameObject:
   - component: {fileID: 9172712674762963129}
   - component: {fileID: 7754916218531264423}
   - component: {fileID: 3813200117792718721}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14139,22 +14351,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 7
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 7
 --- !u!114 &5172273952029261431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14293,7 +14499,7 @@ GameObject:
   - component: {fileID: 6510454003758853540}
   - component: {fileID: 3485944824308170314}
   - component: {fileID: 3775543961611573959}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14327,7 +14533,7 @@ GameObject:
   - component: {fileID: 629738546122103421}
   - component: {fileID: 5976725114368867756}
   - component: {fileID: 4544651935367779630}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14365,7 +14571,7 @@ GameObject:
   - component: {fileID: 1534488282294825486}
   - component: {fileID: 6683061934957657449}
   - component: {fileID: 2538928758393188338}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14432,7 +14638,7 @@ GameObject:
   - component: {fileID: 9032685421395753620}
   - component: {fileID: 2571864742421207458}
   - component: {fileID: 8691257330523158779}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14491,7 +14697,7 @@ GameObject:
   - component: {fileID: 3260933755174301945}
   - component: {fileID: 6537773446198692027}
   - component: {fileID: 2441273856414265606}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14508,7 +14714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 431593103}
   - component: {fileID: 4450893919651855908}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Keyboard-Key-\xD1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14529,7 +14735,7 @@ GameObject:
   - component: {fileID: 3345362838560331598}
   - component: {fileID: 1048752205115201345}
   - component: {fileID: 4243926416216756666}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14547,7 +14753,7 @@ GameObject:
   - component: {fileID: 6485439077483595581}
   - component: {fileID: 7948836962394139336}
   - component: {fileID: 1336806858193258394}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14574,7 +14780,7 @@ GameObject:
   - component: {fileID: 9136800001199061380}
   - component: {fileID: 4853227170565229783}
   - component: {fileID: 8760785708722276760}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14600,7 +14806,7 @@ GameObject:
   - component: {fileID: 2216335522826897377}
   - component: {fileID: 8674934685639216811}
   - component: {fileID: 150401796596222295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14625,7 +14831,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1251809006}
   - component: {fileID: 5612528789141953979}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-V
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14763,7 +14969,7 @@ GameObject:
   - component: {fileID: 2210399570573601095}
   - component: {fileID: 7576360293520596328}
   - component: {fileID: 5172273952029261431}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14931,7 +15137,7 @@ GameObject:
   - component: {fileID: 725033020834861979}
   - component: {fileID: 4708178688295871677}
   - component: {fileID: 1534053820960510835}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14949,7 +15155,7 @@ GameObject:
   - component: {fileID: 4528099987477358151}
   - component: {fileID: 5771473965415434281}
   - component: {fileID: 4209396108365591737}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15009,7 +15215,7 @@ GameObject:
   - component: {fileID: 5061307900892588893}
   - component: {fileID: 4128595888849519015}
   - component: {fileID: 1367490010576786098}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15028,7 +15234,7 @@ GameObject:
   - component: {fileID: 1321095773907050376}
   - component: {fileID: 5989980742259874112}
   - component: {fileID: 511409332293839352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15127,7 +15333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1270546074}
   - component: {fileID: 3156207862291986066}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15211,7 +15417,7 @@ GameObject:
   - component: {fileID: 916324339829888561}
   - component: {fileID: 778858226512387985}
   - component: {fileID: 667734140348981750}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15423,7 +15629,7 @@ GameObject:
   - component: {fileID: 7899071212254595603}
   - component: {fileID: 4327304032917388181}
   - component: {fileID: 6835153051665607742}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15581,22 +15787,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 9
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 9
 --- !u!54 &6212752249235781110
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15666,22 +15866,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 24
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 24
 --- !u!1 &6259019746147210446
 GameObject:
   m_ObjectHideFlags: 0
@@ -15694,7 +15888,7 @@ GameObject:
   - component: {fileID: 8882119674886192786}
   - component: {fileID: 8043185155657064151}
   - component: {fileID: 4066102435614586870}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15731,7 +15925,7 @@ GameObject:
   - component: {fileID: 993324034305814693}
   - component: {fileID: 7273191369552151408}
   - component: {fileID: 2039695862526454884}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15749,7 +15943,7 @@ GameObject:
   - component: {fileID: 993324034747945234}
   - component: {fileID: 7273191369058968263}
   - component: {fileID: 2039695862834957779}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15767,7 +15961,7 @@ GameObject:
   - component: {fileID: 993324033785826911}
   - component: {fileID: 7273191367891336586}
   - component: {fileID: 2039695864019505822}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15851,7 +16045,7 @@ GameObject:
   - component: {fileID: 8292090653538226468}
   - component: {fileID: 7928052679090229274}
   - component: {fileID: 6211236560248776437}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15880,7 +16074,7 @@ GameObject:
   - component: {fileID: 2278957868548398043}
   - component: {fileID: 4307570539702412384}
   - component: {fileID: 4924362350968534397}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16263,22 +16457,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 27
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 27
 --- !u!4 &6575356949096307115
 Transform:
   m_ObjectHideFlags: 0
@@ -16303,7 +16491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 508720416}
   - component: {fileID: 2828436174555078102}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-U
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16376,7 +16564,7 @@ GameObject:
   - component: {fileID: 2799684049854929657}
   - component: {fileID: 1276493441691175587}
   - component: {fileID: 6670702936429508955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16465,22 +16653,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 8
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 8
 --- !u!1 &6707088532658839022
 GameObject:
   m_ObjectHideFlags: 0
@@ -16493,7 +16675,7 @@ GameObject:
   - component: {fileID: 8733631907872350863}
   - component: {fileID: 3499841960602221961}
   - component: {fileID: 688462911648647202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16520,7 +16702,7 @@ GameObject:
   - component: {fileID: 6962561694190823233}
   - component: {fileID: 2276258005969367869}
   - component: {fileID: 3925573665762713226}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16539,22 +16721,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 21
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 21
 --- !u!1 &6802946407290536235
 GameObject:
   m_ObjectHideFlags: 0
@@ -16567,7 +16743,7 @@ GameObject:
   - component: {fileID: 8603957028947355731}
   - component: {fileID: 8845390289730463878}
   - component: {fileID: 4935711721078645020}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16605,22 +16781,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 3
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 3
 --- !u!1 &6837885647684141559
 GameObject:
   m_ObjectHideFlags: 0
@@ -16633,7 +16803,7 @@ GameObject:
   - component: {fileID: 4663141261395674501}
   - component: {fileID: 6627740610179786774}
   - component: {fileID: 4930348982670848698}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16678,7 +16848,7 @@ GameObject:
   - component: {fileID: 3809417848871044413}
   - component: {fileID: 4187255079298750226}
   - component: {fileID: 1498843410198289586}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16699,7 +16869,7 @@ GameObject:
   - component: {fileID: 866953337109808803}
   - component: {fileID: 8472899558567041470}
   - component: {fileID: 1589879049407090677}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16720,7 +16890,7 @@ GameObject:
   - component: {fileID: 8009533241978498782}
   - component: {fileID: 470177668874089770}
   - component: {fileID: 1925180366367402137}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16759,7 +16929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 260026494}
   - component: {fileID: 4538137862317931518}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-W
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16776,7 +16946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1765155114}
   - component: {fileID: 9053018658447880937}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-G
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16809,7 +16979,7 @@ GameObject:
   - component: {fileID: 5410173390171992238}
   - component: {fileID: 7869318728689980057}
   - component: {fileID: 6165621083984955697}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16963,7 +17133,7 @@ GameObject:
   - component: {fileID: 6485338815512400267}
   - component: {fileID: 6212752249235781110}
   - component: {fileID: 6696237551195464852}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16981,7 +17151,7 @@ GameObject:
   - component: {fileID: 2430401062495112814}
   - component: {fileID: 8152396420960885825}
   - component: {fileID: 8722995410136042994}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17002,7 +17172,7 @@ GameObject:
   - component: {fileID: 73871370956849063}
   - component: {fileID: 1849835703163706329}
   - component: {fileID: 6249886804846435200}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17021,7 +17191,7 @@ GameObject:
   - component: {fileID: 4409424724122442810}
   - component: {fileID: 357104563821014335}
   - component: {fileID: 5454121160548663124}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17107,7 +17277,7 @@ GameObject:
   - component: {fileID: 9216089789047053984}
   - component: {fileID: 8316203301414944679}
   - component: {fileID: 3244431448966293296}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17128,7 +17298,7 @@ GameObject:
   - component: {fileID: 9098855768070021318}
   - component: {fileID: 7567519498215463178}
   - component: {fileID: 9010526635609725331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17562,7 +17732,7 @@ GameObject:
   - component: {fileID: 1680706912848293712}
   - component: {fileID: 3782107467975574564}
   - component: {fileID: 2569728323830009689}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17622,7 +17792,7 @@ GameObject:
   - component: {fileID: 6693159689181250464}
   - component: {fileID: 726646660964901644}
   - component: {fileID: 884412855085601341}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17703,7 +17873,7 @@ GameObject:
   - component: {fileID: 4282202018315606293}
   - component: {fileID: 1806333497945095316}
   - component: {fileID: 2717444638955558922}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17899,7 +18069,7 @@ GameObject:
   - component: {fileID: 8175364225818731523}
   - component: {fileID: 6423556586671071159}
   - component: {fileID: 4952150205385706351}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17939,7 +18109,7 @@ GameObject:
   - component: {fileID: 657705348767458175}
   - component: {fileID: 3585503071462377460}
   - component: {fileID: 8091470783534402299}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18179,7 +18349,7 @@ GameObject:
   - component: {fileID: 3620648832837753977}
   - component: {fileID: 6301624684438181801}
   - component: {fileID: 1430568788560652405}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18196,7 +18366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1945238888}
   - component: {fileID: 7259583999742129370}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-K
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18272,22 +18442,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 10
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 10
 --- !u!23 &7749800958730422098
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18509,7 +18673,7 @@ GameObject:
   - component: {fileID: 4689858694435895809}
   - component: {fileID: 3912458436613918305}
   - component: {fileID: 8287307370221282222}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18571,22 +18735,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 15
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 15
 --- !u!23 &7948836962394139336
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18710,7 +18868,7 @@ GameObject:
   - component: {fileID: 5808426582459125975}
   - component: {fileID: 3754313452291742000}
   - component: {fileID: 1279689732966009815}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18770,7 +18928,7 @@ GameObject:
   - component: {fileID: 4287890820343618152}
   - component: {fileID: 9066087644105578812}
   - component: {fileID: 2309232534893837226}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19100,7 +19258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2087455830}
   - component: {fileID: 8585285563394162239}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19119,7 +19277,7 @@ GameObject:
   - component: {fileID: 5967264709851666142}
   - component: {fileID: 8780732545730455415}
   - component: {fileID: 9055066064273161929}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19138,7 +19296,7 @@ GameObject:
   - component: {fileID: 1164414195728876270}
   - component: {fileID: 3457319549346258822}
   - component: {fileID: 2664542619256007934}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19212,7 +19370,7 @@ GameObject:
   - component: {fileID: 5039853224292725622}
   - component: {fileID: 2421328781643058865}
   - component: {fileID: 8767472959554488300}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19487,22 +19645,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 6
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 6
 --- !u!65 &8292090653538226468
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19622,7 +19774,7 @@ GameObject:
   m_Component:
   - component: {fileID: 462876592}
   - component: {fileID: 950922375531795403}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-N
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19655,7 +19807,7 @@ GameObject:
   - component: {fileID: 130346654403138190}
   - component: {fileID: 3141292574879748345}
   - component: {fileID: 7759999298231695549}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19688,22 +19840,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 26
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 26
 --- !u!54 &8472899558567041470
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19732,7 +19878,7 @@ GameObject:
   - component: {fileID: 4222452143034796063}
   - component: {fileID: 7749800958730422098}
   - component: {fileID: 1572801931709868363}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19757,7 +19903,7 @@ GameObject:
   m_Component:
   - component: {fileID: 227346494}
   - component: {fileID: 5706556583738222782}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19776,7 +19922,7 @@ GameObject:
   - component: {fileID: 7551133362021058531}
   - component: {fileID: 7463226043737697706}
   - component: {fileID: 264304030439852798}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19795,7 +19941,7 @@ GameObject:
   - component: {fileID: 7551133359967443118}
   - component: {fileID: 7463226041696662247}
   - component: {fileID: 264304032430527923}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19814,7 +19960,7 @@ GameObject:
   - component: {fileID: 7551133360325900569}
   - component: {fileID: 7463226042008965968}
   - component: {fileID: 264304031933674500}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19911,7 +20057,7 @@ GameObject:
   - component: {fileID: 856965769898060974}
   - component: {fileID: 1879768171568833992}
   - component: {fileID: 7943189296354571513}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19952,7 +20098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 305577743}
   - component: {fileID: 8083671660916445806}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-I
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20205,7 +20351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1252521795}
   - component: {fileID: 5725485870195791246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20237,7 +20383,7 @@ GameObject:
   - component: {fileID: 6260470944033024701}
   - component: {fileID: 560727403862371991}
   - component: {fileID: 1086580357991413393}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20280,7 +20426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 946736225}
   - component: {fileID: 687477428507605046}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-J
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20429,7 +20575,7 @@ GameObject:
   - component: {fileID: 6719795949451650343}
   - component: {fileID: 3387112199718607404}
   - component: {fileID: 5256983318229929669}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20588,7 +20734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1099130006}
   - component: {fileID: 7699846856049250964}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keyboard-Key-A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20683,7 +20829,7 @@ GameObject:
   - component: {fileID: 551927785877037706}
   - component: {fileID: 7329274662043643058}
   - component: {fileID: 6512013678195073819}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20726,22 +20872,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a504a44a97c03c64ca223d723d27592b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  loginManager: {fileID: 1045232244}
   MinLocalX: 0.105
+  TriggerPosX: 0.125
+  UntriggerPosX: 0.19
   MaxLocalX: 0.169
-  MinLocalY: 0.38
-  MaxLocalY: 0.4
-  outputField: {fileID: 1144659767}
-  keyboardKey: 4
-  isBeingTouched: 0
-  isClicked: 0
-  isRunningLogic: 0
   greenMat: {fileID: 2100000, guid: 6d1953f12c5224a40be943994e4847e4, type: 2}
   redMat: {fileID: 2100000, guid: 0414ceb8a1b2e2545b10709a55723d88, type: 2}
-  smooth: 0
-  timeAcu: 0
-  waitTime: 5
+  recoverySpeed: 0.01
+  loginManager: {fileID: 1045232244}
+  outputField: {fileID: 1144659767}
+  keyboardKey: 4
 --- !u!33 &9032444067692330612
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20995,7 +21135,7 @@ GameObject:
   - component: {fileID: 6163319651019787765}
   - component: {fileID: 4969162318898585501}
   - component: {fileID: 4599616081176242886}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}

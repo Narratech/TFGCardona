@@ -225,8 +225,6 @@ MonoBehaviour:
   TriggerPosX: 0.125
   UntriggerPosX: 0.19
   MaxLocalX: 0.2
-  buttonXPosText: {fileID: 0}
-  buttonBody: {fileID: 2795859127679078697}
   greenMat: {fileID: 2100000, guid: 749169b54d08d824e828e6b055ae52d9, type: 2}
   redMat: {fileID: 2100000, guid: 1a96f2c436c09b745985d5faf060545d, type: 2}
   recoverySpeed: 0.01
@@ -299,7 +297,7 @@ RectTransform:
   m_GameObject: {fileID: 5635795713431291414}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1111112, y: 1.1111112, z: 1.3333335}
+  m_LocalScale: {x: 1.1111109, y: 1.111111, z: 1.3333334}
   m_Children: []
   m_Father: {fileID: 7295490118464251237}
   m_RootOrder: 0

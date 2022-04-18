@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ConnectionButton : VR_Button_Template
 {
+    [SerializeField]
     private connectionType tipoConexion;
 
     // Panels

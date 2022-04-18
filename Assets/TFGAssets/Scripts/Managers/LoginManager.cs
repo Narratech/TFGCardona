@@ -16,17 +16,7 @@ public class LoginManager : MonoBehaviourPunCallbacks
     private LoginUIManager uiManager;
 
     #region Unity Methods
-    // Start is called before the first frame update
-    void Start()
-    {
-        //PhotonNetwork.ConnectUsingSettings();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // ... Update, Start, Awake, etc.
     #endregion
 
     #region UI Callback Methods
@@ -63,10 +53,16 @@ public class LoginManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
+        if (PhotonNetwork.NickName.Length == 0) 
+        {
+            PhotonNetwork.NickName = "John Doh";
+        }
         Debug.Log("LoginManager::OnConnectedToMaster() Connected to Master Server with player name: " + PhotonNetwork.NickName);
         uiManager.enqueueDebugPanel("LoginManager::OnConnectedToMaster() Connected to Master Server with player name: " + PhotonNetwork.NickName);
         uiManager.enqueueDebugPanel("LoginManager::OnConnectedToMaster() Trying to load HR_Gathering_Scene");
-        PhotonNetwork.LoadLevel("HR_Gathering_Scene");
+        
+        // Escena a la que saltamos.
+        PhotonNetwork.LoadLevel("Room_Selection_Scene");
     }
     #endregion
 }

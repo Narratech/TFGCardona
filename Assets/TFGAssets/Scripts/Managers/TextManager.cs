@@ -13,37 +13,40 @@ public enum eMessageSource
 
 public class TextManager : MonoBehaviour
 {
+    //--------- VARIABLES EN INSPECTOR ----------------
+
+    [Header("Other Managers")]
     // Referencias Externas
     public Persistence persistenceManager;
 
-    // Esqueletos de ambas manos
+    // TEXTO QUE VE EL JUGADOR
+    [Header("OVR RIG Player UI Panels")]
     [SerializeField]
-    private OVRSkeleton RHskeleton;
+    private TextMeshPro textoChatGUI;
     [SerializeField]
-    private OVRSkeleton LHskeleton;
+    private TextMeshPro textoRecogGUI;
+    [SerializeField]
+    private TextMeshPro chatBufferGUI;
 
-    [SerializeField]
-    private Transform RHAnchor;
-    [SerializeField]
-    private Transform LHAnchor;
+    [Header("LOGS")]
+    public bool saveDebug = false;
+    public bool saveRecog = false;
+    public bool saveCapture = false;
+    public bool saveChat = false;
 
-    // Texto 3D donde se muestra la info
+    [Header("OPTIONAL PANELS")]
+    // OPCIONAL en Escena: Texto 3D donde se muestra la info de los huesos
     [SerializeField]
     private TextMeshPro RHDebugText;
     [SerializeField]
     private TextMeshPro LHDebugText;
-
-    // Huesos de las manos
-    private List<OVRBone> RHfingerBones;
-    private List<OVRBone> LHfingerBones;
-
-    // Textos que se actualizan por ocmpleto
+    // OPCIONAL en Escena: Textos que se actualizan por completo
     [SerializeField]
     private TextMeshPro textoRecog;
     [SerializeField]
     private TextMeshPro textoGuardarGesto; // Record Panel
     
-    // Textos con colas de registro
+    // OPCIONAL en Escena: Paneles de Texto con colas de registro
     [SerializeField]
     private TextMeshPro textoDebug;
     [SerializeField]
@@ -51,13 +54,38 @@ public class TextManager : MonoBehaviour
     [SerializeField]
     private TextMeshPro textoPersistencia;
 
-    // TEXTO QUE VE EL JUGADOR
+    [Header("OPTIONAL PANEL DATA")]
+
+    // Esqueletos de ambas manos
     [SerializeField]
-    private TextMeshPro textoChatGUI;
+    private OVRSkeleton RHskeleton;
     [SerializeField]
-    private TextMeshPro textoRecogGUI;
+    private OVRSkeleton LHskeleton;
     [SerializeField]
-    private TextMeshPro chatBufferGUI;
+    private Transform RHAnchor;
+    [SerializeField]
+    private Transform LHAnchor;
+
+    [Header("Optional Panels Update")]
+    // Activadores de debugs
+    // Debug General
+    public bool updateDebugPanel = false;
+    // Reconocimiento de gestos de la DB 
+    public bool updateRecogPanel = false;
+    // Captura de nuevos gestos
+    public bool updateCapturePanel = false;
+    // Chat
+    public bool updateChatPanel = false;
+    // Persistencia
+    public bool updatePersistencyPanel = false;
+    // Debug Huesos de la mano
+    public bool updateBonesPanel = false;
+
+    //--------- VARIABLES INTERNAS ----------------
+
+    // Huesos de las manos
+    private List<OVRBone> RHfingerBones;
+    private List<OVRBone> LHfingerBones;
 
     // Colas de texto
     private Queue<string> debugTextQueue;
@@ -68,22 +96,6 @@ public class TextManager : MonoBehaviour
     private Queue<string> persistTextQueue;
     private List<string> persistLog;
 
-    // Activadores de debugs
-    // Debug General
-    public bool updateDebug  = true;
-    public bool saveDebug = false;
-    // Reconocimiento de gestos de la DB 
-    public bool updateRecog  = true;
-    public bool saveRecog = false;
-    // Captura de nuevos gestos
-    public bool updateCapture = true;
-    public bool saveCapture = false;
-    // Chat
-    public bool updateChat   = true;
-    public bool saveChat = false;
-    // Debug Huesos de la mano
-    public bool updateBones  = true;
-    
     // Parametros de paneles
     public int debugTextMaxLines = 35;
     public int chatTextMaxLines = 5;
@@ -104,8 +116,11 @@ public class TextManager : MonoBehaviour
         persistLog = new List<string>();
 
         // Huesos manos
-        RHfingerBones = new List<OVRBone>(RHskeleton.Bones);
-        LHfingerBones = new List<OVRBone>(LHskeleton.Bones);
+        if (RHskeleton != null && LHskeleton != null)
+        {
+            RHfingerBones = new List<OVRBone>(RHskeleton.Bones);
+            LHfingerBones = new List<OVRBone>(LHskeleton.Bones);
+        }
 
         // First message.
         string nowTime = DateTime.Now.ToString();
@@ -172,17 +187,23 @@ public class TextManager : MonoBehaviour
     /// </summary>
     public void UpdatePersistPanel()
     {
-        Debug.Log("Actualizando panel Persistencia.");
-        int index = 0;
-        textoPersistencia.text = "";
+        if (updatePersistencyPanel)
+        { 
+            Debug.Log("Actualizando panel Persistencia.");
+            int index = 0;
+            if (textoPersistencia != null)
+            { 
+                textoPersistencia.text = "";
 
-        foreach (string line in persistTextQueue)
-        {
-            if (index < persistTextQueue.Count - 1)
-                textoPersistencia.text += line + "\n";
-            else
-                textoPersistencia.text += line;
-            index++;
+                foreach (string line in persistTextQueue)
+                {
+                    if (index < persistTextQueue.Count - 1)
+                        textoPersistencia.text += line + "\n";
+                    else
+                        textoPersistencia.text += line;
+                    index++;
+                }
+            }
         }
     }
 
@@ -197,61 +218,57 @@ public class TextManager : MonoBehaviour
     /// <param name="line"></param>
     public void EnqueueChatText(string line, eMessageSource eTextSource)
     {
-        if (updateChat)
+        Debug.Log("enqueueChatText() - Encolando texto: " + line);
+        chatTextIndex++;
+
+        // Añadimos iconos
+        string textIntoChat;
+        if (eTextSource == eMessageSource.VOICE)
         {
-            Debug.Log("enqueueChatText() - Encolando texto: " + line);
-            chatTextIndex++;
-
-            // Añadimos iconos
-            string textIntoChat;
-            if (eTextSource == eMessageSource.VOICE)
-            {
-                textIntoChat = "<sprite=\"IconosChat\" name=\"IconosChat_0\">" + line;
-            }
-            else if (eTextSource == eMessageSource.HAND_SIGN)
-            {
-                textIntoChat = "<sprite=\"IconosChat\" index=1> " + line;
-            }
-            else
-            {
-                textIntoChat = line;
-            }
-
-            // Add line
-            chatTextQueue.Enqueue(textIntoChat);
-            chatLog.Add(chatTextIndex + ": " + line);
-
-            if (chatTextQueue.Count > chatTextMaxLines)
-            {
-                chatTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
-            }
-
-            UpdateChatPanel();
+            textIntoChat = "<sprite=\"IconosChat\" name=\"IconosChat_0\">" + line;
+        }
+        else if (eTextSource == eMessageSource.HAND_SIGN)
+        {
+            textIntoChat = "<sprite=\"IconosChat\" index=1> " + line;
         }
         else
-            Debug.Log("Update Chat Panel is deactivated.");
+        {
+            textIntoChat = line;
+        }
+
+        // Add line
+        chatTextQueue.Enqueue(textIntoChat);
+        chatLog.Add(chatTextIndex + ": " + line);
+
+        if (chatTextQueue.Count > chatTextMaxLines)
+        {
+            chatTextQueue.Dequeue(); // Quitamos el primer elemento de la cola (FIFO)
+        }
+
+        UpdateChat();   
     }
 
     /// <summary>
     /// Actualiza el texto del panel de chat en la escena.
     /// </summary>
-    public void UpdateChatPanel()
+    public void UpdateChat()
     {
         Debug.Log("Actualizando panel Chat.");
         int index = 0;
-        textoChat.text = "";
+        if (updateChatPanel) textoChat.text = "";
+        // El GUI del jugador siempre se actualiza
         textoChatGUI.text = "";
 
         foreach (string line in chatTextQueue)
         {
             if (index < chatTextQueue.Count - 1)
-            { 
-                textoChat.text += line + "\n";
+            {
+                if (updateChatPanel) textoChat.text += line + "\n";
                 textoChatGUI.text += line + "\n";
             }
             else
-            { 
-                textoChat.text += line;
+            {
+                if (updateChatPanel) textoChat.text += line;
                 textoChatGUI.text += line;
             }
             index++;
@@ -271,7 +288,7 @@ public class TextManager : MonoBehaviour
     /// <param name="line"></param>
     public void EnqueueDebugText(string line)
     {
-        if (updateDebug)
+        if (updateDebugPanel)
         {
             Debug.Log("enqueueDebugText() - Encolando texto: " + line);
             debugTextIndex++;
@@ -300,7 +317,7 @@ public class TextManager : MonoBehaviour
     /// </summary>
     public void UpdateDebugPanel()
     {
-        if (updateDebug)
+        if (updateDebugPanel)
         {
             Debug.Log("Actualizando panel Debug.");
             int index = 0;
@@ -362,7 +379,7 @@ public class TextManager : MonoBehaviour
     /////////////////////////////////////////
     public void UpdateBonePanels()
     {
-        if (updateBones)
+        if (updateBonesPanel)
         {
             string RHtext = "Bone Debugger\n------------------------\nRIGHT HAND\n";
             string LHtext = "Bone Debugger\n------------------------\nLEFT HAND\n";
@@ -395,10 +412,12 @@ public class TextManager : MonoBehaviour
             RHDebugText.text = RHtext;
             LHDebugText.text = LHtext;
         }
+        /*
         else 
         {
             Debug.Log("Update Bone Panels is deactivated.");
         }
+        */
     }
 
     /////////////////////////////////////////
