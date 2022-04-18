@@ -10,7 +10,7 @@ public class Persistence : MonoBehaviour
     [SerializeField]
     private GestureRecognizer GR;
     [SerializeField]
-    private TextManager _debugManager;
+    private TextManager textManager;
 
     // Lista interna de gestos? Usar la del manager
     private List<Gesture> gestos;
@@ -30,7 +30,7 @@ public class Persistence : MonoBehaviour
 
     public void Init(GestureRecognizer gr, string fileName)
     {
-        _debugManager.EnqueuePersistenceText(debugCounter++ + "- Inicializada la Persistencia.");
+        textManager.EnqueuePersistenceText(debugCounter++ + "- Inicializada la Persistencia.");
 
         // Reconocedor de gestos
         GR = gr;
@@ -47,12 +47,12 @@ public class Persistence : MonoBehaviour
         // Leer el fichero y cargar los gestos nada más se inicie la aplicación
         // Si falla la carga entramos en el if
         Debug.Log("Persistence::Init() - Intentando leer archivo de gestos.");
-        _debugManager.EnqueuePersistenceText(debugCounter++ + " - Persistence::Init() - Intentando leer archivo de gestos.");
+        textManager.EnqueuePersistenceText(debugCounter++ + " - Persistence::Init() - Intentando leer archivo de gestos.");
 
         if (!Deserialize())
         {
             Debug.Log("Persistence::Init() - No se han podido cargar gestos.");
-            _debugManager.EnqueuePersistenceText(debugCounter++ + " - Persistence::Init() - No se han podido cargar gestos.");
+            textManager.EnqueuePersistenceText(debugCounter++ + " - Persistence::Init() - No se han podido cargar gestos.");
         }
 
         
@@ -130,7 +130,7 @@ public class Persistence : MonoBehaviour
     public void SaveGesture(Gesture gesto)
     {
         Debug.Log("Persistence::saveGesture()");
-        _debugManager.EnqueuePersistenceText(debugCounter++ + "- Llamando a SaveGesture.");
+        textManager.EnqueuePersistenceText(debugCounter++ + "- Llamando a SaveGesture.");
 
         Gesture toAddGesture = new Gesture();
 
@@ -188,7 +188,7 @@ public class Persistence : MonoBehaviour
     /// </summary>
     private void Serialize()
     {
-        _debugManager.EnqueuePersistenceText(debugCounter++ + "- Llamando a Serializar.");
+        textManager.EnqueuePersistenceText(debugCounter++ + "- Llamando a Serializar.");
 
         // Preparamos el serializador a XML
         XmlSerializer xmlSer = new XmlSerializer(typeof(List<Gesture>));
@@ -205,13 +205,13 @@ public class Persistence : MonoBehaviour
         {
             success = false;
             Debug.Log("Persistence::Serialize() - Error al serializar los gestos: " + e.ToString());
-            _debugManager.EnqueuePersistenceText(debugCounter++ + "- Error al serializar el gesto.");
+            textManager.EnqueuePersistenceText(debugCounter++ + "- Error al serializar el gesto.");
         }
 
         if (success)
         { 
             Debug.Log("Persistence::Serialize() - Exito al guardar el archivo de gestos");
-            _debugManager.EnqueuePersistenceText(debugCounter++ + "- Exito al guardar el archivo de gestos.");
+            textManager.EnqueuePersistenceText(debugCounter++ + "- Exito al guardar el archivo de gestos.");
         }
 
         // Cerramos el writer.
@@ -230,14 +230,14 @@ public class Persistence : MonoBehaviour
     public void saveTextLog(string filename, List<string> textList)
     {
         Debug.Log("saveTextLog() Archivo: " + filename + " - Tamaño textList: " + textList.Count);
-        _debugManager.EnqueuePersistenceText(debugCounter++ + "- saveTextLog() Archivo: " + filename + " - Tamaño textList: " + textList.Count);
+        textManager.EnqueuePersistenceText(debugCounter++ + "- saveTextLog() Archivo: " + filename + " - Tamaño textList: " + textList.Count);
         
         _logFile = filename;
 
         if (persistenceDebugText == null)
         {
             Debug.Log("saveTextLog() PersistenceDebugText es Null, generando nuevo.");
-            _debugManager.EnqueuePersistenceText(debugCounter++ + "- PersistenceDebugText es Null, generando nuevo.");
+            textManager.EnqueuePersistenceText(debugCounter++ + "- PersistenceDebugText es Null, generando nuevo.");
             persistenceDebugText = new List<string>(textList);
         }
         else
@@ -245,7 +245,7 @@ public class Persistence : MonoBehaviour
             persistenceDebugText.Clear();
             persistenceDebugText.AddRange(textList);
             Debug.Log("saveTextLog() PersistenceDebugText existe. Limpiando y rellenando, ahora tiene tamaño: " + persistenceDebugText.Count);
-            _debugManager.EnqueuePersistenceText(debugCounter++ + "- PersistenceDebugText existe. Limpiando y rellenando.");
+            textManager.EnqueuePersistenceText(debugCounter++ + "- PersistenceDebugText existe. Limpiando y rellenando.");
         }
 
         SerializeDebugText();        
@@ -255,7 +255,7 @@ public class Persistence : MonoBehaviour
     private void SerializeDebugText()
     {
         Debug.Log("serializeDebugText() Preparando serializador XML");
-        _debugManager.EnqueuePersistenceText(debugCounter++ + "- serializeDebugText() Preparando serializador XML.");
+        textManager.EnqueuePersistenceText(debugCounter++ + "- serializeDebugText() Preparando serializador XML.");
         
         XmlSerializer xmlSer = new XmlSerializer(typeof(List<string>));
         TextWriter writer = new StreamWriter(_logFile);
@@ -269,13 +269,13 @@ public class Persistence : MonoBehaviour
         {
             success = false;
             Debug.Log("Persistence::SerializeDebugText() - Error al serializar log texto: " + e.ToString());
-            _debugManager.EnqueuePersistenceText(debugCounter++ + "- Error al serializar log texto");
+            textManager.EnqueuePersistenceText(debugCounter++ + "- Error al serializar log texto");
         }
 
         if (success)
         { 
             Debug.Log("Persistence::SerializeDebugText() - Exito al guardar el log texto.");
-            _debugManager.EnqueuePersistenceText(debugCounter++ + "- Exito al guardar el log texto.");
+            textManager.EnqueuePersistenceText(debugCounter++ + "- Exito al guardar el log texto.");
         }
         writer.Close();
     }
@@ -290,7 +290,7 @@ public class Persistence : MonoBehaviour
         if (debugThis)
         {
             Debug.Log("Persistence::Deserialize() - file: " + _gestureFile); //fileName
-            _debugManager.EnqueuePersistenceText(debugCounter++ + "Persistence::Deserialize()");
+            textManager.EnqueuePersistenceText(debugCounter++ + "Persistence::Deserialize()");
         }
 
         // Intentamos abrir el archivo de guardado si existe.
@@ -302,7 +302,7 @@ public class Persistence : MonoBehaviour
         catch (Exception)
         {
             Debug.Log("Persistence::Deserialize() - WARNING: No se ha encontrado o podido abrir el archivo: " + _gestureFile);//Name);
-            _debugManager.EnqueuePersistenceText(debugCounter++ + "Persistence::Deserialize() - WARNING: No se ha encontrado o podido abrir el archivo");
+            textManager.EnqueuePersistenceText(debugCounter++ + "Persistence::Deserialize() - WARNING: No se ha encontrado o podido abrir el archivo");
             // Volvemos al init.
             return false;
         }
@@ -321,7 +321,7 @@ public class Persistence : MonoBehaviour
             if (debugLoadedBones)
             {
                 Debug.Log("Gestos en archivo: " + gestos.Count);
-                _debugManager.EnqueuePersistenceText(debugCounter++ + ".- Gestos en archivo: " + gestos.Count);
+                textManager.EnqueuePersistenceText(debugCounter++ + ".- Gestos en archivo: " + gestos.Count);
 
                 foreach (Gesture gesto in gestos)
                 {
@@ -355,7 +355,7 @@ public class Persistence : MonoBehaviour
             if (debugThis)
             {
                 Debug.Log("Persistence::Deserialize() - Cargado archivo con exito.");
-                _debugManager.EnqueuePersistenceText(debugCounter++ + "Persistence::Deserialize() - Cargado archivo con exito");
+                textManager.EnqueuePersistenceText(debugCounter++ + "Persistence::Deserialize() - Cargado archivo con exito");
             } 
 
             return true;
@@ -367,7 +367,7 @@ public class Persistence : MonoBehaviour
             if (debugThis)
             {
                 Debug.Log("Persistence::Deserialize() - No se ha podido cargar el archivo de gestos.");
-                _debugManager.EnqueuePersistenceText(debugCounter++ + "Persistence::Deserialize() - No se ha podido cargar el archivo de gestos.");
+                textManager.EnqueuePersistenceText(debugCounter++ + "Persistence::Deserialize() - No se ha podido cargar el archivo de gestos.");
             }
 
             return true;

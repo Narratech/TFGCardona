@@ -18,6 +18,7 @@ public class TextManager : MonoBehaviour
     [Header("Other Managers")]
     // Referencias Externas
     public Persistence persistenceManager;
+    public GestureRecognizer gestureRecognizer;
 
     // TEXTO QUE VE EL JUGADOR
     [Header("OVR RIG Player UI Panels")]
@@ -27,6 +28,16 @@ public class TextManager : MonoBehaviour
     private TextMeshPro textoRecogGUI;
     [SerializeField]
     private TextMeshPro chatBufferGUI;
+    [SerializeField]
+    private TextMeshPro topHeadText;
+    [SerializeField]
+    private GameObject topHeadTextBackground;
+
+    [Header("Top Head Text Timer")]
+    private float topHeadTextTimer = 0.0f;
+    [SerializeField]
+    public float topHeadTextDuration = 5.0f;
+    public bool topHeadTextIsVisible = false;
 
     [Header("LOGS")]
     public bool saveDebug = false;
@@ -55,7 +66,6 @@ public class TextManager : MonoBehaviour
     private TextMeshPro textoPersistencia;
 
     [Header("OPTIONAL PANEL DATA")]
-
     // Esqueletos de ambas manos
     [SerializeField]
     private OVRSkeleton RHskeleton;
@@ -65,6 +75,10 @@ public class TextManager : MonoBehaviour
     private Transform RHAnchor;
     [SerializeField]
     private Transform LHAnchor;
+    // Parametros de paneles
+    public int debugTextMaxLines = 35;
+    public int chatTextMaxLines = 5;
+    public int persistTextMaxLines = 10;
 
     [Header("Optional Panels Update")]
     // Activadores de debugs
@@ -96,13 +110,12 @@ public class TextManager : MonoBehaviour
     private Queue<string> persistTextQueue;
     private List<string> persistLog;
 
-    // Parametros de paneles
-    public int debugTextMaxLines = 35;
-    public int chatTextMaxLines = 5;
-    public int persistTextMaxLines = 10;
+    // Indices
     private int debugTextIndex = 0;
     private int chatTextIndex = 0;
     private int persistTextIndex = 0;
+
+    // Strings
     private string sessionStart;
 
     public void Init()
@@ -130,6 +143,23 @@ public class TextManager : MonoBehaviour
 
         // Chat Buffer
         chatBuffer = "";
+    }
+
+    private void Update()
+    {
+        // Top head text management
+        if (topHeadTextIsVisible)
+        {
+            topHeadTextTimer += Time.deltaTime;
+
+            if (topHeadTextTimer > topHeadTextDuration)
+            {
+                clearTopHeadText();
+                topHeadTextTimer = 0.0f;
+                topHeadTextIsVisible = false;
+            }
+
+        }
     }
 
     /// <summary>
@@ -511,8 +541,6 @@ public class TextManager : MonoBehaviour
     {
         // Sustituimos los "_" por espacios en blanco
         string processedText = chatBuffer.Replace("_", " ");
-
-
         EnqueueChatText(processedText, eMessageSource.HAND_SIGN);
 
         // Mandamos el texto del buffer al chat
@@ -520,9 +548,53 @@ public class TextManager : MonoBehaviour
         // Actualizamos la ventana de chat
         // UpdateChatPanel();
 
+        // Actualizamos el top head text
+        if (topHeadText != null && topHeadTextBackground != null)
+        {
+            startTopHeadTextTimer();
+            topHeadTextBackground.SetActive(true);
+            topHeadText.gameObject.SetActive(true);
+            topHeadText.text = chatBuffer;
+        }
+
         // Vaciamos el buffer
         chatBuffer = "";
         // Actualizamos el bufferGUI
         chatBufferGUI.text = chatBuffer;
+        
+    }
+
+
+    ////////////////////////////////////////////////////////////////////
+    //////////  METODOS DE GESTION DE TEXTO SOBRE CABEZA ///////////////
+    ////////////////////////////////////////////////////////////////////
+    // esto esta aquí para evitar tener varios updates en los objetos //
+    // el update del GestureRecognizer se ocupa de contar el tiempo   //
+    // que el texto sobre la cabeza será mostrado.                    //
+    ////////////////////////////////////////////////////////////////////
+    ///
+    public void clearTopHeadText()
+    {
+        if (topHeadText != null && topHeadTextBackground != null)
+        {
+            topHeadText.text = "";
+            topHeadText.gameObject.SetActive(false);
+            topHeadTextBackground.SetActive(false);
+        }
+    }
+
+    public void startTopHeadTextTimer()
+    {
+        topHeadTextIsVisible = true;
+    }
+
+    public bool isTopHeadTimerActive()
+    {
+        return topHeadTextIsVisible;
+    }
+
+    public void resetTopHeadTimer()
+    {
+        topHeadTextTimer = 0.0f;
     }
 }

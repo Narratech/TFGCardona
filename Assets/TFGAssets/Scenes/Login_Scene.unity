@@ -1085,6 +1085,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 438421066286286985, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 438421066286287029, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1121,6 +1125,10 @@ PrefabInstance:
       propertyPath: handSkeleton
       value: 
       objectReference: {fileID: 524854330}
+    - target: {fileID: 438421066450850215, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 438421066455338675, guid: 131dd70c5ceca9c4f9beaffb258d94d7, type: 3}
       propertyPath: m_IsActive
       value: 0
