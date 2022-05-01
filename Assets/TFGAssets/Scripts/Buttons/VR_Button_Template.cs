@@ -5,7 +5,7 @@ using TMPro;
 
 public class VR_Button_Template : MonoBehaviour
 {
-    // Posiciones mÌnimas y m·ximas del boton
+    // Posiciones m√≠nimas y m√°ximas del boton
     // Horizontal
     [SerializeField]
     private float MinLocalX = 0.105f;
@@ -100,7 +100,7 @@ public class VR_Button_Template : MonoBehaviour
 
         // Reset Z e Y
         transform.localPosition.Set(transform.localPosition.x, OriginalPosition.y, OriginalPosition.z);
-        
+
         // Text
         //debugText = debugText + transform.localPosition.x;
         //debug.text = debugText;

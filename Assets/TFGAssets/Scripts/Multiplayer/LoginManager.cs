@@ -6,6 +6,9 @@ using TMPro;
 
 public class LoginManager : MonoBehaviourPunCallbacks
 {
+    // CLASE COMO SINGLETON
+    public static LoginManager Instance;
+
     //public TMP_InputField inputField;
     public TextMeshPro playerNameField;
     // Panels
@@ -16,7 +19,16 @@ public class LoginManager : MonoBehaviourPunCallbacks
     private LoginUIManager uiManager;
 
     #region Unity Methods
-    // ... Update, Start, Awake, etc.
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
     #endregion
 
     #region UI Callback Methods
@@ -53,10 +65,6 @@ public class LoginManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        if (PhotonNetwork.NickName.Length == 0) 
-        {
-            PhotonNetwork.NickName = "John Doh";
-        }
         Debug.Log("LoginManager::OnConnectedToMaster() Connected to Master Server with player name: " + PhotonNetwork.NickName);
         uiManager.enqueueDebugPanel("LoginManager::OnConnectedToMaster() Connected to Master Server with player name: " + PhotonNetwork.NickName);
         uiManager.enqueueDebugPanel("LoginManager::OnConnectedToMaster() Trying to load HR_Gathering_Scene");

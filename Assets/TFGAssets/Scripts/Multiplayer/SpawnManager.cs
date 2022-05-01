@@ -16,6 +16,7 @@ public class SpawnManager : MonoBehaviour
         // Instantiate players in scene.
         if (PhotonNetwork.IsConnectedAndReady)
         {
+            Debug.Log("Instantiating player prefab into multiplayer scene.");
             // Usando un player prefab.
             // Local OVRPlayer Controller access to headset data, therefore the prefab instantiation should not have
             // access to that.
@@ -28,11 +29,5 @@ public class SpawnManager : MonoBehaviour
 
             PhotonNetwork.Instantiate(GenericVRPlayerPrefab.name, SpawnPosition, Quaternion.identity);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

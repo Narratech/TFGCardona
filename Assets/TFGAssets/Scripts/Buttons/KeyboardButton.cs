@@ -6,18 +6,107 @@ using TMPro;
 public class KeyboardButton : VR_Button_Template
 {
     [SerializeField]
-    private LoginManager loginManager;
-
-    [SerializeField]
-    //private TMP_InputField outputField;
-    private TMP_Text outputField;
-
-    [SerializeField]
     private KeyCommand keyboardKey;
 
-    void Start()
+    private void Start()
     {
-        outputField.text = "";
+        TextMeshPro buttonText = GetComponentInChildren(typeof(TextMeshPro)) as TextMeshPro;
+        switch (keyboardKey)
+        {
+            case KeyCommand.A:
+                buttonText.text = "A";
+                break;
+            case KeyCommand.B:
+                buttonText.text = "B";
+                break;
+            case KeyCommand.C:
+                buttonText.text = "C";
+                break;
+            case KeyCommand.D:
+                buttonText.text = "D";
+                break;
+            case KeyCommand.E:
+                buttonText.text = "E";
+                break;
+            case KeyCommand.F:
+                buttonText.text = "F";
+                break;
+            case KeyCommand.G:
+                buttonText.text = "G";
+                break;
+            case KeyCommand.H:
+                buttonText.text = "H";
+                break;
+            case KeyCommand.I:
+                buttonText.text = "I";
+                break;
+            case KeyCommand.J:
+                buttonText.text = "J";
+                break;
+            case KeyCommand.K:
+                buttonText.text = "K";
+                break;
+            case KeyCommand.L:
+                buttonText.text = "L";
+                break;
+            case KeyCommand.M:
+                buttonText.text = "M";
+                break;
+            case KeyCommand.N:
+                buttonText.text = "N";
+                break;
+            case KeyCommand.Ñ:
+                buttonText.text = "Ñ";
+                break;
+            case KeyCommand.O:
+                buttonText.text = "O";
+                break;
+            case KeyCommand.P:
+                buttonText.text = "P";
+                break;
+            case KeyCommand.Q:
+                buttonText.text = "Q";
+                break;
+            case KeyCommand.R:
+                buttonText.text = "R";
+                break;
+            case KeyCommand.S:
+                buttonText.text = "S";
+                break;
+            case KeyCommand.T:
+                buttonText.text = "T";
+                break;
+            case KeyCommand.U:
+                buttonText.text = "U";
+                break;
+            case KeyCommand.V:
+                buttonText.text = "V";
+                break;
+            case KeyCommand.W:
+                buttonText.text = "W";
+                break;
+            case KeyCommand.X:
+                buttonText.text = "X";
+                break;
+            case KeyCommand.Y:
+                buttonText.text = "Y";
+                break;
+            case KeyCommand.Z:
+                buttonText.text = "Z";
+                break;
+            case KeyCommand.ENTER:
+                buttonText.text = "ENTER";
+                break;
+            case KeyCommand.BACKSPACE:
+                buttonText.text = "BCKSPACE";
+                break;
+            case KeyCommand.BACK:
+                buttonText.text = "BACK";
+                return;
+            default:
+                buttonText.text = "Please Choose Key";
+                break;
+        }
     }
 
     public override void OnClick()
@@ -107,29 +196,31 @@ public class KeyboardButton : VR_Button_Template
                 key = "Z";
                 break;
             case KeyCommand.ENTER:
-                loginManager.ConnectToPhotonServer();
+                //LoginManager.Instance.ConnectToPhotonServer();
                 break;
             case KeyCommand.BACKSPACE:
+                /*
                 string textEdited = "";
                 // Eliminamos el último caracter
-                if (outputField.text.Length > 1)
+                if (KeyboardManager.Instance.outputField.text.Length > 1)
                 {
-                    textEdited = outputField.text.Remove(outputField.text.Length - 1);
+                    textEdited = KeyboardManager.Instance.outputField.text.Remove(KeyboardManager.Instance.outputField.text.Length - 1);
                 }
                 else
                 {
                     textEdited = "";
                 }
-                outputField.text = textEdited;
+                //KeyboardManager.Instance.outputField.text = textEdited;
+                */
                 return;
             case KeyCommand.BACK:
-                loginManager.backToSelection();
+                //LoginManager.Instance.backToSelection();
                 return;
             default:
                 key = "invalid";
                 break;
         }
 
-        outputField.text = outputField.text + key;
+        //KeyboardManager.Instance.outputField.text = KeyboardManager.Instance.outputField.text + key;
     }
 }
