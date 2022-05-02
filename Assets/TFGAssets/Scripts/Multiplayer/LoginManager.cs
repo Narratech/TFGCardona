@@ -10,10 +10,13 @@ public class LoginManager : MonoBehaviourPunCallbacks
     public static LoginManager Instance;
 
     //public TMP_InputField inputField;
-    public TextMeshPro playerNameField;
+    [SerializeField]
+    private TextMeshPro playerNameField;
     // Panels
-    public GameObject ConnectOptionPanel;
-    public GameObject ConnectWithNamePanel;
+    [SerializeField]
+    private GameObject ConnectOptionPanel;
+    [SerializeField]
+    private GameObject ConnectWithNamePanel;
     // Other Managers
     [SerializeField]
     private LoginUIManager uiManager;

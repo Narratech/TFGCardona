@@ -6,25 +6,25 @@ using Photon.Pun;
 public class PlayerNetworkSetup : MonoBehaviourPunCallbacks
 {
     public GameObject LocalOVRRigGameObject;
-    public GameObject LocalGR;
-    public GameObject LocalPersistence;
-    public GameObject LocalTextManager;
-    public GameObject SpeechRecognition;
+    public GameObject LocalManagers;
     public GameObject AvatarHead;
     public GameObject AvatarBody;
+    public GameObject AvatarHandR;
+    public GameObject AvatarHandL;
 
     // Start is called before the first frame update
     void Start()
     {
+        // For now we dont draw the avatar hands
+        AvatarHandR.SetActive(false);
+        AvatarHandL.SetActive(false);
+
         // Setup player (Tells us if the player is local or remote
         if (photonView.IsMine)
         {
             // The Player is local
             LocalOVRRigGameObject.SetActive(true);
-            LocalGR.SetActive(true);
-            LocalPersistence.SetActive(true);
-            LocalTextManager.SetActive(true);
-            SpeechRecognition.SetActive(true);
+            LocalManagers.SetActive(true);
 
             // Allow/Block render of head and body
             SetLayerRecursively(AvatarHead, 7); // CustomLayer: LocalAvatarHead
@@ -34,10 +34,7 @@ public class PlayerNetworkSetup : MonoBehaviourPunCallbacks
         {
             // The player is Remote
             LocalOVRRigGameObject.SetActive(false);
-            LocalGR.SetActive(false);
-            LocalPersistence.SetActive(false);
-            LocalTextManager.SetActive(false);
-            SpeechRecognition.SetActive(false);
+            LocalManagers.SetActive(false);
 
             // Allow/Block render of head and body
             SetLayerRecursively(AvatarHead, 0); // Default Layer (Rendereable)

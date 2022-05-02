@@ -138,6 +138,25 @@ public class GestureRecognizer : MonoBehaviour
     private float timeFromLastCommand = 0.0f;
     private float timeBetweenSameCommand = 1.0f;
 
+    // CLASE COMO SINGLETON (Es parte del prefab de OVRPlayer, así que solo debe existir uno en escena).
+    // En multijugador, desactivar el gesture recognizer de todo player que no sea local.
+    public static GestureRecognizer Instance;
+
+    //////////////////////////////////////////////////////////////////////
+    ///////////////////////  UNITY LIFE CYCLE ////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    #region Unity Life Cycle
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -158,10 +177,65 @@ public class GestureRecognizer : MonoBehaviour
         if (gesturesDB == null) gesturesDB = new List<Gesture>();
     }
 
+
+    // Update is called once per frame
+    void Update()
+    {
+        //textManager.UpdateBonePanels();
+
+        // Actualizar temporizadores
+        timeAcu += Time.deltaTime;
+        timeFromLastCommand += Time.deltaTime;
+
+        // GESTURE RECOGNITION
+        if (timeBetweenRecognition < timeAcu && !isRecognizing)
+        {
+            isRecognizing = true;
+
+            // WORKFLOW DEL RECONOCIMIENTO GESTO
+            // RECONOCIMIENTO->PROCESADO->VALIDACION
+            // 
+            // RECONOCIMIENTO: Toma los valores de la mano en escena, los compara con la base de datos y si encuentra una coincidencia la procesa.
+            // PROCESADO: Tiene en cuenta gestos anteriores para intentar validar el gesto reconocido. Al terminar informa del resultado y actualiza debugs.
+            // VALIDACION: Da el valor final de reconocimiento, transcribiendo al chat el valor del gesto segun si lo ha procesado como gesto simple o compuesto.
+
+            // Recognize inicia el Workflow, llama a los metodos de procesado y estos a la validación si lo ven conveniente.
+            Recognize();
+
+            timeAcu = 0.0f;
+        }
+    }
+    #endregion
+
+    //////////////////////////////////////////////////////////////////////
+    ///////////////////////  GETTERS/SETTERS /////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    #region Getters And Setters
+    public OVRHand getLeftHand()
+    {
+        return LeftHand;
+    }
+
+    public OVRHand getRightHand()
+    {
+        return RightHand;
+    }
+
+    public OVRSkeleton getLeftHandSkeleton()
+    {
+        return LHskeleton;
+    }
+
+    public OVRSkeleton getRightHandSkeleton()
+    {
+        return RHskeleton;
+    }
+    #endregion
+
     ////////////////////////////////////////////////////////////////////
     ///////////////////////  BASE DE DATOS DE GESTOS ///////////////////
     ////////////////////////////////////////////////////////////////////
-
+    #region Gesture Database
     public List<Gesture> getGestureList()
     {
         return gesturesDB;
@@ -200,42 +274,13 @@ public class GestureRecognizer : MonoBehaviour
             }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////
-    ///////////////////////  LOGICA INTERNA ////////////////////////////
-    ////////////////////////////////////////////////////////////////////
-
-    // Update is called once per frame
-    void Update()
-    {
-        //textManager.UpdateBonePanels();
-
-        // Actualizar temporizadores
-        timeAcu += Time.deltaTime;
-        timeFromLastCommand += Time.deltaTime;
-
-        // GESTURE RECOGNITION
-        if (timeBetweenRecognition < timeAcu && !isRecognizing)
-        {
-            isRecognizing = true;
-
-            // WORKFLOW DEL RECONOCIMIENTO GESTO
-            // RECONOCIMIENTO->PROCESADO->VALIDACION
-            // 
-            // RECONOCIMIENTO: Toma los valores de la mano en escena, los compara con la base de datos y si encuentra una coincidencia la procesa.
-            // PROCESADO: Tiene en cuenta gestos anteriores para intentar validar el gesto reconocido. Al terminar informa del resultado y actualiza debugs.
-            // VALIDACION: Da el valor final de reconocimiento, transcribiendo al chat el valor del gesto segun si lo ha procesado como gesto simple o compuesto.
-
-            // Recognize inicia el Workflow, llama a los metodos de procesado y estos a la validación si lo ven conveniente.
-            Recognize();
-            
-            timeAcu = 0.0f;
-        }
-    }
+    #endregion
 
     ////////////////////////////////////////////////////////////////////
     ///////////////  METODOS DE GESTION DE GESTOS //////////////////////
     ////////////////////////////////////////////////////////////////////
+    #region Gesture Capture
+    
 
     public void SaveGesture(handUsage handSelector, gesturePhase phase, gestureCategory category, string simpleTranscription, List<string> composedTranscription, string gestureName = "")
     {
@@ -358,12 +403,13 @@ public class GestureRecognizer : MonoBehaviour
 
         return quatDist;
     }
-
+    #endregion
 
     //////////////////////////////////////////////////
     ///////// RECONOCIMIENTO DEL GESTO ///////////////
     //////////////////////////////////////////////////
-
+    #region Gesture Recognition
+    
     /// <summary>
     /// Por cada gesto almacenado en la lista de Gestos, lo compara contra la posición actual de las manos
     /// en la escena.
@@ -639,11 +685,13 @@ public class GestureRecognizer : MonoBehaviour
             OnProcessed(currentGesture);
         }
     }
+    #endregion
 
     //////////////////////////////////////////////////
     ///////////// PROCESADO DEL GESTO ////////////////
     //////////////////////////////////////////////////
-
+    #region Gesture Processing
+    
     private void ProcessRecognizedGesture(Gesture recognizedGesture)
     {
         bool showDebugInfo = false;
@@ -993,11 +1041,12 @@ public class GestureRecognizer : MonoBehaviour
         // Marcamos la flag informando que ha terminado el procesado.
         isRecognizing = false;
     }
+    #endregion
 
     //////////////////////////////////////////////////
     ///////////// VALIDACION DE GESTO ////////////////
     //////////////////////////////////////////////////
-
+    #region Gesture Validation
     private void ValidateCommand(Gesture RecognizedCommandGesture)
     {
         textManager.EnqueueDebugText("ValidateCommand() : " + RecognizedCommandGesture.gestureName);
@@ -1100,4 +1149,5 @@ public class GestureRecognizer : MonoBehaviour
                 textManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], false);
         }
     }
+    #endregion
 }

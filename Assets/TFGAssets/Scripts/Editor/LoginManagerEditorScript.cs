@@ -10,8 +10,8 @@ public class LoginManagerEditorScript : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        DrawDefaultInspector();
         EditorGUILayout.HelpBox("This script is responsible for connecting to Photon Servers.", MessageType.Info);
+        //DrawDefaultInspector(); (Si activo, pintara dos veces la info del inspector)
 
         LoginManager loginManager = (LoginManager)target;
         

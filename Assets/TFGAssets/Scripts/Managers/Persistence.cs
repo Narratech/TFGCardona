@@ -28,6 +28,20 @@ public class Persistence : MonoBehaviour
     // Debug count
     int debugCounter = 0;
 
+    // CLASE COMO SINGLETON
+    public static Persistence Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
     public void Init(GestureRecognizer gr, string fileName)
     {
         textManager.EnqueuePersistenceText(debugCounter++ + "- Inicializada la Persistencia.");
@@ -54,8 +68,6 @@ public class Persistence : MonoBehaviour
             Debug.Log("Persistence::Init() - No se han podido cargar gestos.");
             textManager.EnqueuePersistenceText(debugCounter++ + " - Persistence::Init() - No se han podido cargar gestos.");
         }
-
-        
     }
 
     ////////////////////////////////////////////////

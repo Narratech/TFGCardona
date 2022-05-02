@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public enum handSelector
+{ 
+    RIGHT_HAND,
+    LEFT_HAND
+}
 public enum finger
 {
     WRISTROOT,
@@ -77,8 +82,10 @@ public enum finger
 public class TouchBallScript : MonoBehaviour
 {
     [SerializeField]
+    private handSelector chosenHand;
+    //[SerializeField]
     private OVRSkeleton handSkeleton;
-    [SerializeField]
+    //[SerializeField]
     private OVRHand hand;
 
     [SerializeField]
@@ -90,6 +97,19 @@ public class TouchBallScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GestureRecognizer.Instance != null)
+        {
+            if (chosenHand == handSelector.LEFT_HAND)
+            {
+                handSkeleton = GestureRecognizer.Instance.getLeftHandSkeleton();
+                hand = GestureRecognizer.Instance.getLeftHand();
+            }
+            else 
+            {
+                handSkeleton = GestureRecognizer.Instance.getRightHandSkeleton();
+                hand = GestureRecognizer.Instance.getRightHand();
+            }
+        }
         fingerPos = new Vector3(0f, 0f, 0f);
     }
 
@@ -99,7 +119,12 @@ public class TouchBallScript : MonoBehaviour
         // NO REALIZAR RECONOCIMIENTO SI NO SE ESTA TRAQUEANDO ALGUNA DE LAS MANOS O NO HAY SUFICIENTE CONFIANZA.
         if (!handSkeleton.IsDataHighConfidence || !hand.IsTracked)
         {
+            GetComponent<SphereCollider>().enabled = false;
             return;
+        }
+        else
+        {
+            if (!GetComponent<SphereCollider>().enabled) GetComponent<SphereCollider>().enabled = true;
         }
 
         // While in Unity Editor.

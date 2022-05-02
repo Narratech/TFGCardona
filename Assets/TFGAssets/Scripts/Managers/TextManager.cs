@@ -118,6 +118,20 @@ public class TextManager : MonoBehaviour
     // Strings
     private string sessionStart;
 
+    // CLASE COMO SINGLETON
+    public static TextManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
     public void Init()
     {
         // Colas
@@ -284,13 +298,24 @@ public class TextManager : MonoBehaviour
     public void UpdateChat()
     {
         Debug.Log("Actualizando panel Chat.");
-        int index = 0;
+        //int index = 0;
         if (updateChatPanel) textoChat.text = "";
         // El GUI del jugador siempre se actualiza
         textoChatGUI.text = "";
+        string auxText = "";
 
         foreach (string line in chatTextQueue)
         {
+            // Texto más reciente se coloca arriba
+            // Nos interesa para que se corte el texto que sobresale de
+            // la ventana de chat.
+            auxText = line + "\n" + textoChatGUI.text;
+
+            textoChatGUI.text = auxText;
+            if (updateChatPanel) textoChat.text = auxText;
+
+            /*
+             * Texto más reciente se coloca abajo.
             if (index < chatTextQueue.Count - 1)
             {
                 if (updateChatPanel) textoChat.text += line + "\n";
@@ -302,6 +327,7 @@ public class TextManager : MonoBehaviour
                 textoChatGUI.text += line;
             }
             index++;
+            */
         }
 
         if (saveChat) SaveLogs();

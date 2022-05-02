@@ -70,7 +70,7 @@ public class VR_Button_Template : MonoBehaviour
      */
     virtual public void Update()
     {
-        string debugText = "";
+        //string debugText = "";
         // Constrain movement to only allow movement in X axys in LOCAL space.
         // This is a fix to avoid using Rigidbody constraints that only work on Global Space.
         Vector3 localVelocity = transform.InverseTransformDirection(gameObject.GetComponent<Rigidbody>().velocity);
@@ -82,7 +82,7 @@ public class VR_Button_Template : MonoBehaviour
         // Getting it back into normal position (X)
         if (transform.localPosition.x < MaxLocalX)
         {
-            debugText = "Recovering: X = ";
+            //debugText = "Recovering: X = ";
             // Be sure object speed is 0.
             gameObject.GetComponent<Rigidbody>().velocity = ZeroSpeed;
             // Recover
@@ -90,7 +90,7 @@ public class VR_Button_Template : MonoBehaviour
         }
         else if (transform.localPosition.x >= MaxLocalX)
         {
-            debugText = "Other: X = ";
+            //debugText = "Other: X = ";
             gameObject.transform.localPosition = OriginalPosition;
         }
         else if (transform.localPosition.x < MinLocalX)
