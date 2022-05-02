@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour
     public Vector3 SpawnPosition;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Instantiate players in scene.
         if (PhotonNetwork.IsConnectedAndReady)
