@@ -5,10 +5,15 @@ using TMPro;
 
 public class KeyboardButton : VR_Button_Template
 {
-    [SerializeField]
     private KeyCommand keyboardKey;
 
-    private void Start()
+    public void setKeyboardKey(KeyCommand kk)
+    {
+        keyboardKey = kk;
+        reconfigureButton();
+    }
+
+    public void reconfigureButton()
     {
         TextMeshPro buttonText = GetComponentInChildren(typeof(TextMeshPro)) as TextMeshPro;
         switch (keyboardKey)
@@ -102,7 +107,10 @@ public class KeyboardButton : VR_Button_Template
                 break;
             case KeyCommand.BACK:
                 buttonText.text = "BACK";
-                return;
+                break;
+            case KeyCommand.CLEAR:
+                buttonText.text = "LIMPIAR";
+                break; ;
             default:
                 buttonText.text = "Please Choose Key";
                 break;
@@ -197,23 +205,13 @@ public class KeyboardButton : VR_Button_Template
                 break;
             case KeyCommand.ENTER:
                 //LoginManager.Instance.ConnectToPhotonServer();
+                KeyboardManager.Instance.OnEnterPressed();
                 break;
             case KeyCommand.BACKSPACE:
-                /*
-                string textEdited = "";
-                // Eliminamos el último caracter
-                if (KeyboardManager.Instance.outputField.text.Length > 1)
-                {
-                    textEdited = KeyboardManager.Instance.outputField.text.Remove(KeyboardManager.Instance.outputField.text.Length - 1);
-                }
-                else
-                {
-                    textEdited = "";
-                }
-                //KeyboardManager.Instance.outputField.text = textEdited;
-                */
+                KeyboardManager.Instance.removeOneCharacter();
                 return;
             case KeyCommand.BACK:
+                KeyboardManager.Instance.OnBackPressed();
                 //LoginManager.Instance.backToSelection();
                 return;
             default:
@@ -221,6 +219,6 @@ public class KeyboardButton : VR_Button_Template
                 break;
         }
 
-        //KeyboardManager.Instance.outputField.text = KeyboardManager.Instance.outputField.text + key;
+        KeyboardManager.Instance.addCharacter(key);
     }
 }

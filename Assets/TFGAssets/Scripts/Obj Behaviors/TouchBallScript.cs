@@ -116,99 +116,102 @@ public class TouchBallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // NO REALIZAR RECONOCIMIENTO SI NO SE ESTA TRAQUEANDO ALGUNA DE LAS MANOS O NO HAY SUFICIENTE CONFIANZA.
-        if (!handSkeleton.IsDataHighConfidence || !hand.IsTracked)
+        if (handSkeleton != null)
         {
-            GetComponent<SphereCollider>().enabled = false;
-            return;
-        }
-        else
-        {
-            if (!GetComponent<SphereCollider>().enabled) GetComponent<SphereCollider>().enabled = true;
-        }
+            // NO REALIZAR SEGUIMIENTO SI NO SE ESTA TRAQUEANDO ALGUNA DE LAS MANOS O NO HAY SUFICIENTE CONFIANZA.
+            if (!handSkeleton.IsDataHighConfidence || !hand.IsTracked)
+            {
+                GetComponent<SphereCollider>().enabled = false;
+                return;
+            }
+            else
+            {
+                if (!GetComponent<SphereCollider>().enabled) GetComponent<SphereCollider>().enabled = true;
+            }
 
-        // While in Unity Editor.
-        if (handSkeleton.Bones.Count == 0) return;
+            // While in Unity Editor.
+            if (handSkeleton.Bones.Count == 0) return;
 
-        switch (chosenFinger) 
-        {
-            case finger.WRISTROOT:
-                fingerPos = handSkeleton.Bones[0].Transform.position;
-                break;
-            case finger.FOREARMSTUB:
-                fingerPos = handSkeleton.Bones[1].Transform.position;
-                break;
-            // TIPS
-            case finger.THUMB_Tip:
-                fingerPos = handSkeleton.Bones[19].Transform.position;
-                break;
-            case finger.INDEX_Tip:
-                fingerPos = handSkeleton.Bones[20].Transform.position;
-                break;
-            case finger.MIDDLE_Tip:
-                fingerPos = handSkeleton.Bones[21].Transform.position;
-                break;
-            case finger.RING_Tip:
-                fingerPos = handSkeleton.Bones[22].Transform.position;
-                break;
-            case finger.PINKY_Tip:
-                fingerPos = handSkeleton.Bones[23].Transform.position;
-                break;
-            // DISTAL
-            case finger.THUMB_Dystal:
-                fingerPos = handSkeleton.Bones[5].Transform.position;
-                break;
-            case finger.INDEX_Dystal:
-                fingerPos = handSkeleton.Bones[8].Transform.position;
-                break;
-            case finger.MIDDLE_Dystal:
-                fingerPos = handSkeleton.Bones[11].Transform.position;
-                break;
-            case finger.RING_Dystal:
-                fingerPos = handSkeleton.Bones[14].Transform.position;
-                break;
-            case finger.PINKY_Dystal:
-                fingerPos = handSkeleton.Bones[18].Transform.position;
-                break;
-            // INTERMEDIATES
-            case finger.INDEX_Intermediate:
-                fingerPos = handSkeleton.Bones[7].Transform.position;
-                break;
-            case finger.MIDDLE_Intermediate:
-                fingerPos = handSkeleton.Bones[10].Transform.position;
-                break;
-            case finger.RING_Intermediate:
-                fingerPos = handSkeleton.Bones[13].Transform.position;
-                break;
-            case finger.PINKY_Intermediate:
-                fingerPos = handSkeleton.Bones[17].Transform.position;
-                break;
-            // PROXIMALS
-            case finger.THUMB_Proximal:
-                fingerPos = handSkeleton.Bones[4].Transform.position;
-                break;
-            case finger.INDEX_Proximal:
-                fingerPos = handSkeleton.Bones[6].Transform.position;
-                break;
-            case finger.MIDDLE_Proximal:
-                fingerPos = handSkeleton.Bones[9].Transform.position;
-                break;
-            case finger.RING_Proximal:
-                fingerPos = handSkeleton.Bones[12].Transform.position;
-                break;
-            case finger.PINKY_Proximal:
-                fingerPos = handSkeleton.Bones[16].Transform.position;
-                break;
-            // METACARPALS
-            case finger.THUMB_Metacarpal:
-                fingerPos = handSkeleton.Bones[3].Transform.position;
-                break;
-            case finger.PINKY_Metacarpal:
-                fingerPos = handSkeleton.Bones[15].Transform.position;
-                break;
+            switch (chosenFinger) 
+            {
+                case finger.WRISTROOT:
+                    fingerPos = handSkeleton.Bones[0].Transform.position;
+                    break;
+                case finger.FOREARMSTUB:
+                    fingerPos = handSkeleton.Bones[1].Transform.position;
+                    break;
+                // TIPS
+                case finger.THUMB_Tip:
+                    fingerPos = handSkeleton.Bones[19].Transform.position;
+                    break;
+                case finger.INDEX_Tip:
+                    fingerPos = handSkeleton.Bones[20].Transform.position;
+                    break;
+                case finger.MIDDLE_Tip:
+                    fingerPos = handSkeleton.Bones[21].Transform.position;
+                    break;
+                case finger.RING_Tip:
+                    fingerPos = handSkeleton.Bones[22].Transform.position;
+                    break;
+                case finger.PINKY_Tip:
+                    fingerPos = handSkeleton.Bones[23].Transform.position;
+                    break;
+                // DISTAL
+                case finger.THUMB_Dystal:
+                    fingerPos = handSkeleton.Bones[5].Transform.position;
+                    break;
+                case finger.INDEX_Dystal:
+                    fingerPos = handSkeleton.Bones[8].Transform.position;
+                    break;
+                case finger.MIDDLE_Dystal:
+                    fingerPos = handSkeleton.Bones[11].Transform.position;
+                    break;
+                case finger.RING_Dystal:
+                    fingerPos = handSkeleton.Bones[14].Transform.position;
+                    break;
+                case finger.PINKY_Dystal:
+                    fingerPos = handSkeleton.Bones[18].Transform.position;
+                    break;
+                // INTERMEDIATES
+                case finger.INDEX_Intermediate:
+                    fingerPos = handSkeleton.Bones[7].Transform.position;
+                    break;
+                case finger.MIDDLE_Intermediate:
+                    fingerPos = handSkeleton.Bones[10].Transform.position;
+                    break;
+                case finger.RING_Intermediate:
+                    fingerPos = handSkeleton.Bones[13].Transform.position;
+                    break;
+                case finger.PINKY_Intermediate:
+                    fingerPos = handSkeleton.Bones[17].Transform.position;
+                    break;
+                // PROXIMALS
+                case finger.THUMB_Proximal:
+                    fingerPos = handSkeleton.Bones[4].Transform.position;
+                    break;
+                case finger.INDEX_Proximal:
+                    fingerPos = handSkeleton.Bones[6].Transform.position;
+                    break;
+                case finger.MIDDLE_Proximal:
+                    fingerPos = handSkeleton.Bones[9].Transform.position;
+                    break;
+                case finger.RING_Proximal:
+                    fingerPos = handSkeleton.Bones[12].Transform.position;
+                    break;
+                case finger.PINKY_Proximal:
+                    fingerPos = handSkeleton.Bones[16].Transform.position;
+                    break;
+                // METACARPALS
+                case finger.THUMB_Metacarpal:
+                    fingerPos = handSkeleton.Bones[3].Transform.position;
+                    break;
+                case finger.PINKY_Metacarpal:
+                    fingerPos = handSkeleton.Bones[15].Transform.position;
+                    break;
+            }
+
+            // Move sphere to finger position
+            gameObject.transform.position = fingerPos;
         }
-
-        // Move sphere to finger position
-        gameObject.transform.position = fingerPos;
     }
 }

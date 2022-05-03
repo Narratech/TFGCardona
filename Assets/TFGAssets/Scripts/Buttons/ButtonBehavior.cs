@@ -34,7 +34,8 @@ public enum KeyCommand
     M,
     ENTER,
     BACKSPACE,
-    BACK
+    BACK,
+    CLEAR
 }
 
 enum connectionType

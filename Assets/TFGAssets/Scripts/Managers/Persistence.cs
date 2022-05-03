@@ -354,7 +354,7 @@ public class Persistence : MonoBehaviour
                     {
                         Debug.Log("Gesto no contiene datos de huesos de la mano izquierda");
                     }
-                    Debug.Log(datosGesto);
+                    //Debug.Log(datosGesto);
                 }
             }
 

@@ -17,14 +17,16 @@ public enum gesturePhase
 {
     GESTURE_SIMPLE,   // Gestos sin movimiento
     GESTURE_BEGIN,    // Inicio de gesto en movimiento
-    GESTURE_END       // Fin gesto en movimiento
+    GESTURE_END,       // Fin gesto en movimiento
+    NONE
 }
 public enum gestureCategory
 {
     GESTURE_WORD,           // Si es una palabra (añadir espacio despues de ella)
     GESTURE_LETTER,         // Si es una letra (no añadir espacio)
     GESTURE_LETTER_OR_WORD, // Cuando tiene ambas componentes
-    GESTURE_COMMAND
+    GESTURE_COMMAND,
+    NONE
 }
 public enum ESLalphabet
 {
@@ -270,7 +272,7 @@ public class GestureRecognizer : MonoBehaviour
                 {
                     Debug.Log("Gesto no contiene datos de huesos de la mano izquierda");
                 }
-                Debug.Log(datosGesto);
+                //Debug.Log(datosGesto);
             }
         }
     }

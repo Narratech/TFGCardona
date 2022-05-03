@@ -1,0 +1,41 @@
+Test de Utilización
+------------------
+[MULTIJUGADOR]
+Actores:
+	- 1 voluntario para el testeo (Oyente/Signante)
+	- El desarrollador como segundo jugador.
+
+Equipo:
+	- 2 Oculus Quest (uno por jugador)
+	- 1 ordenador portatil que grabe el stream de la interacción y donde rellenar el formulario.
+	- 1 movil que haga de hotspot para la red portatil-quest.
+
+Prueba Multijugador:
+	1.- El voluntario es una persona oyente
+		a. Ambos se conectarán a la sala online
+		b. Ambos se presentarán, con nombre y apellido (o nick) y se preguntará la edad.
+		c. Se preguntará por algun elemento de la escenografía
+			AULA:
+				- ¿Cuantas luces hay?
+				- ¿De que color es el extintor?
+				- ¿Qué hora marca el reloj?
+			Exteriores:
+				- ¿Cuantos coches hay aparcados?
+				- ¿De que color es la motocicleta?
+				- ¿Qué hora es?
+		d. Se pasará el formulario al voluntario para que lo rellene en el portatil.
+			
+	2.- El voluntario es una persona signante
+		a. Ambos se conectarán a la sala online.
+		b. La persona signante procede a presentarse con su nombre y edad.
+		c. La persona oyente se comunica mediante habla y se comprueba si los valores de la 
+		   base de datos se leen bien o se requiere personalización.
+
+[UN JUGADOR]
+Actores:
+	- 1 voluntario para el testeo (Oyente/Signante)
+
+Equipo:
+	- 1 Oculus Quest
+	- 1 ordenador portatil que grabe el stream de la interacción y donde rellenar el formulario.
+	- 1 movil que haga de hotspot para la red portatil-quest.

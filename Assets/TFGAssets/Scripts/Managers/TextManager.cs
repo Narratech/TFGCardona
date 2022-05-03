@@ -123,6 +123,7 @@ public class TextManager : MonoBehaviour
 
     private void Awake()
     {
+
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
@@ -130,6 +131,11 @@ public class TextManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    private void Start()
+    {
+        
     }
 
     public void Init()
@@ -211,7 +217,7 @@ public class TextManager : MonoBehaviour
     /// <param name="line"></param>
     public void EnqueuePersistenceText(string line)
     {
-        Debug.Log("enqueuePersistenceText() - Encolando texto: " + line);
+        Debug.Log("enqueuePersistenceText() - Encolando texto: " + line + "\n");
         persistTextIndex++;
 
         // Add line
@@ -262,7 +268,7 @@ public class TextManager : MonoBehaviour
     /// <param name="line"></param>
     public void EnqueueChatText(string line, eMessageSource eTextSource)
     {
-        Debug.Log("enqueueChatText() - Encolando texto: " + line);
+        Debug.Log("enqueueChatText() - Encolando texto: " + line + "\n");
         chatTextIndex++;
 
         // Añadimos iconos

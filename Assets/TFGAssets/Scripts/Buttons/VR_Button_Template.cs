@@ -33,7 +33,7 @@ public class VR_Button_Template : MonoBehaviour
     // Movimiento Recuperacion boton
     public float recoverySpeed = 0.01f;
 
-    void Start()
+    virtual public void Start()
     {
         // Set position to unpushed
         transform.localPosition = new Vector3(MaxLocalX, transform.localPosition.y, transform.localPosition.z);

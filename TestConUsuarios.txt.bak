@@ -1,0 +1,14 @@
+Test de Utilización
+------------------
+
+[Multiplayer]
+Actores:
+	- 1 voluntario para el testeo (Oyente/Signante)
+	- El desarrollador como segundo jugador.
+Equipo:
+	- 2 Oculus Quest (uno por jugador)
+	- 1 ordenador portatil que grabe el stream de la interacción.
+	- 1 movil que haga de hotspot para la red portatil-quest.
+Prueba:
+	1.- El voluntario es una persona oyente
+		a. Ambos se conectarán a la sala online
