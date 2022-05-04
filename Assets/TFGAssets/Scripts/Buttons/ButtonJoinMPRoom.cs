@@ -2,12 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum eMapType
-{ 
-    Exteriores,
-    Aula,
-    Random
-}
 
 public class ButtonJoinMPRoom : VR_Button_Template
 {

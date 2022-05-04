@@ -12,7 +12,7 @@ public class Persistence : MonoBehaviour
     [SerializeField]
     private TextManager textManager;
 
-    // Lista interna de gestos? Usar la del manager
+    // Lista interna de gestos
     private List<Gesture> gestos;
 
     // nombre del fichero a guardar
@@ -100,7 +100,7 @@ public class Persistence : MonoBehaviour
             toAddGesture.usedHand = gesto.usedHand;
 
             // Tipos de gesto
-            toAddGesture.gPhases = new List<gesturePhase>();
+            toAddGesture.gPhases = new List<eGesturePhase>();
 
             // Categoria
             toAddGesture.gCategory = gesto.gCategory;
@@ -121,7 +121,7 @@ public class Persistence : MonoBehaviour
                 toAddGesture.LHBoneInfo.Add(lhbones);
             }
 
-            foreach (gesturePhase type in gesto.gPhases)
+            foreach (eGesturePhase type in gesto.gPhases)
             {
                 toAddGesture.gPhases.Add(type);
             }
@@ -157,7 +157,7 @@ public class Persistence : MonoBehaviour
         toAddGesture.usedHand = gesto.usedHand;
 
         // Tipos de gesto
-        toAddGesture.gPhases = new List<gesturePhase>();
+        toAddGesture.gPhases = new List<eGesturePhase>();
 
         // Categoria
         toAddGesture.gCategory = gesto.gCategory;
@@ -178,7 +178,7 @@ public class Persistence : MonoBehaviour
             toAddGesture.LHBoneInfo.Add(lhbones);
         }
 
-        foreach (gesturePhase type in gesto.gPhases)
+        foreach (eGesturePhase type in gesto.gPhases)
         {
             toAddGesture.gPhases.Add(type);
         }

@@ -4,13 +4,6 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public enum eMessageSource
-{
-    DEBUG,
-    VOICE,
-    HAND_SIGN    
-}
-
 public class TextManager : MonoBehaviour
 {
     //--------- VARIABLES EN INSPECTOR ----------------

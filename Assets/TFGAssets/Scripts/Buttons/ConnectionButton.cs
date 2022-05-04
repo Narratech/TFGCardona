@@ -3,7 +3,7 @@ using UnityEngine;
 public class ConnectionButton : VR_Button_Template
 {
     [SerializeField]
-    private connectionType tipoConexion;
+    private eConnectionType tipoConexion;
 
     // Panels
     public GameObject ConnectOptionPanel;
@@ -15,12 +15,12 @@ public class ConnectionButton : VR_Button_Template
     public override void OnClick()
     {
         // CREATE AND CALL A LOGIC METHOD
-        if (tipoConexion == connectionType.ANONYMOUS)
+        if (tipoConexion == eConnectionType.ANONYMOUS)
         {
             loginManager.ConnectAnonymously();
             Debug.Log("TipoConexion: Anonima.");
         }
-        else if (tipoConexion == connectionType.WITHNAME)
+        else if (tipoConexion == eConnectionType.WITHNAME)
         {
             // to do
             Debug.Log("TipoConexion: Con Nombre.");

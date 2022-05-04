@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class KeyboardManager : MonoBehaviour
 {
     [SerializeField]
@@ -59,54 +59,54 @@ public class KeyboardManager : MonoBehaviour
                     switch (x)
                     {
                         case 0:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.Q);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.A);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.Z); 
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.Q);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.A);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.Z); 
                             break;
                         case 1:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.W);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.S);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.X);
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.W);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.S);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.X);
                             break;
                         case 2:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.E);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.D);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.C);
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.E);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.D);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.C);
                             break;
                         case 3:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.R);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.F);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.V);
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.R);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.F);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.V);
                             break;
                         case 4:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.T);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.G);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.B);
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.T);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.G);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.B);
                             break;
                         case 5:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.Y);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.H);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.N);
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.Y);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.H);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.N);
                             break;
                         case 6:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.U);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.J);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.M); 
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.U);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.J);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.M); 
                             break;
                         case 7:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.I);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.K);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.CLEAR);
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.I);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.K);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.CLEAR);
                             break;
                         case 8:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.O);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.L);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.BACKSPACE);
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.O);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.L);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.BACKSPACE);
                             break;
                         case 9:
-                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.P);
-                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.Ñ);
-                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.BACK);
+                            if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.P);
+                            else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.Ñ);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(eKeyCommand.BACK);
                             break;
                     }
                 }
@@ -152,6 +152,6 @@ public class KeyboardManager : MonoBehaviour
 
     public void OnBackPressed()
     {
-        Debug.Log("No behavior for back pressed");
+        SceneManager.LoadScene("Login_Scene");
     }
 }

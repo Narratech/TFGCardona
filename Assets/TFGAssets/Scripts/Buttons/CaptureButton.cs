@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-enum eButtonMode
-{ 
-    GESTURE_CAPTURE,
-    HAND_CONF,
-    PHASE_CONF,
-    SEND_COMMAND
-}
 
 public class CaptureButton : VR_Button_Template
 {
@@ -22,9 +15,9 @@ public class CaptureButton : VR_Button_Template
 
     // Configuración del boton
     public string gestureName;
-    public handUsage handSelector;
-    public gesturePhase phase;
-    public gestureCategory category;
+    public eHandUsage handSelector;
+    public eGesturePhase phase;
+    public eGestureCategory category;
     public string simpleTranscription;
     public List<string> composedTranscription;
 

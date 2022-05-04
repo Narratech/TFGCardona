@@ -15,9 +15,9 @@ public class GestureCaptureManager : MonoBehaviour
     private TextMeshPro guideText;
 
     // Valores son tomados de los botones de configuración
-    private handUsage usedHand;
-    private gesturePhase phase;    
-    private gestureCategory category;
+    private eHandUsage usedHand;
+    private eGesturePhase phase;    
+    private eGestureCategory category;
     private List<string> composedTranscription;
 
     public static GestureCaptureManager Instance;
@@ -35,9 +35,9 @@ public class GestureCaptureManager : MonoBehaviour
 
     private void Start()
     {
-        usedHand = handUsage.NOHAND;
-        phase = gesturePhase.GESTURE_SIMPLE;
-        category = gestureCategory.GESTURE_LETTER;
+        usedHand = eHandUsage.NOHAND;
+        phase = eGesturePhase.GESTURE_SIMPLE;
+        category = eGestureCategory.GESTURE_LETTER;
         composedTranscription = new List<string>();
     }
 
@@ -48,13 +48,13 @@ public class GestureCaptureManager : MonoBehaviour
 
         switch (usedHand)
         {
-            case handUsage.LEFT_HAND_ONLY:
+            case eHandUsage.LEFT_HAND_ONLY:
                 gestureName = gestureName + "_LH_";
                 break;
-            case handUsage.RIGHT_HAND_ONLY:
+            case eHandUsage.RIGHT_HAND_ONLY:
                 gestureName = gestureName + "_RH_";
                 break;
-            case handUsage.BOTH_HANDS:
+            case eHandUsage.BOTH_HANDS:
                 gestureName = gestureName + "_2H_";
                 break;
         }
@@ -64,17 +64,17 @@ public class GestureCaptureManager : MonoBehaviour
         return gestureName;
     }
 
-    public gesturePhase getPhase()
+    public eGesturePhase getPhase()
     {
         return phase;
     }
 
-    public handUsage getHand() 
+    public eHandUsage getHand() 
     {
         return usedHand;
     }
 
-    public gestureCategory getCategory()
+    public eGestureCategory getCategory()
     {
         return category;
     }
@@ -92,19 +92,19 @@ public class GestureCaptureManager : MonoBehaviour
         return composedTranscription;
     }
 
-    public void setPhase(gesturePhase newPhase)
+    public void setPhase(eGesturePhase newPhase)
     {
         guideText.text = "Fase configurada a " + newPhase;
         phase = newPhase;
     }
 
-    public void setHand(handUsage newHand)
+    public void setHand(eHandUsage newHand)
     {
         guideText.text = "Uso manos configurado a " + newHand;
         usedHand = newHand;
     }
 
-    public void setCategory(gestureCategory newCat)
+    public void setCategory(eGestureCategory newCat)
     {
         guideText.text = "Categoría gesto configurado a " + newCat;
         category = newCat;

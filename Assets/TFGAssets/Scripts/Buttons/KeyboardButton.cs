@@ -5,9 +5,9 @@ using TMPro;
 
 public class KeyboardButton : VR_Button_Template
 {
-    private KeyCommand keyboardKey;
+    private eKeyCommand keyboardKey;
 
-    public void setKeyboardKey(KeyCommand kk)
+    public void setKeyboardKey(eKeyCommand kk)
     {
         keyboardKey = kk;
         reconfigureButton();
@@ -18,97 +18,97 @@ public class KeyboardButton : VR_Button_Template
         TextMeshPro buttonText = GetComponentInChildren(typeof(TextMeshPro)) as TextMeshPro;
         switch (keyboardKey)
         {
-            case KeyCommand.A:
+            case eKeyCommand.A:
                 buttonText.text = "A";
                 break;
-            case KeyCommand.B:
+            case eKeyCommand.B:
                 buttonText.text = "B";
                 break;
-            case KeyCommand.C:
+            case eKeyCommand.C:
                 buttonText.text = "C";
                 break;
-            case KeyCommand.D:
+            case eKeyCommand.D:
                 buttonText.text = "D";
                 break;
-            case KeyCommand.E:
+            case eKeyCommand.E:
                 buttonText.text = "E";
                 break;
-            case KeyCommand.F:
+            case eKeyCommand.F:
                 buttonText.text = "F";
                 break;
-            case KeyCommand.G:
+            case eKeyCommand.G:
                 buttonText.text = "G";
                 break;
-            case KeyCommand.H:
+            case eKeyCommand.H:
                 buttonText.text = "H";
                 break;
-            case KeyCommand.I:
+            case eKeyCommand.I:
                 buttonText.text = "I";
                 break;
-            case KeyCommand.J:
+            case eKeyCommand.J:
                 buttonText.text = "J";
                 break;
-            case KeyCommand.K:
+            case eKeyCommand.K:
                 buttonText.text = "K";
                 break;
-            case KeyCommand.L:
+            case eKeyCommand.L:
                 buttonText.text = "L";
                 break;
-            case KeyCommand.M:
+            case eKeyCommand.M:
                 buttonText.text = "M";
                 break;
-            case KeyCommand.N:
+            case eKeyCommand.N:
                 buttonText.text = "N";
                 break;
-            case KeyCommand.Ñ:
+            case eKeyCommand.Ñ:
                 buttonText.text = "Ñ";
                 break;
-            case KeyCommand.O:
+            case eKeyCommand.O:
                 buttonText.text = "O";
                 break;
-            case KeyCommand.P:
+            case eKeyCommand.P:
                 buttonText.text = "P";
                 break;
-            case KeyCommand.Q:
+            case eKeyCommand.Q:
                 buttonText.text = "Q";
                 break;
-            case KeyCommand.R:
+            case eKeyCommand.R:
                 buttonText.text = "R";
                 break;
-            case KeyCommand.S:
+            case eKeyCommand.S:
                 buttonText.text = "S";
                 break;
-            case KeyCommand.T:
+            case eKeyCommand.T:
                 buttonText.text = "T";
                 break;
-            case KeyCommand.U:
+            case eKeyCommand.U:
                 buttonText.text = "U";
                 break;
-            case KeyCommand.V:
+            case eKeyCommand.V:
                 buttonText.text = "V";
                 break;
-            case KeyCommand.W:
+            case eKeyCommand.W:
                 buttonText.text = "W";
                 break;
-            case KeyCommand.X:
+            case eKeyCommand.X:
                 buttonText.text = "X";
                 break;
-            case KeyCommand.Y:
+            case eKeyCommand.Y:
                 buttonText.text = "Y";
                 break;
-            case KeyCommand.Z:
+            case eKeyCommand.Z:
                 buttonText.text = "Z";
                 break;
-            case KeyCommand.ENTER:
+            case eKeyCommand.ENTER:
                 buttonText.text = "<size=25%>ENTER";
                 break;
-            case KeyCommand.BACKSPACE:
+            case eKeyCommand.BACKSPACE:
                 buttonText.text = "<size=18%>BORRAR";
                 break;
-            case KeyCommand.BACK:
+            case eKeyCommand.BACK:
                 buttonText.text = "<size=25%>SALIR";
                 break;
-            case KeyCommand.CLEAR:
+            case eKeyCommand.CLEAR:
                 buttonText.text = "<size=18%>LIMPIAR";
                 break; ;
             default:
@@ -122,99 +122,99 @@ public class KeyboardButton : VR_Button_Template
         string key = "";
         switch (keyboardKey)
         {
-            case KeyCommand.A:
+            case eKeyCommand.A:
                 key = "A";
                 break;
-            case KeyCommand.B:
+            case eKeyCommand.B:
                 key = "B";
                 break;
-            case KeyCommand.C:
+            case eKeyCommand.C:
                 key = "C";
                 break;
-            case KeyCommand.D:
+            case eKeyCommand.D:
                 key = "D";
                 break;
-            case KeyCommand.E:
+            case eKeyCommand.E:
                 key = "E";
                 break;
-            case KeyCommand.F:
+            case eKeyCommand.F:
                 key = "F";
                 break;
-            case KeyCommand.G:
+            case eKeyCommand.G:
                 key = "G";
                 break;
-            case KeyCommand.H:
+            case eKeyCommand.H:
                 key = "H";
                 break;
-            case KeyCommand.I:
+            case eKeyCommand.I:
                 key = "I";
                 break;
-            case KeyCommand.J:
+            case eKeyCommand.J:
                 key = "J";
                 break;
-            case KeyCommand.K:
+            case eKeyCommand.K:
                 key = "K";
                 break;
-            case KeyCommand.L:
+            case eKeyCommand.L:
                 key = "L";
                 break;
-            case KeyCommand.M:
+            case eKeyCommand.M:
                 key = "M";
                 break;
-            case KeyCommand.N:
+            case eKeyCommand.N:
                 key = "N";
                 break;
-            case KeyCommand.Ñ:
+            case eKeyCommand.Ñ:
                 key = "Ñ";
                 break;
-            case KeyCommand.O:
+            case eKeyCommand.O:
                 key = "O";
                 break;
-            case KeyCommand.P:
+            case eKeyCommand.P:
                 key = "P";
                 break;
-            case KeyCommand.Q:
+            case eKeyCommand.Q:
                 key = "Q";
                 break;
-            case KeyCommand.R:
+            case eKeyCommand.R:
                 key = "R";
                 break;
-            case KeyCommand.S:
+            case eKeyCommand.S:
                 key = "S";
                 break;
-            case KeyCommand.T:
+            case eKeyCommand.T:
                 key = "T";
                 break;
-            case KeyCommand.U:
+            case eKeyCommand.U:
                 key = "U";
                 break;
-            case KeyCommand.V:
+            case eKeyCommand.V:
                 key = "V";
                 break;
-            case KeyCommand.W:
+            case eKeyCommand.W:
                 key = "W";
                 break;
-            case KeyCommand.X:
+            case eKeyCommand.X:
                 key = "X";
                 break;
-            case KeyCommand.Y:
+            case eKeyCommand.Y:
                 key = "Y";
                 break;
-            case KeyCommand.Z:
+            case eKeyCommand.Z:
                 key = "Z";
                 break;
-            case KeyCommand.ENTER:
+            case eKeyCommand.ENTER:
                 //LoginManager.Instance.ConnectToPhotonServer();
                 KeyboardManager.Instance.OnEnterPressed();
                 break;
-            case KeyCommand.BACKSPACE:
+            case eKeyCommand.BACKSPACE:
                 KeyboardManager.Instance.removeOneCharacter();
                 return;
-            case KeyCommand.BACK:
+            case eKeyCommand.BACK:
                 KeyboardManager.Instance.OnBackPressed();
                 //LoginManager.Instance.backToSelection();
                 return;
-            case KeyCommand.CLEAR:
+            case eKeyCommand.CLEAR:
                 KeyboardManager.Instance.clearText();
                 return;
             default:

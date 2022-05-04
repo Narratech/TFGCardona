@@ -14,7 +14,6 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     //public TextMeshPro mpDebug;
     //private Queue<string> debugTextQueue;
 
-
     void Awake()
     {
         if (Instance != null && Instance != this)

@@ -3,48 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum KeyCommand
-{
-    Q,
-    W,
-    E,
-    R,
-    T,
-    Y,
-    U,
-    I,
-    O,
-    P,
-    A,
-    S,
-    D,
-    F,
-    G,
-    H,
-    J,
-    K,
-    L,
-    Ñ,
-    Z,
-    X,
-    C,
-    V,
-    B,
-    N,
-    M,
-    ENTER,
-    BACKSPACE,
-    BACK,
-    CLEAR
-}
-
-enum connectionType
-{
-    ANONYMOUS,
-    WITHNAME,
-    CONNECT
-}
-
 public class ButtonBehavior : MonoBehaviour
 {
     // -- VARIABLES CONEXION --

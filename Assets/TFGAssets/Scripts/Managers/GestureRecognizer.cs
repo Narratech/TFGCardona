@@ -5,62 +5,7 @@ using UnityEngine.Events;
 using TMPro;
 using System;
 
-// ENUMS
-public enum handUsage
-{
-    NOHAND,
-    LEFT_HAND_ONLY,
-    RIGHT_HAND_ONLY,
-    BOTH_HANDS
-};
-public enum gesturePhase
-{
-    GESTURE_SIMPLE,   // Gestos sin movimiento
-    GESTURE_BEGIN,    // Inicio de gesto en movimiento
-    GESTURE_END,       // Fin gesto en movimiento
-    NONE
-}
-public enum gestureCategory
-{
-    GESTURE_WORD,           // Si es una palabra (añadir espacio despues de ella)
-    GESTURE_LETTER,         // Si es una letra (no añadir espacio)
-    GESTURE_LETTER_OR_WORD, // Cuando tiene ambas componentes
-    GESTURE_COMMAND,
-    NONE
-}
-public enum ESLalphabet
-{
-    A,
-    B,
-    C,
-    CH,
-    D,
-    E,
-    F,
-    G,
-    H,
-    I,
-    J,
-    K,
-    L,
-    LL,
-    M,
-    N,
-    Ñ,
-    O,
-    P,
-    Q,
-    R,
-    RR,
-    S,
-    T,
-    U,
-    V,
-    W,
-    X,
-    Y,
-    Z
-};
+
 // STRUCTS
 public struct BoneData
 {
@@ -81,9 +26,9 @@ public struct Gesture
     public List<BoneData> RHBoneInfo;
     public List<BoneData> LHBoneInfo;
     public UnityEvent onRecognized;            // Callback
-    public handUsage usedHand;
-    public gestureCategory gCategory;
-    public List<gesturePhase> gPhases;         // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
+    public eHandUsage usedHand;
+    public eGestureCategory gCategory;
+    public List<eGesturePhase> gPhases;         // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
     public string singleTranscription;         // La transcripción de la componente simple del gesto.
     public List<string> composedTranscription; // Un gesto compuesto puede interpretarse de varias formas (yo, mi). Al inicio del proyecto solo usaremos la primera transcripción.
 };
@@ -100,7 +45,7 @@ public class GestureRecognizer : MonoBehaviour
     [SerializeField]
     private OVRSkeleton LHskeleton; // Esqueleto de la mano OVRLeftHand
 
-    // Databases
+    // Base de datos cargada en memoria.
     [SerializeField]
     private List<Gesture> gesturesDB; // Base de datos de Gestos.
 
@@ -284,7 +229,7 @@ public class GestureRecognizer : MonoBehaviour
     #region Gesture Capture
     
 
-    public void SaveGesture(handUsage handSelector, gesturePhase phase, gestureCategory category, string simpleTranscription, List<string> composedTranscription, string gestureName = "")
+    public void SaveGesture(eHandUsage handSelector, eGesturePhase phase, eGestureCategory category, string simpleTranscription, List<string> composedTranscription, string gestureName = "")
     {
         // Instanciamos un nuevo gesto
         Gesture g = new Gesture();
@@ -292,7 +237,7 @@ public class GestureRecognizer : MonoBehaviour
         // Inicializamos sus listas
         g.RHBoneInfo = new List<BoneData>();
         g.LHBoneInfo = new List<BoneData>();
-        g.gPhases = new List<gesturePhase>();
+        g.gPhases = new List<eGesturePhase>();
         g.composedTranscription = new List<string>();
 
         // Variables donde almacenamos la info de los huesos que vamos obteniendo.
@@ -300,7 +245,7 @@ public class GestureRecognizer : MonoBehaviour
         BoneData lhBoneData = new BoneData();
 
         // Capturar la mano derecha si es necesario.
-        if (handSelector == handUsage.RIGHT_HAND_ONLY || handSelector == handUsage.BOTH_HANDS)
+        if (handSelector == eHandUsage.RIGHT_HAND_ONLY || handSelector == eHandUsage.BOTH_HANDS)
         { 
             // Obtain finger data for each hand
             foreach (OVRBone bone in RHskeleton.Bones)
@@ -316,7 +261,7 @@ public class GestureRecognizer : MonoBehaviour
         }
 
         // Capturar la mano izquierda si es necesario.
-        if (handSelector == handUsage.LEFT_HAND_ONLY || handSelector == handUsage.BOTH_HANDS)
+        if (handSelector == eHandUsage.LEFT_HAND_ONLY || handSelector == eHandUsage.BOTH_HANDS)
         { 
             // Obtain finger data for left hand
             foreach (OVRBone bone in LHskeleton.Bones)
@@ -336,13 +281,13 @@ public class GestureRecognizer : MonoBehaviour
         {
             switch (handSelector)
             {
-                case handUsage.RIGHT_HAND_ONLY:
+                case eHandUsage.RIGHT_HAND_ONLY:
                     g.gestureName = "RightGesture-" + Time.time;
                     break;
-                case handUsage.LEFT_HAND_ONLY:
+                case eHandUsage.LEFT_HAND_ONLY:
                     g.gestureName = "LeftGesture-" + Time.time;
                     break;
-                case handUsage.BOTH_HANDS:
+                case eHandUsage.BOTH_HANDS:
                     g.gestureName = "FullGesture-" + Time.time;
                     break;
                 default:
@@ -472,7 +417,7 @@ public class GestureRecognizer : MonoBehaviour
             // -----------CALCULO DE DISTANCIAS----------
             // RIGHT HAND
             // Almacenamos suma distancias de la mano derecha
-            if ((gesture.usedHand == handUsage.RIGHT_HAND_ONLY || gesture.usedHand == handUsage.BOTH_HANDS) && RHskeleton.Bones.Count > 0)
+            if ((gesture.usedHand == eHandUsage.RIGHT_HAND_ONLY || gesture.usedHand == eHandUsage.BOTH_HANDS) && RHskeleton.Bones.Count > 0)
             {
                 if (displayInDebug) Debug.Log("Comparando RH. RHskeleton.Bones.Count = " + RHskeleton.Bones.Count);
 
@@ -527,7 +472,7 @@ public class GestureRecognizer : MonoBehaviour
             }
             else
             {
-                bool handNotUsed = !(gesture.usedHand == handUsage.RIGHT_HAND_ONLY || gesture.usedHand == handUsage.BOTH_HANDS);
+                bool handNotUsed = !(gesture.usedHand == eHandUsage.RIGHT_HAND_ONLY || gesture.usedHand == eHandUsage.BOTH_HANDS);
                 if (RHskeleton.Bones.Count == 0 && displayInDebug)
                 {
                     Debug.Log("No Skeleton Found.");
@@ -547,7 +492,7 @@ public class GestureRecognizer : MonoBehaviour
 
             // LEFT HAND
             // Almacenamos suma distancias de la mano izquierda
-            if ((gesture.usedHand == handUsage.LEFT_HAND_ONLY || gesture.usedHand == handUsage.BOTH_HANDS) && LHskeleton.Bones.Count > 0)
+            if ((gesture.usedHand == eHandUsage.LEFT_HAND_ONLY || gesture.usedHand == eHandUsage.BOTH_HANDS) && LHskeleton.Bones.Count > 0)
             {
                 if (displayInDebug) Debug.Log("Comparando LH. LHfingerBones.Count = " + LHskeleton.Bones.Count);
                 for (int i = 0; i < LHskeleton.Bones.Count; i++)
@@ -585,7 +530,7 @@ public class GestureRecognizer : MonoBehaviour
             }
             else
             {
-                bool handNotUsed = !(gesture.usedHand == handUsage.LEFT_HAND_ONLY || gesture.usedHand == handUsage.BOTH_HANDS);
+                bool handNotUsed = !(gesture.usedHand == eHandUsage.LEFT_HAND_ONLY || gesture.usedHand == eHandUsage.BOTH_HANDS);
 
                 if (displayInDebug)
                 { 
@@ -607,7 +552,7 @@ public class GestureRecognizer : MonoBehaviour
                 //textManager.enqueueDebugText("Recognize() Distancia LH: " + sumDistanceLH);
             }
 
-            if (gesture.usedHand == handUsage.BOTH_HANDS)
+            if (gesture.usedHand == eHandUsage.BOTH_HANDS)
             {
                 if (!isDiscardedRH && !isDiscardedLH && sumDistanceRH < RHcurrentMin && sumDistanceLH < LHcurrentMin)
                 {
@@ -618,7 +563,7 @@ public class GestureRecognizer : MonoBehaviour
                     recognizedDist = RHcurrentMin + LHcurrentMin;
                 }
             }
-            else if (gesture.usedHand == handUsage.RIGHT_HAND_ONLY)
+            else if (gesture.usedHand == eHandUsage.RIGHT_HAND_ONLY)
             {
                 if (displayInDebug) Debug.Log("Comparando gesto actual contra gesto almacenado de solo mano izquierda (" + gesture.gestureName + ")");
                 // Si la mano derecha capturada no ha sido descartada
@@ -643,7 +588,7 @@ public class GestureRecognizer : MonoBehaviour
                     }
                 }
             }
-            else if (gesture.usedHand == handUsage.LEFT_HAND_ONLY)
+            else if (gesture.usedHand == eHandUsage.LEFT_HAND_ONLY)
             {
                 if (!isDiscardedLH && sumDistanceLH < LHcurrentMin)
                 {
@@ -665,7 +610,7 @@ public class GestureRecognizer : MonoBehaviour
             else 
             {
                 // Should not go here.
-                if (displayInDebug) Debug.Log("GestureRecognizer::Recognize() Caso de handUsage no contemplado.");
+                if (displayInDebug) Debug.Log("GestureRecognizer::Recognize() Caso de eHandUsage no contemplado.");
             }
         }
 
@@ -697,9 +642,9 @@ public class GestureRecognizer : MonoBehaviour
     private void ProcessRecognizedGesture(Gesture recognizedGesture)
     {
         bool showDebugInfo = false;
-        bool isCommand = (recognizedGesture.gCategory == gestureCategory.GESTURE_COMMAND);
-        bool isCurrentPurelySimple = recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE) && 
-            !(recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_BEGIN) || recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_END));
+        bool isCommand = (recognizedGesture.gCategory == eGestureCategory.GESTURE_COMMAND);
+        bool isCurrentPurelySimple = recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE) && 
+            !(recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_BEGIN) || recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_END));
 
         if (isCommand)
         {
@@ -721,7 +666,7 @@ public class GestureRecognizer : MonoBehaviour
 
             // A partir de aqui el gesto tiene UNA única componente de movimiento (también puede contener además una componente de gesto simple)
             // Lo que nunca podrá tener al mismo tiempo es dos componentes de movimiento, como sería Gesture_Begin y Gesture_End.
-            if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_BEGIN) && recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_END))
+            if (recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_BEGIN) && recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_END))
             {
                 if (showDebugInfo) 
                 { 
@@ -729,7 +674,7 @@ public class GestureRecognizer : MonoBehaviour
                     textManager.EnqueueDebugText("ProcessRecognizedGesture() - ERROR: Gesto Reconocido (" + recognizedGesture.gestureName + ") tiene componentes BEGIN y END. Revisar la DB y corregir.");
                 } 
             }
-            else if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_BEGIN))
+            else if (recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_BEGIN))
             {
                 if (showDebugInfo)
                 {
@@ -740,7 +685,7 @@ public class GestureRecognizer : MonoBehaviour
                 ProcessBeginGesture(recognizedGesture);
 
             }
-            else if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_END))
+            else if (recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_END))
             {
                 if (showDebugInfo)
                 {
@@ -775,7 +720,7 @@ public class GestureRecognizer : MonoBehaviour
             Gesture PreviousGestureInStack = recogGestStack.Peek();
             
             // Si tiene un componente simple, se valida
-            if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
+            if (PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE))
             {
                 ValidateAsSimple(PreviousGestureInStack);
             }
@@ -813,9 +758,9 @@ public class GestureRecognizer : MonoBehaviour
 
         // Si el stack no esta vacío debemos tener en consideración el gesto que contiene.
         Gesture PreviousGestureInStack = recogGestStack.Peek();
-        bool isPreviousPurelySimple = PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE) &&
-            !(PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_BEGIN) || PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_END));
-        bool isPreviousPurelyComposed = !PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE);
+        bool isPreviousPurelySimple = PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE) &&
+            !(PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_BEGIN) || PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_END));
+        bool isPreviousPurelyComposed = !PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE);
 
         // ¿El gesto previo reconocido era puramente simple o puramente compuesto?
         if (isPreviousPurelySimple || isPreviousPurelyComposed)
@@ -864,7 +809,7 @@ public class GestureRecognizer : MonoBehaviour
         // Si no tiene una componente simple, se devuelve un gesto No Reconocido.
         if (recogGestStack.Count == 0)
         {
-            if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
+            if (recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE))
             {
                 textManager.EnqueueDebugText("ProcessEndGesture() Stack vacío y gesto compuesto con componente simple.");
                 // Es importante tener en cuenta que aunque devolvamos el GESTURE_END como reconocido
@@ -883,8 +828,8 @@ public class GestureRecognizer : MonoBehaviour
 
         // Si el stack de gestos NO esta vacío, debemos tener en cuenta el gesto anterior a la hora de validar el gesto actual.
         Gesture PreviousGestureInStack = recogGestStack.Peek();
-        bool isPreviousPurelySimple = PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE) &&
-            !(PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_BEGIN) || PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_END));
+        bool isPreviousPurelySimple = PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE) &&
+            !(PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_BEGIN) || PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_END));
 
         // ¿Este caso se puede dar? ¿Encolamos gestos puramente simples?
         if (isPreviousPurelySimple)
@@ -895,7 +840,7 @@ public class GestureRecognizer : MonoBehaviour
             recogGestStack.Pop();
 
             // Si el gesto actual GESTURE_END tiene componente simple
-            if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
+            if (recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE))
             {
                 textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo simple ya procesado."); 
                 textManager.EnqueueDebugText("ProcessEndGesture() Gesto actual con componente Simple. Validando simple.");
@@ -913,7 +858,7 @@ public class GestureRecognizer : MonoBehaviour
             {
                 textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo del mismo SIGNO que el actual.");
                 // Y el gesto anterior corresponde al inicio del signo
-                if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_BEGIN))
+                if (PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_BEGIN))
                 {
                     textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo es la componente BEGIN del Gesto actual.");
 
@@ -932,7 +877,7 @@ public class GestureRecognizer : MonoBehaviour
                     textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo no es de la componente Begin.");
 
                     // Si el anterior tiene componente simple lo validamos.
-                    if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
+                    if (PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE))
                     {
                         textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo tiene componente simple, validando.");
                         // Lo validamos
@@ -940,7 +885,7 @@ public class GestureRecognizer : MonoBehaviour
                     }
 
                     // Si el gesto actual GESTURE_END tiene componente simple
-                    if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
+                    if (recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE))
                     {
                         textManager.EnqueueDebugText("ProcessEndGesture() Gesto actual tiene componente simple, validando.");
                         // Lo validamos
@@ -961,7 +906,7 @@ public class GestureRecognizer : MonoBehaviour
                 recogGestStack.Pop();
 
                 // Si el anterior tiene componente simple lo validamos.
-                if (PreviousGestureInStack.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
+                if (PreviousGestureInStack.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE))
                 {
                     textManager.EnqueueDebugText("ProcessEndGesture() Gesto previo tiene componente simple. Validando.");
                     // Lo validamos
@@ -969,7 +914,7 @@ public class GestureRecognizer : MonoBehaviour
                 }
 
                 // Si el gesto actual GESTURE_END tiene componente simple
-                if (recognizedGesture.gPhases.Contains(gesturePhase.GESTURE_SIMPLE))
+                if (recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE))
                 {
                     textManager.EnqueueDebugText("ProcessEndGesture() Gesto actual tiene componente simple. Validando (Ya que es un end).");
                     // Lo validamos
@@ -1006,11 +951,11 @@ public class GestureRecognizer : MonoBehaviour
                 textManager.SetRecogText(ProcessedGesture.gestureName + "\nMinFound: " + minDistFound + "\nGesture: " + minNameFound);
             else
             {
-                if (ProcessedGesture.gCategory == gestureCategory.GESTURE_COMMAND)
+                if (ProcessedGesture.gCategory == eGestureCategory.GESTURE_COMMAND)
                 {
                     textManager.SetRecogText(ProcessedGesture.gestureName);
                 }
-                else if (ProcessedGesture.usedHand == handUsage.BOTH_HANDS)
+                else if (ProcessedGesture.usedHand == eHandUsage.BOTH_HANDS)
                 {
                     textManager.SetRecogText(ProcessedGesture.gestureName + "\nSuma Dist Ambas Manos: " + recognizedDist);
                 }
@@ -1110,7 +1055,7 @@ public class GestureRecognizer : MonoBehaviour
             
             // Añadir la transcripción del gesto a la ventana del buffer
             // Si es una palabra, añadir un espacio.
-            if (RecognizedSimpleGesture.gCategory == gestureCategory.GESTURE_WORD)
+            if (RecognizedSimpleGesture.gCategory == eGestureCategory.GESTURE_WORD)
                 textManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription, true); // add space
             else
                 textManager.AppendChatBuffer(RecognizedSimpleGesture.singleTranscription, false);
@@ -1144,7 +1089,7 @@ public class GestureRecognizer : MonoBehaviour
 
             // Añadir la transcripción del gesto a la ventana del buffer
             // Si es una palabra, añadir un espacio.
-            if (RecognizedComposedGesture.gCategory == gestureCategory.GESTURE_WORD)
+            if (RecognizedComposedGesture.gCategory == eGestureCategory.GESTURE_WORD)
                 // Añadir la transcripción del gesto a la ventana del buffer
                 textManager.AppendChatBuffer(RecognizedComposedGesture.composedTranscription[0], true); // add space
             else

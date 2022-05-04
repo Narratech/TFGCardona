@@ -14,11 +14,11 @@ public class HandConfiguratorButton : VR_Button_Template
     [SerializeField]
     private configuration buttonConfig;
     [SerializeField]
-    private handUsage usedHand;
+    private eHandUsage usedHand;
     [SerializeField]
-    private gesturePhase phase;
+    private eGesturePhase phase;
     [SerializeField]
-    private gestureCategory category;
+    private eGestureCategory category;
 
     public override void OnClick()
     {

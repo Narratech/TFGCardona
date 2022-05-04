@@ -16,7 +16,7 @@ public class SpawnObject : MonoBehaviour
     }
 
     // Given a enumerate letter value, spawns one object showing that letter and its gesture.
-    public void SpawnESLLetter(ESLalphabet letter)
+    public void SpawnESLLetter(eESLalphabet letter)
     {
         Instantiate(prefabs[(int)letter], transform.position, transform.rotation);
     }
