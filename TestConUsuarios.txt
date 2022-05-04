@@ -39,3 +39,5 @@ Equipo:
 	- 1 Oculus Quest
 	- 1 ordenador portatil que grabe el stream de la interacción y donde rellenar el formulario.
 	- 1 movil que haga de hotspot para la red portatil-quest.
+	
+	ARREGLAR-> Boton siguiente/Anterior de tutorial, escena aula, añadir spawner con el OVR Player multijugador.

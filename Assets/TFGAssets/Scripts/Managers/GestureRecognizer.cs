@@ -327,6 +327,8 @@ public class GestureRecognizer : MonoBehaviour
         Debug.Log("Llamando a guardar gesto.");
         textManager.EnqueuePersistenceText("GestureRecognizer::SaveGesture() llamando a guardar gesto.");
         _persistence.SaveGesture(g);
+
+        if (DBManager.Instance != null) DBManager.Instance.updateDB();
     }
 
     /// <summary>
