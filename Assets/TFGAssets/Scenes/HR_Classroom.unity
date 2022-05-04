@@ -14562,6 +14562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VR-Button-Disconnect
       objectReference: {fileID: 0}
+    - target: {fileID: 4148811329450453373, guid: f7043d02ef700b54983c3ecfa811a5e2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7043d02ef700b54983c3ecfa811a5e2, type: 3}
 --- !u!4 &6544109066329911660 stripped
