@@ -18,10 +18,7 @@ public class GestureCaptureManager : MonoBehaviour
     private handUsage usedHand;
     private gesturePhase phase;    
     private gestureCategory category;
-
-
-    public string simpleTranscription;
-    public List<string> composedTranscription;
+    private List<string> composedTranscription;
 
     public static GestureCaptureManager Instance;
 
@@ -41,7 +38,6 @@ public class GestureCaptureManager : MonoBehaviour
         usedHand = handUsage.NOHAND;
         phase = gesturePhase.GESTURE_SIMPLE;
         category = gestureCategory.GESTURE_LETTER;
-        simpleTranscription = "";
         composedTranscription = new List<string>();
     }
 

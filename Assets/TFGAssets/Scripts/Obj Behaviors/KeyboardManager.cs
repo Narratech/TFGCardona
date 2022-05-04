@@ -9,10 +9,11 @@ public class KeyboardManager : MonoBehaviour
     public TMP_Text outputField;
     [SerializeField]
     GameObject keybuttonPrefab;
+    [SerializeField]
+    Vector3 rotateKeyboard;
 
     // CLASE COMO SINGLETON
     public static KeyboardManager Instance;
-
 
     private bool instantiateKeyboard;
 
@@ -34,10 +35,10 @@ public class KeyboardManager : MonoBehaviour
         if (instantiateKeyboard)
         {
             // Colocar a 0.2 de distancia uno de otro
-            //    x0 x1 x2 x3 x4 x5 x6 x7 x8 x9
-            // y0 Q  W  E  R  T  Y  U  I  O  P
-            // y1 A  S  D  F  G  H  J  K  L  Ñ
-            // y2 Z  X  C  V  B  N  M
+            //    x0 x1 x2 x3 x4 x5 x6  x7    x8      x9
+            // y0 Q  W  E  R  T  Y  U   I     O       P
+            // y1 A  S  D  F  G  H  J   K     L       Ñ
+            // y2 Z  X  C  V  B  N  M CLEAR BCKSPC BACK(EXIT)
 
             // QWERTYUIOP
             GameObject generatedButton;
@@ -46,8 +47,6 @@ public class KeyboardManager : MonoBehaviour
             {
                 for (int x = 0; x < 10; x++)
                 {
-                    if (y == 2 && x > 6) break;
-
                     generatedButton = Instantiate(keybuttonPrefab, new Vector3(gameObject.transform.position.x + 0.11f * gameObject.transform.localScale.x * x, gameObject.transform.position.y - 0.11f * gameObject.transform.localScale.y * y, gameObject.transform.position.z), new Quaternion(Quaternion.identity.x, Quaternion.identity.y, Quaternion.identity.z, Quaternion.identity.w));
                     generatedButton.transform.parent = gameObject.transform;
                     generatedButton.transform.localScale = new Vector3(
@@ -56,6 +55,7 @@ public class KeyboardManager : MonoBehaviour
                         gameObject.transform.localScale.z * generatedButton.transform.localScale.z
                         );
                     generatedButton.transform.Rotate(new Vector3(0, 90, 0));
+
                     switch (x)
                     {
                         case 0:
@@ -96,18 +96,23 @@ public class KeyboardManager : MonoBehaviour
                         case 7:
                             if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.I);
                             else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.K);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.CLEAR);
                             break;
                         case 8:
                             if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.O);
                             else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.L);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.BACKSPACE);
                             break;
                         case 9:
                             if (y == 0) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.P);
                             else if (y == 1) generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.Ñ);
+                            else generatedButton.GetComponentInChildren<KeyboardButton>().setKeyboardKey(KeyCommand.BACK);
                             break;
                     }
                 }
-            }
+            } // Key generation loop (for)
+
+            gameObject.transform.Rotate(rotateKeyboard);
         }
     }
 
@@ -128,6 +133,11 @@ public class KeyboardManager : MonoBehaviour
             textEdited = "";
         }
         outputField.text = textEdited;
+    }
+
+    public void clearText() 
+    {
+        outputField.text = "";
     }
 
     public void addCharacter(string key)

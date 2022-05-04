@@ -100,19 +100,19 @@ public class KeyboardButton : VR_Button_Template
                 buttonText.text = "Z";
                 break;
             case KeyCommand.ENTER:
-                buttonText.text = "ENTER";
+                buttonText.text = "<size=25%>ENTER";
                 break;
             case KeyCommand.BACKSPACE:
-                buttonText.text = "BCKSPACE";
+                buttonText.text = "<size=18%>BORRAR";
                 break;
             case KeyCommand.BACK:
-                buttonText.text = "BACK";
+                buttonText.text = "<size=25%>SALIR";
                 break;
             case KeyCommand.CLEAR:
-                buttonText.text = "LIMPIAR";
+                buttonText.text = "<size=18%>LIMPIAR";
                 break; ;
             default:
-                buttonText.text = "Please Choose Key";
+                buttonText.text = "<size=10%>Please Choose Key";
                 break;
         }
     }
@@ -213,6 +213,9 @@ public class KeyboardButton : VR_Button_Template
             case KeyCommand.BACK:
                 KeyboardManager.Instance.OnBackPressed();
                 //LoginManager.Instance.backToSelection();
+                return;
+            case KeyCommand.CLEAR:
+                KeyboardManager.Instance.clearText();
                 return;
             default:
                 key = "invalid";

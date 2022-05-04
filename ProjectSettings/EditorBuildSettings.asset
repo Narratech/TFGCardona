@@ -8,21 +8,24 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/TFGAssets/Scenes/Dev_Scene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/TFGAssets/Scenes/Login_Scene.unity
     guid: 35309777bfebe724b94aba71b7fa56ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/TFGAssets/Scenes/Room_Selection_Scene.unity
     guid: 9141e5c00aa1123449b22c6533b35454
-  - enabled: 1
+  - enabled: 0
     path: Assets/TFGAssets/Scenes/HR_Outdoors.unity
     guid: c0ec5fba8b3073643b312141614d3b6e
-  - enabled: 1
+  - enabled: 0
     path: Assets/TFGAssets/Scenes/HR_Classroom.unity
     guid: 4f649bcadcda01b4c9ce30a62ab4522f
   - enabled: 0
     path: Assets/TFGAssets/Scenes/Physics_Test_Scene.unity
     guid: 6524dc76cecca4040a30657b79840afc
+  - enabled: 1
+    path: Assets/TFGAssets/Scenes/Capture_Scene.unity
+    guid: 1ada478d9e791b542b5d3aa0493e7bec
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 116d543c21e684843a2050d9a79b4f76, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3441d30b929f1764a9d7b2d7d1a348a4, type: 2}
