@@ -28,7 +28,7 @@ public struct Gesture
     public UnityEvent onRecognized;            // Callback
     public eHandUsage usedHand;
     public eGestureCategory gCategory;
-    public List<eGesturePhase> gPhases;         // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
+    public List<eGesturePhase> gPhases;        // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
     public string singleTranscription;         // La transcripción de la componente simple del gesto.
     public List<string> composedTranscription; // Un gesto compuesto puede interpretarse de varias formas (yo, mi). Al inicio del proyecto solo usaremos la primera transcripción.
 };
@@ -220,6 +220,8 @@ public class GestureRecognizer : MonoBehaviour
                 //Debug.Log(datosGesto);
             }
         }
+
+        if (DBManager.Instance != null) DBManager.Instance.updateDB();
     }
     #endregion
 
@@ -228,7 +230,6 @@ public class GestureRecognizer : MonoBehaviour
     ////////////////////////////////////////////////////////////////////
     #region Gesture Capture
     
-
     public void SaveGesture(eHandUsage handSelector, eGesturePhase phase, eGestureCategory category, string simpleTranscription, List<string> composedTranscription, string gestureName = "")
     {
         // Instanciamos un nuevo gesto
@@ -370,13 +371,18 @@ public class GestureRecognizer : MonoBehaviour
         bool displayInDebug = false;
 
         // NO REALIZAR RECONOCIMIENTO SI NO SE ESTA TRAQUEANDO ALGUNA DE LAS MANOS O NO HAY SUFICIENTE CONFIANZA.
-        if (!RHskeleton.IsDataHighConfidence || !LHskeleton.IsDataHighConfidence || !RightHand.IsTracked || !LeftHand.IsTracked)
+        //if (!RHskeleton.IsDataHighConfidence || !LHskeleton.IsDataHighConfidence || !RightHand.IsTracked || !LeftHand.IsTracked)
+        if (!RightHand.IsTracked && !LeftHand.IsTracked)
         {
+            textManager.EnqueueDebugText("Manos no encontradas.");
             isRecognizing = false;
             if (!RightHand.IsTracked || !LeftHand.IsTracked) textManager.SetRecogGUIText("Hands Untracked.");
-            else if (!RHskeleton.IsDataHighConfidence || !LHskeleton.IsDataHighConfidence) textManager.SetRecogGUIText("Low Confidence.");
             return;
         }
+        if (!RHskeleton.IsDataHighConfidence || !LHskeleton.IsDataHighConfidence)
+        { 
+            textManager.SetRecogGUIText("Low Confidence.");
+        }    
 
         // Inicializamos el gesto a devolver
         Gesture currentGesture = new Gesture();
@@ -416,6 +422,7 @@ public class GestureRecognizer : MonoBehaviour
 
             // -----------CALCULO DE DISTANCIAS----------
             // RIGHT HAND
+            textManager.EnqueueDebugText("Calculo Distancia Mano derecha.");
             // Almacenamos suma distancias de la mano derecha
             if ((gesture.usedHand == eHandUsage.RIGHT_HAND_ONLY || gesture.usedHand == eHandUsage.BOTH_HANDS) && RHskeleton.Bones.Count > 0)
             {
@@ -435,6 +442,7 @@ public class GestureRecognizer : MonoBehaviour
                     }
 
                     // ROTACION
+                    /*
                     Quaternion currentRHRotData = RHskeleton.Bones[i].Transform.rotation;
                     float RHRotDistance = quaternionDistance(currentRHRotData, gesture.RHBoneInfo[i].rotation);
 
@@ -444,7 +452,8 @@ public class GestureRecognizer : MonoBehaviour
                         Debug.Log("Captured RH Rot: " + currentRHRotData);
                         Debug.Log("Stored RH Rot: " + gesture.LHBoneInfo[i].rotation);
                     }
-
+                    */
+                    
                     // Si la suma de la distancia supera el umbral máximo de reconocimiento, descartamos la mano.
                     if (sumDistanceRH > threshold)
                     {
@@ -490,6 +499,7 @@ public class GestureRecognizer : MonoBehaviour
                 isDiscardedRH = true;
             }
 
+            textManager.EnqueueDebugText("Calculo Distancia Mano izquierda.");
             // LEFT HAND
             // Almacenamos suma distancias de la mano izquierda
             if ((gesture.usedHand == eHandUsage.LEFT_HAND_ONLY || gesture.usedHand == eHandUsage.BOTH_HANDS) && LHskeleton.Bones.Count > 0)
@@ -545,6 +555,7 @@ public class GestureRecognizer : MonoBehaviour
 
 
             //----------------PROCESADO DE DISTANCIAS-------------------
+            textManager.EnqueueDebugText("Procesado de distancias.");
             if (displayInDebug)
             {
                 Debug.Log("Distancia RH: " + sumDistanceRH);
@@ -554,6 +565,8 @@ public class GestureRecognizer : MonoBehaviour
 
             if (gesture.usedHand == eHandUsage.BOTH_HANDS)
             {
+                textManager.EnqueueDebugText("Procesado de distancias: Gesto de ambas manos.");
+                
                 if (!isDiscardedRH && !isDiscardedLH && sumDistanceRH < RHcurrentMin && sumDistanceLH < LHcurrentMin)
                 {
                     if (displayInDebug) textManager.EnqueueDebugText("Recognize() Nuevo minimo encontrado con gesto: " + gesture.gestureName);
@@ -565,6 +578,7 @@ public class GestureRecognizer : MonoBehaviour
             }
             else if (gesture.usedHand == eHandUsage.RIGHT_HAND_ONLY)
             {
+                textManager.EnqueueDebugText("Procesado de distancias: Gesto de mano derecha.");
                 if (displayInDebug) Debug.Log("Comparando gesto actual contra gesto almacenado de solo mano izquierda (" + gesture.gestureName + ")");
                 // Si la mano derecha capturada no ha sido descartada
                 // y la suma de sus distancias es menor que la encontrada con otros gestos
@@ -590,6 +604,7 @@ public class GestureRecognizer : MonoBehaviour
             }
             else if (gesture.usedHand == eHandUsage.LEFT_HAND_ONLY)
             {
+                textManager.EnqueueDebugText("Procesado de distancias: Gesto de mano izquierda.");
                 if (!isDiscardedLH && sumDistanceLH < LHcurrentMin)
                 {
                     LHcurrentMin = sumDistanceLH;
@@ -622,12 +637,12 @@ public class GestureRecognizer : MonoBehaviour
         // Finalmente mete en la pila el gesto.
         if (currentGesture.gestureName != "Unknown")
         {
-            if (displayInDebug) textManager.EnqueueDebugText("Recognize: Gesto candidato encontrado en Recognize. Llamando a procesado.");
+            textManager.EnqueueDebugText("Recognize: Gesto candidato encontrado en Recognize. Llamando a procesado.");
             ProcessRecognizedGesture(currentGesture);
         }
         else
         {
-            if (displayInDebug) textManager.EnqueueDebugText("Recognize: Gesto no reconocido.");
+            textManager.EnqueueDebugText("Recognize: Gesto no reconocido.");
             // Los gestos no procesados
             OnProcessed(currentGesture);
         }
@@ -641,7 +656,16 @@ public class GestureRecognizer : MonoBehaviour
     
     private void ProcessRecognizedGesture(Gesture recognizedGesture)
     {
-        bool showDebugInfo = false;
+        textManager.EnqueueDebugText("ProcessRecognizedGesture()\n------------------");
+        textManager.EnqueueDebugText("Nombre: " + recognizedGesture.gestureName);
+        textManager.EnqueueDebugText("Mano: " + recognizedGesture.usedHand);
+        textManager.EnqueueDebugText("Categoria: " + recognizedGesture.gCategory);
+        textManager.EnqueueDebugText("Fase Simple: " + recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE));
+        textManager.EnqueueDebugText("Fase Inicio: " + recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_BEGIN));
+        textManager.EnqueueDebugText("Fase Final: " + recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_END));
+        textManager.EnqueueDebugText("Transcripccion simple: " + recognizedGesture.singleTranscription);
+
+        bool showDebugInfo = true;
         bool isCommand = (recognizedGesture.gCategory == eGestureCategory.GESTURE_COMMAND);
         bool isCurrentPurelySimple = recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_SIMPLE) && 
             !(recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_BEGIN) || recognizedGesture.gPhases.Contains(eGesturePhase.GESTURE_END));
@@ -698,6 +722,7 @@ public class GestureRecognizer : MonoBehaviour
                 if (showDebugInfo)
                 { 
                     Debug.Log("processRecognizedGesture() Error - Gesto reconocido que no es puro, pero no contiene GESTURE_BEGIN ni GESTURE_END. ¡No debería suceder!");
+                    textManager.EnqueueDebugText("Gesto: " + recognizedGesture.gestureName);
                     textManager.EnqueueDebugText("processRecognizedGesture() Error - Gesto reconocido que no es puro, pero no contiene GESTURE_BEGIN ni GESTURE_END. ¡No debería suceder!");
                 } 
             }

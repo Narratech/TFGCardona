@@ -33,7 +33,7 @@ public class ChangeSceneButton : VR_Button_Template
                 SceneManager.LoadSceneAsync("HR_Classroom");
                 break;
             case eScenes.TUTORIAL:
-                SceneManager.LoadSceneAsync("Capture_Scene");
+                SceneManager.LoadSceneAsync("Tutorial_Scene");
                 break;
         }
     }

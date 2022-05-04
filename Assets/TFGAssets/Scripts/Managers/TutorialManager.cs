@@ -4,18 +4,54 @@ using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
 {
-    GameObject tutoImage1;
-    GameObject tutoImage2;
+    [SerializeField]
+    List<GameObject> steps;
 
-    // Start is called before the first frame update
-    void Start()
+    int currentStep = 0;
+
+    // CLASE COMO SINGLETON.
+    public static TutorialManager Instance;
+
+    private void Awake()
     {
-        
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        // Nos aseguramos de esconder todos los pasos
+        foreach (GameObject step in steps)
+        {
+            step.SetActive(false);
+        }
+
+        // Ponemos el indice a 0
+        currentStep = 0;
+
+        // activamos el primero
+        steps[currentStep].SetActive(true);
+    }
+
+    public void OnNextStep()
+    {
+        steps[currentStep].SetActive(false);
+        currentStep++;
+        if (currentStep == steps.Count) currentStep = 0;
+        steps[currentStep].SetActive(true);
+    }
+
+
+    public void OnPreviousStep()
+    {
+        steps[currentStep].SetActive(false);
+        currentStep--;
+        if (currentStep < 0) currentStep = steps.Count - 1;
+        steps[currentStep].SetActive(true);
     }
 }
