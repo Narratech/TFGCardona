@@ -1,5 +1,15 @@
 TFG-Cardona - HowTo-SetupNewScene.txt
 --------------------------------------------
+
+Drag OVRPlayer-HandRecognizer prefab from Resources folder into a scene.
+Provide the output text from your Voice to Text system into the Text Manager.
+I strongly suggest using Speech Recognition System Package form Unity Store.
+
+
+
+
+Other way to implement it manually:
+------------------------------------
 Create Empty Object named GestureManager
 	Add Gesture Manager Script to it
 Create Empty Object named TextManager

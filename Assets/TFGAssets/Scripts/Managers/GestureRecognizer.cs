@@ -25,7 +25,6 @@ public struct Gesture
     public string gestureName;
     public List<BoneData> RHBoneInfo;
     public List<BoneData> LHBoneInfo;
-    public UnityEvent onRecognized;            // Callback
     public eHandUsage usedHand;
     public eGestureCategory gCategory;
     public List<eGesturePhase> gPhases;        // Un gesto puede pertenecer a un gesto sin movimiento o ser parte de uno en movimiento.
